@@ -200,7 +200,9 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
           }}
         >
           {/* icon logout */}
-          <CustomDrawerItem label="Cerrar Sesion" icon={icons.logout} />
+          <CustomDrawerItem label="Cerrar Sesion" icon={icons.logout} 
+          onPress={() =>navigation.navigate('SignIn')}
+          />
         </View>
       </View>
     </DrawerContentScrollView>
