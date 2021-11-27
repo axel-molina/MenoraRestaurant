@@ -3,22 +3,22 @@ const onboarding_screens = [
         id: 1,
         backgroundImage: require("../assets/images/background_01.png"),
         bannerImage: require("../assets/images/favourite_food.png"),
-        title: "Choose a Favourite Food",
-        description: "When you oder Eat Steet, we’ll hook you up with exclusive coupon, specials and rewards"
+        title: "Elija una comida favorita",
+        description: "Cuando realice un pedido en Menora, lo conectaremos con cupones exclusivos, ofertas especiales y recompensas."
     },
     {
         id: 2,
         backgroundImage: require("../assets/images/background_02.png"),
         bannerImage: require("../assets/images/hot_delivery.png"),
-        title: "Hot Delivery to Home",
-        description: "We make food ordering fasr, simple and free-no matter if you order online or cash"
+        title: "Entrega caliente a domicilio",
+        description: "Hacemos que los pedidos de alimentos sean más rápidos, sencillos y gratuitos, ya sea que los solicite en línea o en efectivo."
     },
     {
         id: 3,
         backgroundImage: require("../assets/images/background_01.png"),
         bannerImage: require("../assets/images/great_food.png"),
-        title: "Receive the Great Food",
-        description: "You’ll receive the great food within a hour. And get free delivery credits for every order."
+        title: "Recibe una gran comida",
+        description: "Recibirás la excelente comida en una hora. Y obtenga créditos de envío gratis por cada pedido."
     }
 ]
 
