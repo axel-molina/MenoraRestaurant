@@ -55,6 +55,7 @@ const Home = () => {
     //Recuperar el menú recomendado
     let selectedRecommend = dummyData.menu.find(
       (a) => a.name == "Recomendados"
+      
     );
 
     // encuentra el menú basado en menuTypeId
@@ -68,6 +69,7 @@ const Home = () => {
     // Establecer el menú recomendado según el categoryId
     setRecommends(
       selectedRecommend?.list.filter((a) => a.categories.includes(categoryId))
+      
     );
 
     //configurar el menú según el categoryId
@@ -198,7 +200,6 @@ const Home = () => {
     return (
       <Section
         title="Recomendaciones"
-        onPress={() => console.log("Show all recommended")}
       >
         <FlatList
           data={recommends}
@@ -222,7 +223,7 @@ const Home = () => {
                 resizeMode: "contain",
               }}
               item={item}
-              onPress={() => console.log("HorizontalFoodCard")}
+
             />
           )}
         />
@@ -235,8 +236,7 @@ const Home = () => {
     return (
       <Section
         title="Top 3 platos"
-        onPress={() => console.log("Show all popular items")}
-      >
+        >
         <FlatList
           data={popular}
           keyExtractor={(item) => `${item.id}`}
@@ -244,15 +244,16 @@ const Home = () => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <VerticalFoodCard
-              containerStyle={{
-                marginLeft: index == 0 ? SIZES.padding : 18,
-                marginRight: index == popular.length - 1 ? SIZES.padding : 0,
-              }}
-              item={item}
-              onPress={() => console.log("Vertical Food Card")}
-            />
-          )}
+            containerStyle={{
+              marginLeft: index == 0 ? SIZES.padding : 18,
+              marginRight: index == popular.length - 1 ? SIZES.padding : 0,
+            }}
+            
+            item={item}
+            />            
+            )}
         />
+        
       </Section>
     );
   }
@@ -323,6 +324,7 @@ const Home = () => {
               {renderMenuTypes()}
             </View>
           }
+
           renderItem={({ item, index }) => {
             return (
               <HorizontalFoodCard
@@ -332,6 +334,7 @@ const Home = () => {
                   marginHorizontal: SIZES.padding,
                   marginBottom: SIZES.radius,
                 }}
+
                 imageStyle={{
                   marginTop: 20,
                   marginLeft: 20,
@@ -342,8 +345,10 @@ const Home = () => {
                 item={item}
                 onPress={() => console.log("HorizontalFoodCard")}
               />
+              
             );
           }}
+          
         />
       </ScrollView>
     </View>

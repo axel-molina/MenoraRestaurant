@@ -2,8 +2,8 @@ import React from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import { setSelectedTab } from "../store/tab/tabActions";
-import { Home, Search, CartTab, Favourite, AccountPage } from "../screens";
-import { Header } from "../components";
+import { Home, Search, CartTab, AccountPage } from "../screens";
+import { Header} from "../components";
 import {
   View,
   Text,
@@ -91,6 +91,10 @@ const MainLayout = ({
   navigation,
   selectedTab,
   setSelectedTab,
+  containerStyle,
+  iconStyle,
+  quantity,
+  onPress,
 }) => {
   const flatListRef = React.useRef();
 
@@ -206,6 +210,7 @@ const MainLayout = ({
     }
   }, [selectedTab]);
 
+
   return (
     <Animated.View
       style={{
@@ -227,8 +232,8 @@ const MainLayout = ({
         leftComponent={
           <TouchableOpacity
             style={{
-              width: 40,
-              height: 40,
+              width: 45,
+              height: 45,
               alignItems: "center",
               justifyContent: "center",
               borderWidth: 1,
@@ -240,25 +245,58 @@ const MainLayout = ({
             <Image source={icons.menu} />
           </TouchableOpacity>
         }
-        // foto del usuario logeado
+
+        
+        // icono del carrito 
         rightComponent={
           <TouchableOpacity
+          style={{
+            width: 50,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: SIZES.radius,
+            backgroundColor: COLORS.lightOrange2,
+            ...containerStyle
+          }}
+          //se direcciona a la pestaña del carrito
+          onPress={() => setSelectedTab(constants.screens.cart)}
+        >
+          <Image
+            source={icons.cart}
             style={{
-              borderRadius: SIZES.radius,
+              width: 25,
+              height: 25,
+              tintColor: COLORS.black,
+              ...iconStyle
+            }}
+          />
+    
+          <View
+            style={{
+              position: "absolute",
+              top: 5,
+              right: 5,
+              height: 15,
+              width: 15,
               alignItems: "center",
               justifyContent: "center",
+              borderRadius: SIZES.radius,
+              backgroundColor: COLORS.primary,
             }}
-            onPress={() => navigation.openDrawer()}
           >
-            <Image
-              source={dummyData?.myProfile?.profile_image}
+            <Text
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: SIZES.radius,
+                color: COLORS.white,
+                ...FONTS.body5,
+                lineHeight: 0,
+                fontSize: 10,
               }}
-            />
-          </TouchableOpacity>
+            >
+            </Text>
+          </View>
+          
+        </TouchableOpacity>
         }
       />
 
@@ -360,7 +398,7 @@ const MainLayout = ({
 
           <TabButton
             label={constants.screens.account}
-            icon={icons.notification}
+            icon={icons.profile}
             isFocused={selectedTab == constants.screens.account}
             outerContainerStyle={accountFlexStyle}
             innerContainerStyle={accountColorStyle}

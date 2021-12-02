@@ -97,28 +97,6 @@ const SignIn = ({ navigation }) => {
           }
         />
 
-        {/* Save me & Forgot Password */}
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.radius,
-            justifyContent: "space-between",
-          }}
-        >
-          <CustomSwitch value={saveMe} onChange={(value) => setSaveMe(value)} />
-
-          <TextButton
-            label="Forgot Password?"
-            buttonContainerStyle={{
-              backgroundColor: null,
-            }}
-            labelStyle={{
-              color: COLORS.gray,
-              ...FONTS.body4,
-            }}
-            onPress={() => navigation.navigate("ForgotPassword")}
-          />
-        </View>
 
         {/* Sign In */}
         <TextButton
@@ -133,8 +111,30 @@ const SignIn = ({ navigation }) => {
               ? COLORS.primary
               : COLORS.transparentPrimray,
           }}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate("Home")}
         />
+
+
+        {/*Forgot Password */}
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: SIZES.radius,
+            justifyContent: "center",
+          }}
+        >
+          <TextButton
+            label="Olvidaste la Contraseña?"
+            buttonContainerStyle={{
+              backgroundColor: null,
+            }}
+            labelStyle={{
+              color: COLORS.gray,
+              ...FONTS.body4,
+            }}
+            onPress={() => navigation.navigate("ForgotPassword")}
+          />
+        </View>
 
         {/* Sign Up */}
         <View
@@ -171,6 +171,28 @@ const SignIn = ({ navigation }) => {
       {/* Footer */}
 
       <View>
+        {/* Button Facebook */}
+        <TextIconButton
+          containerStyle={{
+            height: 50,
+            alignItems: "center",
+            marginTop: SIZES.radius,
+            borderRadius: SIZES.radius,
+            backgroundColor: COLORS.blue,
+          }}
+          icon={icons.fb}
+          iconPosition="LEFT"
+          iconStyle={{
+            tintColor: COLORS.white,
+          }}
+          label="Continuar con Google"
+          labelStyle={{
+            marginLeft: SIZES.radius,
+            color: COLORS.white,
+          }}
+          onPress={() => console.log("Google")}
+        />
+
         {/* Button Google */}
         <TextIconButton
           containerStyle={{
@@ -178,16 +200,17 @@ const SignIn = ({ navigation }) => {
             alignItems: "center",
             marginTop: SIZES.radius,
             borderRadius: SIZES.radius,
-            backgroundColor: COLORS.lightGray1,
+            backgroundColor: COLORS.red,
           }}
           icon={icons.google}
           iconPosition="LEFT"
           iconStyle={{
-            tintColor: COLORS.primary,
+            tintColor: COLORS.white,
           }}
           label="Continuar con Google"
           labelStyle={{
             marginLeft: SIZES.radius,
+            color: COLORS.white,
           }}
           onPress={() => console.log("Google")}
         />

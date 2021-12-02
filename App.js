@@ -52,7 +52,7 @@ import {
   SignUp,
   ForgotPassword,
   Otp,
-  Home,
+  FoodDetail,
 } from "./screens";
 import CustomDrawer from "./navigation/CustomDrawer";
 
@@ -72,11 +72,13 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={"OnBoarding"}
+          initialRouteName={"SignIn"}
         >
           <Stack.Screen name="OnBoarding" component={OnBoarding} />
 
           <Stack.Screen name="Home" component={CustomDrawer} />
+
+          <Stack.Screen name="FoodDetail" component={FoodDetail} />
 
           <Stack.Screen name="SignIn" component={SignIn} />
 

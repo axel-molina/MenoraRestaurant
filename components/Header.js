@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { FONTS } from "../constants";
 
-const Header = ({ containerStyle, title, leftComponent, rightComponent}) => {
+const Header = ({ containerStyle, title, leftComponent, rightComponent, titleStyle }) => {
   return (
     <View
       style={{

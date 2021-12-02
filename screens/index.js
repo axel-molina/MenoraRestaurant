@@ -9,6 +9,9 @@ import Search from "./Search/Search";
 // Cart
 import CartTab from "./Cart/CartTab";
 
+//FoodDetail
+import FoodDetail from "./Food/FoodDetail"
+
 // Favourite
 import Favourite from "./Favourite/Favourite";
 
@@ -36,5 +39,6 @@ export {
   SignUp,
   Otp,
   ForgotPassword,
-  AuthLayout
+  AuthLayout,
+  FoodDetail
 };

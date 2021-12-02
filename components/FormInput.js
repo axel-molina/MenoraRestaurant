@@ -49,6 +49,7 @@ const FormInput = ({
           autoCompleteType={autoCompleteType}
           autoCapitalize={autoCapitalize}
           onChangeText={(text) => onChange(text)}
+          
         />
 
         {appendComponent}

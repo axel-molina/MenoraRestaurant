@@ -1,8 +1,9 @@
 import React from "react";
 import { TouchableOpacity, View, Text, Image } from "react-native";
 import { COLORS, SIZES, FONTS, icons } from "../constants";
+import { AsyncStorage } from "react-native";
 
-const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
+const VerticalFoodCard = ({ containerStyle, item, onPress, navigation }) => {
   return (
     <TouchableOpacity
       style={{
@@ -13,6 +14,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
         backgroundColor: COLORS.lightGray2,
         ...containerStyle,
       }}
+        
     >
       {/* Favoritos */}
       <View style={{ flexDirection: "row" }}>
@@ -44,7 +46,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
             width: "100%",
             resizeMode: "contain",
           }}
-        />
+          />
       </View>
 
       {/* Info */}
@@ -68,8 +70,50 @@ const VerticalFoodCard = ({ containerStyle, item, onPress }) => {
           ${item.price}
         </Text>
       </View>
+
+      <TouchableOpacity
+        style={{
+          width: 100,
+          height: 30,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: COLORS.primary,
+          borderRadius: SIZES.radius,
+          marginTop: SIZES.radius,
+        }}
+        onPress={() => this.onClickAddCart(item)}
+      >
+        <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Add Cart</Text>
+      </TouchableOpacity>
+      
     </TouchableOpacity>
   );
+};
+
+onClickAddCart = async (data) => {
+  const itemcart = {
+    food: data,
+    quantity: 1,
+    price: data.price,
+  };
+
+  AsyncStorage.getItem("cart")
+    .then((datacart) => {
+      if (datacart !== null) {
+        // We have data!!
+        const cart = JSON.parse(datacart);
+        cart.push(itemcart);
+        AsyncStorage.setItem("cart", JSON.stringify(cart));
+      } else {
+        const cart = [];
+        cart.push(itemcart);
+        AsyncStorage.setItem("cart", JSON.stringify(cart));
+      }
+      alert("Add Cart");
+    })
+    .catch((err) => {
+      alert(err);
+    });
 };
 
 export default VerticalFoodCard;

@@ -2,9 +2,10 @@ import React from "react";
 import { TouchableOpacity, View, Text, Image } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
 
-const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress }) => {
+const HorizontalFoodCard = ({ containerStyle, imageStyle, item, navigation }) => {
   return (
     <TouchableOpacity
+    onPress={() =>{navigation.navigate('FoodDetail')}}
       style={{
         flexDirection: "row",
         borderRadius: SIZES.radius,
@@ -23,6 +24,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress }) => {
             style={{
                 flex: 1,
             }}
+
         >
             {/* Name */}
             <Text style={{...FONTS.h3, fontSize: 17, color: COLORS.white}}>
@@ -42,8 +44,26 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress }) => {
 
         </View>
 
+        <TouchableOpacity
+        style={{
+          width:100,
+          height:30,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: COLORS.primary,
+          borderRadius: SIZES.radius,
+          marginTop: SIZES.radius,
+          marginRight: 10       
+        }}
+      >
+        <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Add Cart</Text>
+      </TouchableOpacity>
+
     </TouchableOpacity>
   );
 };
+
+
+
 
 export default HorizontalFoodCard;
