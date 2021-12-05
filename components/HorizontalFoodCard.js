@@ -1,11 +1,19 @@
 import React from "react";
-import { TouchableOpacity, View, Text, Image } from "react-native";
+import { TouchableOpacity, View, Text, Image, ToastAndroid } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
 
-const HorizontalFoodCard = ({ containerStyle, imageStyle, item, navigation }) => {
+
+const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, setProductos }) => {
+
+  const añadirAlCarrito = (item) => {
+    ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
+    setProductos(item)
+  }
+
   return (
-    <TouchableOpacity
-    onPress={() =>{navigation.navigate('FoodDetail')}}
+    <TouchableOpacity 
+    onPress={onPress}
+    
       style={{
         flexDirection: "row",
         borderRadius: SIZES.radius,
@@ -39,7 +47,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, navigation }) =>
 
             {/* Price */}
             <Text style={{ marginTop: SIZES.base, ...FONTS.h3, color: COLORS.white }}>
-                ${item.price}
+                {item.price}
             </Text>
 
         </View>
@@ -56,7 +64,11 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, navigation }) =>
           marginRight: 10       
         }}
       >
-        <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Add Cart</Text>
+        <TouchableOpacity
+        onPress={() => añadirAlCarrito(item)}
+        >
+          <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Agregar</Text>
+        </TouchableOpacity>
       </TouchableOpacity>
 
     </TouchableOpacity>
@@ -67,3 +79,4 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, navigation }) =>
 
 
 export default HorizontalFoodCard;
+

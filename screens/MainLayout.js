@@ -210,6 +210,7 @@ const MainLayout = ({
     }
   }, [selectedTab]);
 
+  const [productos, setProductos] = React.useState([])
 
   return (
     <Animated.View
@@ -324,9 +325,9 @@ const MainLayout = ({
                   width: SIZES.width,
                 }}
               >
-                {item.label == constants.screens.home && <Home />}
+                {item.label == constants.screens.home && <Home setProductos={setProductos}/>}
                 {item.label == constants.screens.search && <Search />}
-                {item.label == constants.screens.cart && <CartTab />}
+                {item.label == constants.screens.cart && <CartTab productos={productos}/>}
                 {item.label == constants.screens.account && <AccountPage />}
               </View>
             );

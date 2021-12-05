@@ -1,9 +1,9 @@
 import { icons, images } from "./";
 
 const myProfile = {
-  name: "Emiliano Cassoni",
+  name: "Axel Molina",
   profile_image: images.profile,
-  address: "Corrientes, Corrientes",
+  address: "Almirante Brown, Buenos Aires",
 };
 
 const categories = [

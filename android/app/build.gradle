@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-applt plugin: "com.google.gms.google-services" // <- Add this line
+apply plugin: "com.google.gms.google-services" // <- Add this line
 
 import com.android.build.OutputFile
 
@@ -194,7 +194,7 @@ dependencies {
     //When using the BoM, you don't specify in Firebase library
     implementation 'com.google.firebase:firebase-auth'
 
-    implementation 'com.facebook.android:facebook-android.sdk'
+   // implementation 'com.facebook.android:facebook-android.sdk'
 
     //add this line
     implementation 'androidx.browser:browser:1.2.0'

@@ -54,6 +54,7 @@ import {
   Otp,
   FoodDetail,
 } from "./screens";
+
 import CustomDrawer from "./navigation/CustomDrawer";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -72,7 +73,7 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={"SignIn"}
+          initialRouteName={"Home"}
         >
           <Stack.Screen name="OnBoarding" component={OnBoarding} />
 

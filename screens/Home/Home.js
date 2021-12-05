@@ -1,6 +1,7 @@
 import React from "react";
 import { FONTS, COLORS, SIZES, icons, dummyData } from "../../constants";
 import { HorizontalFoodCard, VerticalFoodCard } from "../../components";
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -9,11 +10,15 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  StatusBar,
 } from "react-native";
+import Search from "../Search/Search";
 
-const Section = ({ title, onPress, children }) => {
+
+const Section = ({ title, children }) => {
   return (
     <View>
+      <StatusBar backgroundColor='#000'></StatusBar>
       {/* Header */}
       <View
         style={{
@@ -32,7 +37,7 @@ const Section = ({ title, onPress, children }) => {
   );
 };
 
-const Home = () => {
+const Home = ({ setProductos }) => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
 
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
@@ -78,58 +83,6 @@ const Home = () => {
     );
   }
 
-  //Render Buscador
-
-  function renderSearch() {
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          height: 45,
-          alignItems: "center",
-          marginHorizontal: SIZES.padding,
-          marginVertical: SIZES.base,
-          paddingHorizontal: SIZES.radius,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.lightGray1,
-        }}
-      >
-        {/* Icono buscar */}
-        <Image
-          source={icons.search}
-          style={{
-            height: 20,
-            width: 20,
-            tintColor: COLORS.black,
-          }}
-        />
-
-        {/* Text Input */}
-        <TextInput
-          style={{
-            flex: 1,
-            marginLeft: SIZES.radius,
-            ...FONTS.body3,
-          }}
-          placeholder="Search food..."
-        />
-
-        {/* Boton de filtos */}
-        <TouchableOpacity
-        //    onPress
-        >
-          <Image
-            source={icons.filter}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.black,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
 
   //Seleccion de tipo
   function renderFoodCategory() {
@@ -196,7 +149,10 @@ const Home = () => {
   }
 
   //Recomendaciones
-  function renderRecommendedSection() {
+  function renderRecommendedSection(setProductos) {
+
+    const navigation = useNavigation();
+
     return (
       <Section
         title="Recomendaciones"
@@ -223,7 +179,8 @@ const Home = () => {
                 resizeMode: "contain",
               }}
               item={item}
-
+              setProductos={setProductos}
+              onPress={() => navigation.navigate("FoodDetail")}
             />
           )}
         />
@@ -232,7 +189,10 @@ const Home = () => {
   }
 
   //Top 3 platos
-  function renderPopularSection() {
+  function renderPopularSection(setProductos) {
+
+    const navigation = useNavigation();
+
     return (
       <Section
         title="Top 3 platos"
@@ -250,6 +210,8 @@ const Home = () => {
             }}
             
             item={item}
+            setProductos={setProductos}
+            onPress={() => navigation.navigate("FoodDetail")}
             />            
             )}
         />
@@ -260,6 +222,7 @@ const Home = () => {
 
   //Todos los productos
   function renderMenuTypes() {
+    
     return (
       <FlatList
         horizontal
@@ -271,13 +234,16 @@ const Home = () => {
           marginBottom: 30,
         }}
         // al precionar busca si coinsiden las categorias de las comidas con las del tipo de menu
-        renderItem={({ item, index }) => (
+        renderItem={({ item, index}) => (
           <TouchableOpacity
             style={{
               marginLeft: SIZES.padding,
               marginRight:
                 index == dummyData.menu.length - 1 ? SIZES.padding : 0,
             }}
+
+            
+            
             onPress={() => {
               setSelectedMenuType(item.id);
               handleChangeCategory(selectedCategoryId, item.id);
@@ -298,6 +264,7 @@ const Home = () => {
     );
   }
 
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -306,7 +273,7 @@ const Home = () => {
     >
       <ScrollView style={{ marginBottom: 200, width: "100%" }}>
       {/* Buscador */}
-      {renderSearch()}
+      <Search></Search>
         {/* Lista */}
         <FlatList
           data={menuList}
@@ -317,11 +284,11 @@ const Home = () => {
               {/* Categotorias de comida */}
               {renderFoodCategory()}
               {/* Recomendados */}
-              {renderRecommendedSection()}
+              {renderRecommendedSection(setProductos)}
               {/* top 3 */}
-              {renderPopularSection()}
+              {renderPopularSection(setProductos)}
               {/* todos los productos */}
-              {renderMenuTypes()}
+              {renderMenuTypes(setProductos)}
             </View>
           }
 
@@ -343,7 +310,9 @@ const Home = () => {
                   resizeMode: "contain",
                 }}
                 item={item}
-                onPress={() => console.log("HorizontalFoodCard")}
+                setProductos={setProductos}
+                onPress={() => navigation.navigate("FoodDetail")}
+                
               />
               
             );

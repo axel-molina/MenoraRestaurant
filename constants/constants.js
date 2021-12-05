@@ -24,7 +24,7 @@ const onboarding_screens = [
 
 const screens = {
     main_layout: "MainLayout",
-    home: "Home",
+    home: "Inicio",
     my_wallet: "Mis Tarjetas",
     search: "Buscar",
     cart: "Carrito",

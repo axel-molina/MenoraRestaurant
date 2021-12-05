@@ -40,9 +40,11 @@ const FoodDetail = ({ navigation }) => {
   const [value, onChangeText] = React.useState('');
   const [qty, setQty] = React.useState(1)
 
+
   function renderHeader() {
     return (
       <Header
+      
         title="DETALLES"
         containerStyle={{
           height: 50,
@@ -269,11 +271,11 @@ const FoodDetail = ({ navigation }) => {
               flexDirection: 'row',
               height:60,
               marginLeft: SIZES.radius,
-              paddingHorizontal: SIZES.radius,
+              paddingHorizontal: 40,
               borderRadius: SIZES.radius,
               backgroundColor: COLORS.primary
             }}
-            label="Agregar al Carrito"
+            label="Agregar"
             label2= {foodItem?.price}
             onPress={() =>{
               
