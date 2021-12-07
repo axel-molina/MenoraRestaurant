@@ -1,31 +1,84 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView } from "react-native";
+import {
+  FONTS,
+  COLORS,
+  SIZES,
+  dummyData,
+} from "../../constants";
 
 
-const CartTab = ({ productos }) => {
 
-  const [text, onChangeText] = React.useState("¿Querés aclarar algo?");
+const UselessTextInput = (props) => {
+  return (
+    <TextInput
+      {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
+      editable
+      maxLength={40}
+    />
+  );
+}
+
+const CartTab = ({productos, setProductos}) => {
+
+
+
+ const renderPedido = ({ item }) => {
+  return (
+      <Text style={styles.numero}>{item.name} - {item.price}<Button onPress={() => eliminar(item.id)} title="Eliminar"></Button></Text>
+    );
+}
+
+  const [text, onChangeText] = React.useState("");
 
   const alEscribir = (text) => {
-    console.log(text);
+    onChangeText(text);
   }
 
+  const eliminar = (id) => {
+    const pedido = productos.filter(producto => producto.id !== id);
+    console.log(pedido)
+    setProductos(pedido);
+  }
+
+  const comprar = () => {
+    console.log(productos);
+    console.log("Aclaraciones: " + text);
+  }
+
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.numero}>Número de orden: #28112396</Text>
-      <Text style={styles.numero}>Detalles de la orden:</Text>
-      <Text style={styles.numero}>1x {productos.name}</Text>
-      <Text style={styles.numero}>Total:</Text>
-      <TextInput
-      style={styles.input}
-      onChangeText={alEscribir}
-      value={text}
-      ></TextInput>
-      <TouchableOpacity>
-        <Text style={styles.numero}>Enviar</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView style={styles.container}>
+
+      
+      { productos.length !== 0 ? 
+      (<View style={styles.inputContain}>
+        <Text style={styles.numero}>Número de orden: #28112396</Text>
+        <Text style={styles.numero}>Detalles de la orden:</Text>
+
+        {/* Renderizado del pedido */}
+      <FlatList 
+      data={productos} 
+      keyExtractor={(item, index) => index}
+      renderItem={renderPedido}
+      />
+
+        <Text style={styles.numero}>Total:</Text>
+        <View style={styles.input}>
+            <UselessTextInput
+              multiline
+              placeholder="¿Querés aclarar algo?"
+              numberOfLines={4}
+              onChangeText={(text) => alEscribir(text)}
+              //value={value}
+              style={{ padding: SIZES.base }}
+            />
+        </View>
+        <TouchableOpacity onPress={comprar}>
+          <Text style={styles.comprar}>COMPRAR</Text>
+        </TouchableOpacity>
+      </View>) : <Text style={styles.numero}>Aún no has hecho tu pedido</Text>}
+    </ScrollView>
   );
 };
 
@@ -39,13 +92,32 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 22,
   },
+  inputContain:{
+    flex: 1,
+    marginBottom: 200, 
+    width: "100%" 
+  },
   input: {
-    height: 60,
-    marginTop: 10,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#BBBDC1',
+    backgroundColor: COLORS.white,
+            borderBottomColor: "#000000",
+            borderBottomWidth: 1,
+            marginTop: SIZES.padding,
+            borderRadius: SIZES.radius,
+  },
+  comprar: {
+    color: COLORS.white,
+    fontSize: 22,
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.primary,
+    padding: SIZES.radius,
+    marginTop: SIZES.padding,
+    marginBottom: SIZES.padding,
+    textAlign: 'center',
+    fontFamily: "Poppins-Regular",
   }
 })
+
+
+
 
 export default CartTab;

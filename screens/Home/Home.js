@@ -15,6 +15,7 @@ import {
 import Search from "../Search/Search";
 
 
+
 const Section = ({ title, children }) => {
   return (
     <View>
@@ -37,7 +38,7 @@ const Section = ({ title, children }) => {
   );
 };
 
-const Home = ({ setProductos }) => {
+const Home = ({productos, setProductos}) => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
 
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
@@ -149,47 +150,53 @@ const Home = ({ setProductos }) => {
   }
 
   //Recomendaciones
-  function renderRecommendedSection(setProductos) {
+  function renderRecommendedSection(productos, setProductos) {
 
     const navigation = useNavigation();
 
     return (
-      <Section
-        title="Recomendaciones"
-      >
-        <FlatList
-          data={recommends}
-          keyExtractor={(item) => `${item.id}`}
-          horizontal
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, idx }) => (
-            <HorizontalFoodCard
-              containerStyle={{
-                height: 160,
-                width: SIZES.width * 0.85,
-                marginLeft: idx == 0 ? SIZES.padding : 18,
-                marginRight: idx == recommends.length - 1 ? SIZES.padding : 0,
-                paddingRight: SIZES.radius,
-                alignItems: "center",
-              }}
-              imageStyle={{
-                flex: 1,
-                width: 110,
-                height: 110,
-                resizeMode: "contain",
-              }}
-              item={item}
-              setProductos={setProductos}
-              onPress={() => navigation.navigate("FoodDetail")}
-            />
-          )}
-        />
-      </Section>
+
+        <Section
+          title="Recomendaciones"
+        >
+          
+          <FlatList
+            data={recommends}
+            keyExtractor={(item) => `${item.id}`}
+            horizontal
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, idx }) => (
+              
+              <HorizontalFoodCard
+                containerStyle={{
+                  height: 160,
+                  width: SIZES.width * 0.85,
+                  marginLeft: idx == 0 ? SIZES.padding : 18,
+                  marginRight: idx == recommends.length - 1 ? SIZES.padding : 0,
+                  paddingRight: SIZES.radius,
+                  alignItems: "center",
+                }}
+                imageStyle={{
+                  flex: 1,
+                  width: 110,
+                  height: 110,
+                  resizeMode: "contain",
+                }}
+                item={item}
+                productos={productos}
+                setProductos={setProductos}
+                onPress={() => navigation.navigate("FoodDetail")}
+              />
+               
+        
+            )}
+          />
+        </Section>
     );
   }
 
   //Top 3 platos
-  function renderPopularSection(setProductos) {
+  function renderPopularSection(productos, setProductos) {
 
     const navigation = useNavigation();
 
@@ -210,6 +217,7 @@ const Home = ({ setProductos }) => {
             }}
             
             item={item}
+            productos={productos}
             setProductos={setProductos}
             onPress={() => navigation.navigate("FoodDetail")}
             />            
@@ -282,13 +290,13 @@ const Home = ({ setProductos }) => {
           ListHeaderComponent={
             <View>
               {/* Categotorias de comida */}
-              {renderFoodCategory()}
+              {renderFoodCategory(productos, setProductos)}
               {/* Recomendados */}
-              {renderRecommendedSection(setProductos)}
+              {renderRecommendedSection(productos, setProductos)}
               {/* top 3 */}
-              {renderPopularSection(setProductos)}
+              {renderPopularSection(productos, setProductos)}
               {/* todos los productos */}
-              {renderMenuTypes(setProductos)}
+              {renderMenuTypes(productos, setProductos)}
             </View>
           }
 
@@ -310,6 +318,7 @@ const Home = ({ setProductos }) => {
                   resizeMode: "contain",
                 }}
                 item={item}
+                productos={productos}
                 setProductos={setProductos}
                 onPress={() => navigation.navigate("FoodDetail")}
                 

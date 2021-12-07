@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TouchableOpacity, View, Text, Image, ToastAndroid } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
+//redux
 
 
-const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, setProductos }) => {
+const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, productos, setProductos }) => {
 
-  const añadirAlCarrito = (item) => {
+  
+
+  const añadirAlCarrito =  (item) => {
     ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
-    setProductos(item)
+    const name = item.name;
+    const price = item.price;
+    const id = item.id;
+    setProductos([...productos, { name, price, id }]);
   }
+
 
   return (
     <TouchableOpacity 
@@ -64,6 +71,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, setProd
           marginRight: 10       
         }}
       >
+        
         <TouchableOpacity
         onPress={() => añadirAlCarrito(item)}
         >
@@ -74,9 +82,6 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, setProd
     </TouchableOpacity>
   );
 };
-
-
-
 
 export default HorizontalFoodCard;
 

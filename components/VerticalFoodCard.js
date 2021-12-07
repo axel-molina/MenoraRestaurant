@@ -3,7 +3,16 @@ import { TouchableOpacity, View, Text, Image, ToastAndroid } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants";
 
 
-const VerticalFoodCard = ({ containerStyle, item, onPress, setProductos }) => {
+const VerticalFoodCard = ({ containerStyle, item, onPress, productos, setProductos }) => {
+
+  const añadirAlCarrito =  (item) => {
+    ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
+    const name = item.name;
+    const price = item.price;
+    const id = item.id;
+    setProductos([...productos, { name, price, id }]);
+  }
+  
   return (
     <TouchableOpacity onPress={onPress}
       style={{
@@ -81,7 +90,7 @@ const VerticalFoodCard = ({ containerStyle, item, onPress, setProductos }) => {
           borderRadius: SIZES.radius,
           marginTop: SIZES.radius,
         }}
-        onPress={() => añadirAlCarrito(item, setProductos)}
+        onPress={() => añadirAlCarrito(item)}
       >
         <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Agregar</Text>
       </TouchableOpacity>
@@ -90,9 +99,6 @@ const VerticalFoodCard = ({ containerStyle, item, onPress, setProductos }) => {
   );
 };
 
-const añadirAlCarrito = (item, setProductos) => {
-  ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
-  setProductos(item);
-}
+
 
 export default VerticalFoodCard;

@@ -199,7 +199,7 @@ dependencies {
     //add this line
     implementation 'androidx.browser:browser:1.2.0'
 
-
+    implementation 'com.mercadopago.android.px:checkout:4.+'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
