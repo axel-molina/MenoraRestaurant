@@ -17,7 +17,7 @@ function validateEmail(value, setEmailError) {
 
 function validatePassword(value, setPasswordError) {
     if (value.length < 9) {
-        setPasswordError("Password must be 9 characters")
+        setPasswordError("La contraseña debe contener al menos 9 caracteres")
     } else {
         setPasswordError("")
     }

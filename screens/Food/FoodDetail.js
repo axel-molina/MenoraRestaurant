@@ -14,7 +14,6 @@ import {
   SIZES,
   icons,
   images,
-  dummyData,
 } from "../../constants";
 import {
   Header,

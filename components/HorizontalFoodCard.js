@@ -12,10 +12,11 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, product
     ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
     const name = item.name;
     const price = item.price;
-    const id = item.id;
+    const id = item._id;
     setProductos([...productos, { name, price, id }]);
   }
 
+ // console.log(item)
 
   return (
     <TouchableOpacity 
@@ -30,7 +31,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, product
     >
         {/* Image */}
         <Image 
-            source={item.image}
+            source={{ uri: item.image }}
             style={imageStyle}
         />
 

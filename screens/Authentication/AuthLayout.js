@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import { images, FONTS, SIZES, COLORS } from "../../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const AuthLayout = ({ title, subtitle, titleContainerStyle, children }) => {
+const AuthLayout = ({ title, children }) => {
   return (
     <View
       style={{
@@ -25,40 +25,19 @@ const AuthLayout = ({ title, subtitle, titleContainerStyle, children }) => {
             alignItems: "center",
           }}
         >
-          <Image
-            source={images.logo_02}
-            resizeMode="contain"
-            style={{
-              height: 100,
-              width: 100,
-            }}
-          />
         </View>
 
         {/* Titulo & Subtitulo */}
-        <View
-          style={{
-            marginTop: SIZES.padding,
-            ...titleContainerStyle,
-          }}
-        >
+        <View>
           <Text
             style={{
               textAlign: "center",
-              ...FONTS.h2,
+              ...FONTS.h1,
+              marginTop: 80,
+              marginBottom: 20,
             }}
           >
             {title}
-          </Text>
-          <Text
-            style={{
-              textAlign: "center",
-              color: COLORS.darkGray,
-              marginTop: SIZES.base,
-              ...FONTS.body3,
-            }}
-          >
-            {subtitle}
           </Text>
         </View>
 

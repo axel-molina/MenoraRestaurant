@@ -1,5 +1,5 @@
 import React from "react";
-import { FONTS, COLORS, SIZES, icons, dummyData } from "../../constants";
+import { FONTS, COLORS, SIZES, icons } from "../../constants";
 import { HorizontalFoodCard, VerticalFoodCard } from "../../components";
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -13,6 +13,7 @@ import {
   StatusBar,
 } from "react-native";
 import Search from "../Search/Search";
+
 
 
 
@@ -39,9 +40,9 @@ const Section = ({ title, children }) => {
 };
 
 const Home = ({productos, setProductos}) => {
-  const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
+  const [selectedCategoryId, setSelectedCategoryId] = React.useState(0);
 
-  const [selectedMenuType, setSelectedMenuType] = React.useState(1);
+  const [categoryIndex, setCategoryIndex] = React.useState(0);
 
   const [popular, setPopular] = React.useState([]);
 
@@ -49,48 +50,35 @@ const Home = ({productos, setProductos}) => {
 
   const [menuList, setMenuList] = React.useState([]);
 
-  React.useEffect(() => {
-    handleChangeCategory(selectedCategoryId, selectedMenuType);
+  const [categoryList, setCategoryList] = React.useState([]);
+
+  const [loader, setLoader] = React.useState(true);
+
+  React.useEffect( async () => {
+    try {
+    const response = await fetch('https://app-menora.herokuapp.com/categories', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtldmluQGdtYWlsLmNvbSIsImlkIjoiNjFhZTQ5ZjYyM2E1YWY2NTc1YmZkMDM1IiwiYWRtaW4iOmZhbHNlLCJhY3RpdmUiOnRydWUsImlhdCI6MTYzOTQ4ODMyNiwiZXhwIjoxNjM5NTA5OTI2fQ.UnWYapjbWdBKLo2ytrXedOPsoFWPjaMkQnj9ICB2LVo`
+      }
+    })
+    const data = await response.json()
+    setCategoryList(data)
+    setLoader(false)
+    } catch (error) {
+      console.log(error)
+    }
   }, []);
 
-  // Handler
-  function handleChangeCategory(categoryId, menuTypeId) {
-    //Recuperar el tipo de menú popular
-    let selectedPopular = dummyData.menu.find((a) => a.name == "Populares");
-
-    //Recuperar el menú recomendado
-    let selectedRecommend = dummyData.menu.find(
-      (a) => a.name == "Recomendados"
-      
-    );
-
-    // encuentra el menú basado en menuTypeId
-    let selectedMenu = dummyData.menu.find((a) => a.id == menuTypeId);
-
-    //Establecer la base del menú popular en el categoryId
-    setPopular(
-      selectedPopular?.list.filter((a) => a.categories.includes(categoryId))
-    );
-
-    // Establecer el menú recomendado según el categoryId
-    setRecommends(
-      selectedRecommend?.list.filter((a) => a.categories.includes(categoryId))
-      
-    );
-
-    //configurar el menú según el categoryId
-    setMenuList(
-      selectedMenu?.list.filter((a) => a.categories.includes(categoryId))
-    );
-  }
 
 
   //Seleccion de tipo
   function renderFoodCategory() {
     return (
       <FlatList
-        data={dummyData.categories}
-        keyExtractor={(item) => `${item.id}`}
+        data={categoryList}
+        keyExtractor={(item) => `${item._id}`}
         horizontal
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
@@ -101,15 +89,14 @@ const Home = ({productos, setProductos}) => {
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
               marginRight:
-                index == dummyData.categories.length - 1 ? SIZES.padding : 0,
+                index == categoryList.length - 1 ? SIZES.padding : 0,
               paddingHorizontal: 10,
               borderRadius: SIZES.radius,
-              backgroundColor:
-                selectedCategoryId == item.id ? COLORS.primary : COLORS.black,
+              
             }}
             onPress={() => {
-              setSelectedCategoryId(item.id);
-              handleChangeCategory(item.id, selectedMenuType);
+              setSelectedCategoryId(item._id);
+              handleChangeCategory(item._id, selectedCategory);
             }}
           >
             <View
@@ -119,7 +106,7 @@ const Home = ({productos, setProductos}) => {
               }}
             >
               <Image
-                source={item.icon}
+                source={{ uri: item.image }}
                 style={{
                   height: 50,
                   width: 50,
@@ -134,7 +121,7 @@ const Home = ({productos, setProductos}) => {
                   alignSelf: "center",
                   margin: SIZES.base,
                   color:
-                    selectedCategoryId == item.id
+                    selectedCategoryId == item._id
                       ? COLORS.white
                       : COLORS.darkGray,
                   ...FONTS.h3,
@@ -149,94 +136,16 @@ const Home = ({productos, setProductos}) => {
     );
   }
 
-  //Recomendaciones
-  function renderRecommendedSection(productos, setProductos) {
-
-    const navigation = useNavigation();
-
-    return (
-
-        <Section
-          title="Recomendaciones"
-        >
-          
-          <FlatList
-            data={recommends}
-            keyExtractor={(item) => `${item.id}`}
-            horizontal
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item, idx }) => (
-              
-              <HorizontalFoodCard
-                containerStyle={{
-                  height: 160,
-                  width: SIZES.width * 0.85,
-                  marginLeft: idx == 0 ? SIZES.padding : 18,
-                  marginRight: idx == recommends.length - 1 ? SIZES.padding : 0,
-                  paddingRight: SIZES.radius,
-                  alignItems: "center",
-                }}
-                imageStyle={{
-                  flex: 1,
-                  width: 110,
-                  height: 110,
-                  resizeMode: "contain",
-                }}
-                item={item}
-                productos={productos}
-                setProductos={setProductos}
-                onPress={() => navigation.navigate("FoodDetail")}
-              />
-               
-        
-            )}
-          />
-        </Section>
-    );
-  }
-
-  //Top 3 platos
-  function renderPopularSection(productos, setProductos) {
-
-    const navigation = useNavigation();
-
-    return (
-      <Section
-        title="Top 3 platos"
-        >
-        <FlatList
-          data={popular}
-          keyExtractor={(item) => `${item.id}`}
-          horizontal
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <VerticalFoodCard
-            containerStyle={{
-              marginLeft: index == 0 ? SIZES.padding : 18,
-              marginRight: index == popular.length - 1 ? SIZES.padding : 0,
-            }}
-            
-            item={item}
-            productos={productos}
-            setProductos={setProductos}
-            onPress={() => navigation.navigate("FoodDetail")}
-            />            
-            )}
-        />
-        
-      </Section>
-    );
-  }
-
   //Todos los productos
   function renderMenuTypes() {
     
     return (
       <FlatList
         horizontal
-        data={dummyData.menu}
-        keyExtractor={(item) => `${item.id}`}
+        data={categoryList}
+        keyExtractor={(item) => `${item._id}`}
         showsHorizontalScrollIndicator={false}
+        ListEmptyComponent={() => (<Text>No hay productos</Text>)}
         contentContainerStyle={{
           marginTop: 30,
           marginBottom: 30,
@@ -247,14 +156,14 @@ const Home = ({productos, setProductos}) => {
             style={{
               marginLeft: SIZES.padding,
               marginRight:
-                index == dummyData.menu.length - 1 ? SIZES.padding : 0,
+                index == categoryList.menu.length - 1 ? SIZES.padding : 0,
             }}
 
             
             
             onPress={() => {
-              setSelectedMenuType(item.id);
-              handleChangeCategory(selectedCategoryId, item.id);
+              setSelectedMenuType(item._id);
+              handleChangeCategory(selectedCategoryId, item._id);
             }}
           >
             <Text
@@ -273,6 +182,10 @@ const Home = ({productos, setProductos}) => {
   }
 
   const navigation = useNavigation();
+
+
+
+  
   return (
     <View
       style={{
@@ -283,20 +196,19 @@ const Home = ({productos, setProductos}) => {
       {/* Buscador */}
       <Search></Search>
         {/* Lista */}
+      
+        
         <FlatList
-          data={menuList}
-          keyExtractor={(item) => `${item.id}`}
+          data={categoryList[categoryIndex].products}
+          keyExtractor={(item) => `${item._id}`}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => (<Text>No hay productos</Text>)}
           ListHeaderComponent={
             <View>
               {/* Categotorias de comida */}
               {renderFoodCategory(productos, setProductos)}
-              {/* Recomendados */}
-              {renderRecommendedSection(productos, setProductos)}
-              {/* top 3 */}
-              {renderPopularSection(productos, setProductos)}
               {/* todos los productos */}
-              {renderMenuTypes(productos, setProductos)}
+              {/*renderMenuTypes(productos, setProductos)*/}
             </View>
           }
 
@@ -322,12 +234,12 @@ const Home = ({productos, setProductos}) => {
                 setProductos={setProductos}
                 onPress={() => navigation.navigate("FoodDetail")}
                 
-              />
-              
+              />              
             );
           }}
-          
         />
+      
+
       </ScrollView>
     </View>
   );

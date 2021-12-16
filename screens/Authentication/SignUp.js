@@ -28,7 +28,7 @@ const SignUp = ({ navigation }) => {
 
   return (
     <AuthLayout
-      title="Vamos a Empezar"
+      title="Registro"
       subtitle="Create una cuenta para continuar!"
       titleContainerStyle={{
         marginTop: SIZES.radius,
@@ -189,28 +189,7 @@ const SignUp = ({ navigation }) => {
       </View>
 
       {/* Footer */}
-      <View>
-        {/* Button Google */}
-        <TextIconButton
-          containerStyle={{
-            height: 50,
-            alignItems: "center",
-            marginTop: SIZES.radius,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.lightGray1,
-          }}
-          icon={icons.google}
-          iconPosition="LEFT"
-          iconStyle={{
-            tintColor: COLORS.primary,
-          }}
-          label="Continuar con Google"
-          labelStyle={{
-            marginLeft: SIZES.radius,
-          }}
-          onPress={() => console.log("Google")}
-        />
-      </View>
+      
     </AuthLayout>
   );
 };

@@ -1,11 +1,13 @@
-import React from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView } from "react-native";
+import React, {useState} from "react";
+import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Alert } from "react-native";
 import {
   FONTS,
   COLORS,
   SIZES,
-  dummyData,
+  
 } from "../../constants";
+import MercadoPagoCheckout from '@blackbox-vision/react-native-mercadopago-px';
+import Checkout from '../../utils/Checkout';
 
 
 
@@ -19,8 +21,34 @@ const UselessTextInput = (props) => {
   );
 }
 
-const CartTab = ({productos, setProductos}) => {
+// function Checkout() {
+//   const [paymentResult, setPaymentResult] = useState(null);
 
+//   const startCheckout = async () => {
+//     try {
+//       const payment = await MercadoPagoCheckout.createPayment({
+//         publicKey: 'TEST-b56168fe-5b9b-49c0-9419-51cad5763a2c',
+//         preferenceId: "114746594-bd3e1ecd-2067-4c97-b8b2-5b2727d44996",
+//       });
+
+//       setPaymentResult(payment);
+//     } catch (err) {
+//       Alert.alert('Something went wrong', err.message);
+//     }
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <TouchableOpacity onPress={startCheckout}>
+//         <Text style={styles.text}>Start Payment</Text>
+//       </TouchableOpacity>
+//       <Text style={styles.text}>Payment: {JSON.stringify(paymentResult)}</Text>
+//     </View>
+//   );
+// }
+
+
+const CartTab = ({productos, setProductos}) => {
 
 
  const renderPedido = ({ item }) => {
@@ -44,12 +72,15 @@ const CartTab = ({productos, setProductos}) => {
   const comprar = () => {
     console.log(productos);
     console.log("Aclaraciones: " + text);
+
+
   }
 
 
   return (
     <ScrollView style={styles.container}>
-
+      
+     <Checkout/>
       
       { productos.length !== 0 ? 
       (<View style={styles.inputContain}>
@@ -77,7 +108,7 @@ const CartTab = ({productos, setProductos}) => {
         <TouchableOpacity onPress={comprar}>
           <Text style={styles.comprar}>COMPRAR</Text>
         </TouchableOpacity>
-      </View>) : <Text style={styles.numero}>Aún no has hecho tu pedido</Text>}
+      </View>) : <Text style={styles.aviso}>Aún no tenés productos en el carrito</Text>}
     </ScrollView>
   );
 };
@@ -114,6 +145,9 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.padding,
     textAlign: 'center',
     fontFamily: "Poppins-Regular",
+  },
+  aviso: {
+    textAlign: 'center',
   }
 })
 

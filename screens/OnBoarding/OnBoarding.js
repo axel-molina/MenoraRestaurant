@@ -114,7 +114,7 @@ const OnBoarding = ({ navigation }) => {
             }}
           >
             <TextButton
-              label="Skip"
+              label="Saltar"
               buttonContainerStyle={{
                 backgroundColor: null,
               }}
@@ -125,7 +125,7 @@ const OnBoarding = ({ navigation }) => {
             />
 
             <TextButton
-              label="Next"
+              label="Siguiente"
               buttonContainerStyle={{
                 height: 60,
                 width: 200,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { AuthLayout } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../constants";
@@ -9,17 +9,50 @@ import {
   TextIconButton,
 } from "../../components";
 import { utils } from "../../utils";
+import CookieManager from '@react-native-cookies/cookies';
+import axios from 'axios';
+
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [showPass, setShowPass] = React.useState(false);
-  const [saveMe, setSaveMe] = React.useState(false);
+  const [token, setToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  function isEnableSignIn() {
-    return email != "" && password != "" && emailError == "";
+
+function isEnableSignIn() {
+  return email != "" && password != "" && emailError == "";
+}
+
+const iniciarSesion = () => {
+  if (isEnableSignIn()) {
+    //CookieManager.clearAll().then(() => {
+      const consultarAPI = async () => {
+        const url = "https://app-menora.herokuapp.com/login";
+        const data = await axios.post(url, {
+          email : "kevin@gmail.com",
+          password : "kevin"
+        })
+        CookieManager.get('https://app-menora.herokuapp.com')
+        .then((cookies) => {
+          //console.log('CookieManager.get =>', cookies);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        if(data.data.accessToken){
+          
+          //console.log('ESTO ES TOKEN', data.data.accessToken);
+          navigation.navigate("Home");
+        }
+      }
+      consultarAPI();
   }
+    
+}
 
   return (
     <AuthLayout
@@ -100,7 +133,7 @@ const SignIn = ({ navigation }) => {
 
         {/* Sign In */}
         <TextButton
-          label="Sign In"
+          label="Iniciar Sesión"
           disabled={isEnableSignIn() ? false : true}
           buttonContainerStyle={{
             height: 55,
@@ -111,7 +144,7 @@ const SignIn = ({ navigation }) => {
               ? COLORS.primary
               : COLORS.transparentPrimray,
           }}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => iniciarSesion()}
         />
 
 
@@ -170,51 +203,7 @@ const SignIn = ({ navigation }) => {
 
       {/* Footer */}
 
-      <View>
-        {/* Button Facebook */}
-        <TextIconButton
-          containerStyle={{
-            height: 50,
-            alignItems: "center",
-            marginTop: SIZES.radius,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.blue,
-          }}
-          icon={icons.fb}
-          iconPosition="LEFT"
-          iconStyle={{
-            tintColor: COLORS.white,
-          }}
-          label="Continuar con Google"
-          labelStyle={{
-            marginLeft: SIZES.radius,
-            color: COLORS.white,
-          }}
-          onPress={() => console.log("Google")}
-        />
 
-        {/* Button Google */}
-        <TextIconButton
-          containerStyle={{
-            height: 50,
-            alignItems: "center",
-            marginTop: SIZES.radius,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.red,
-          }}
-          icon={icons.google}
-          iconPosition="LEFT"
-          iconStyle={{
-            tintColor: COLORS.white,
-          }}
-          label="Continuar con Google"
-          labelStyle={{
-            marginLeft: SIZES.radius,
-            color: COLORS.white,
-          }}
-          onPress={() => console.log("Google")}
-        />
-      </View>
     </AuthLayout>
   );
 };
