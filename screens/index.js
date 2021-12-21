@@ -12,13 +12,16 @@ import CartTab from "./Cart/CartTab";
 //FoodDetail
 import FoodDetail from "./Food/FoodDetail"
 
+//Abonar
+import Abonar from "./Abonar/Abonar"
+
 // Favourite
 import Favourite from "./Favourite/Favourite";
 
 // Notification
 import AccountPage from "./Account/AccountPage";
 
-import OnBoarding from "./OnBoarding/OnBoarding";
+import PaginaDeBienvenida from "./OnBoarding/PaginaDeBienvenida";
 
 // Authentication
 import AuthLayout from "./Authentication/AuthLayout";
@@ -34,11 +37,12 @@ export {
   CartTab,
   Favourite,
   AccountPage,
-  OnBoarding,
+  PaginaDeBienvenida,
   SignIn,
   SignUp,
   Otp,
   ForgotPassword,
   AuthLayout,
-  FoodDetail
+  FoodDetail,
+  Abonar
 };

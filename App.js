@@ -11,12 +11,13 @@ import rootReducer from "./store/rootReducer";
 
 
 import {
-  OnBoarding,
+  PaginaDeBienvenida,
   SignIn,
   SignUp,
   ForgotPassword,
   Otp,
   FoodDetail,
+  Abonar
 } from "./screens";
 
 import CustomDrawer from "./navigation/CustomDrawer";
@@ -42,9 +43,10 @@ const App = () => {
               screenOptions={{
                 headerShown: false,
               }}
-              initialRouteName={"OnBoarding"}
+              initialRouteName={"Abonar"}
             >
-              <Stack.Screen name="OnBoarding" component={OnBoarding} />
+             
+              <Stack.Screen name="PaginaDeBienvenida" component={PaginaDeBienvenida} />
           
               <Stack.Screen name="Home" component={CustomDrawer} />
           
@@ -57,6 +59,8 @@ const App = () => {
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           
               <Stack.Screen name="Otp" component={Otp} />
+
+              <Stack.Screen name="Abonar" component={Abonar} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

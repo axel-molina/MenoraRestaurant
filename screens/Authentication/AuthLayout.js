@@ -10,6 +10,7 @@ const AuthLayout = ({ title, children }) => {
         flex: 1,
         paddingVertical: SIZES.padding,
         backgroundColor: COLORS.white,
+        backgroundColor: COLORS.black,
       }}
     >
       <KeyboardAwareScrollView
@@ -33,8 +34,9 @@ const AuthLayout = ({ title, children }) => {
             style={{
               textAlign: "center",
               ...FONTS.h1,
-              marginTop: 80,
+              marginTop: 10,
               marginBottom: 20,
+              color: COLORS.white,
             }}
           >
             {title}

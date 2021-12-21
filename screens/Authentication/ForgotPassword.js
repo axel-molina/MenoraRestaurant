@@ -15,7 +15,7 @@ const ForgotPassword = ({ navigation }) => {
 
   return (
     <AuthLayout
-      title="Recuperar Password"
+      title="Recuperar contraseña"
       subtitle="Porfavor ingrese su dirección de correo electrónico para recuperar su contraseña"
       titleContainerStyle={{
         marginTop: SIZES.padding * 2,
@@ -68,7 +68,7 @@ const ForgotPassword = ({ navigation }) => {
 
       {/* Button */}
       <TextButton
-        label="Send Email"
+        label="Enviar correo"
         disabled={isEnableSendEmail() ? false : true}
         buttonContainerStyle={{
           height: 55,
@@ -77,7 +77,7 @@ const ForgotPassword = ({ navigation }) => {
           borderRadius: SIZES.radius,
           backgroundColor:isEnableSendEmail() ? COLORS.primary : COLORS.transparentPrimray
         }}
-        onPress={() => navigation.goBack()}
+        onPress={() =>{ navigation.navigate("SignIn")}}
       />
     </AuthLayout>
   );

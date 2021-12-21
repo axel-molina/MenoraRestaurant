@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TextInput } from "react-native";
 import { FONTS, COLORS, SIZES } from "../constants";
 
+
 const FormInput = ({
   containerStyle,
   label,
@@ -18,21 +19,29 @@ const FormInput = ({
 }) => {
   return (
     <View style={{ ...containerStyle }}>
+
+      {/*Linea separadora*/}
+    <View
+      style={{
+        borderBottomColor: 'white',
+        borderBottomWidth: 1,
+        marginBottom: 12,
+      }}
+    />
+
       {/* Label & Error Messages */}
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={{ color: COLORS.gray, ...FONTS.body4 }}> {label}</Text>
+        <Text style={{ color: COLORS.white, ...FONTS.body4 }}> {label}</Text>
         <Text style={{ color: COLORS.red, ...FONTS.body4 }}>{errorMsg}</Text>
       </View>
 
       {/* Text input */}
+      
       <View
         style={{
           flexDirection: "row",
           height: 55,
-          paddingHorizontal: SIZES.padding,
           margiTop: SIZES.base,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.lightGray1,
         }}
       >
         {prependComponent}
@@ -41,6 +50,8 @@ const FormInput = ({
           style={{
             flex: 1,
             ...inputStyle,
+            color: COLORS.white,
+            fontSize: 20,
           }}
           placeholder={placeholder}
           placeholderTextColor={COLORS.gray}

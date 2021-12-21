@@ -60,7 +60,7 @@ const Home = ({productos, setProductos}) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtldmluQGdtYWlsLmNvbSIsImlkIjoiNjFhZTQ5ZjYyM2E1YWY2NTc1YmZkMDM1IiwiYWRtaW4iOmZhbHNlLCJhY3RpdmUiOnRydWUsImlhdCI6MTYzOTQ4ODMyNiwiZXhwIjoxNjM5NTA5OTI2fQ.UnWYapjbWdBKLo2ytrXedOPsoFWPjaMkQnj9ICB2LVo`
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWFuQGdtYWlsLmNvbSIsImlkIjoiNjFjMGIxYTI5MTA1NTJiMmU1YzY1MTc3IiwiYWRtaW4iOmZhbHNlLCJhY3RpdmUiOnRydWUsImlhdCI6MTY0MDA0MjI0MCwiZXhwIjoxNjQwMDYzODQwfQ.A7lszvJIchmpTxRIBKVYZyuDMH0Dh5h7yknj5WT5mx0`
       }
     })
     const data = await response.json()
@@ -199,7 +199,7 @@ const Home = ({productos, setProductos}) => {
       
         
         <FlatList
-          data={categoryList[categoryIndex].products}
+          data={categoryList.length && categoryList[categoryIndex].products}
           keyExtractor={(item) => `${item._id}`}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => (<Text>No hay productos</Text>)}

@@ -1,6 +1,7 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { FONTS, COLORS } from "../constants";
+import LinearGradient from 'react-native-linear-gradient';
 
 const TextButton = ({
   buttonContainerStyle,
@@ -12,41 +13,49 @@ const TextButton = ({
   onPress,
 }) => {
   return (
-    <TouchableOpacity
-      style={{
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: COLORS.primary,
-        ...buttonContainerStyle,
-      }}
-      disabled={disabled}
-      onPress={onPress}
-    >
-      <Text
+    <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={styles.linearGradient}>
+      <TouchableOpacity
         style={{
-          color: COLORS.white,
-          ...FONTS.h3,
-          ...labelStyle,
+          
         }}
+        disabled={disabled}
+        onPress={onPress}
       >
-        {label}
-      </Text>
-
-      {label2 != "" && (
         <Text
           style={{
-            flex: 1,
-            textAlign: "right",
             color: COLORS.white,
             ...FONTS.h3,
             ...labelStyle,
           }}
         >
-          {label2}
+          {label}
         </Text>
-      )}
-    </TouchableOpacity>
+      
+        {label2 != "" && (
+          <Text
+            style={{
+              flex: 1,
+              textAlign: "right",
+              color: COLORS.white,
+              ...FONTS.h3,
+              ...labelStyle,
+            }}
+          >
+            {label2}
+          </Text>
+        )}
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
+
+const styles = StyleSheet.create({
+  linearGradient: {
+    alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 120,
+          height: 60,
+  },
+});
 
 export default TextButton;

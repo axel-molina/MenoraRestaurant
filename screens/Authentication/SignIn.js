@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, StatusBar, StyleSheet } from "react-native";
 import { AuthLayout } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../constants";
 import {
@@ -20,45 +20,51 @@ const SignIn = ({ navigation }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
+  const [userError, setUserError] = useState(false);
 
 
 function isEnableSignIn() {
   return email != "" && password != "" && emailError == "";
 }
 
-const iniciarSesion = () => {
+const iniciarSesion = (email, password) => {
   if (isEnableSignIn()) {
     //CookieManager.clearAll().then(() => {
       const consultarAPI = async () => {
         const url = "https://app-menora.herokuapp.com/login";
         const data = await axios.post(url, {
-          email : "kevin@gmail.com",
-          password : "kevin"
+          email : email,
+          password : password
         })
         CookieManager.get('https://app-menora.herokuapp.com')
         .then((cookies) => {
           //console.log('CookieManager.get =>', cookies);
         })
         .catch((error) => {
-          console.log(error);
+          setUserError(true);
+          
         })
         if(data.data.accessToken){
-          
-          //console.log('ESTO ES TOKEN', data.data.accessToken);
-          navigation.navigate("Home");
+          setError(false);
+          console.log('ESTO ES TOKEN', data.data.accessToken);
+          navigation.navigate("Home", {
+            token: data.data.accessToken
+          });
         }
       }
       consultarAPI();
-  }
-    
-}
+      } else {
+        setError(true);
+      }
+ 
+    }
 
   return (
     <AuthLayout
       title="Iniciar Sesion"
-      subtitle="Bienvenido de nuevo, ingrese sus datos"
     >
+    <StatusBar backgroundColor='#000'></StatusBar>
       <View
         style={{
           flex: 1,
@@ -104,7 +110,7 @@ const iniciarSesion = () => {
         />
 
         <FormInput
-          label="Password"
+          label="Contraseña"
           secureTextEntry={!showPass}
           autoCompletType="password"
           containerStyle={{ marginTop: SIZES.radius }}
@@ -130,21 +136,19 @@ const iniciarSesion = () => {
           }
         />
 
+        {error ? <Text style={styles.error}>Todos los campos son obligatorios</Text> : null}
 
         {/* Sign In */}
         <TextButton
           label="Iniciar Sesión"
-          disabled={isEnableSignIn() ? false : true}
           buttonContainerStyle={{
             height: 55,
             alignItems: "center",
             marginTop: SIZES.padding,
             borderRadius: SIZES.radius,
-            backgroundColor: isEnableSignIn()
-              ? COLORS.primary
-              : COLORS.transparentPrimray,
+            backgroundColor: COLORS.primary,
           }}
-          onPress={() => iniciarSesion()}
+          onPress={() => iniciarSesion(email, password)}
         />
 
 
@@ -156,17 +160,11 @@ const iniciarSesion = () => {
             justifyContent: "center",
           }}
         >
-          <TextButton
-            label="Olvidaste la Contraseña?"
-            buttonContainerStyle={{
-              backgroundColor: null,
-            }}
-            labelStyle={{
-              color: COLORS.gray,
-              ...FONTS.body4,
-            }}
-            onPress={() => navigation.navigate("ForgotPassword")}
-          />
+          <TouchableOpacity  onPress={() => navigation.navigate("ForgotPassword")}>
+            <Text style={styles.olvidasteTuContraseña}>
+              ¿Olvidaste tu contraseña?
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Sign Up */}
@@ -179,25 +177,17 @@ const iniciarSesion = () => {
         >
           <Text
             style={{
-              color: COLORS.darkGray,
+              color: COLORS.white,
               ...FONTS.body3,
             }}
           >
-            No tienes una cuenta?
+            No tienes una cuenta? 
           </Text>
-
-          <TextButton
-            label="Sign Up"
-            buttonContainerStyle={{
-              marginLeft: 3,
-              backgroundColor: null,
-            }}
-            labelStyle={{
-              color: COLORS.primary,
-              ...FONTS.h3,
-            }}
-            onPress={() => navigation.navigate("SignUp")}
-          />
+          <TouchableOpacity  onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.olvidasteTuContraseña}>
+              {} Crear
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -207,5 +197,17 @@ const iniciarSesion = () => {
     </AuthLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  olvidasteTuContraseña: {
+    color: COLORS.primary,
+    ...FONTS.body3,
+  },
+  error:{
+    color: COLORS.red,
+    ...FONTS.body3,
+    marginBottom: 25,
+  }
+});
 
 export default SignIn;

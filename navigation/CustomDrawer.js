@@ -119,7 +119,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
               {dummyData.myProfile?.name}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.h4 }}>
-              View your Profile
+              Ver mi perfil
             </Text>
           </View>
         </TouchableOpacity>
@@ -189,8 +189,6 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
           {/* icon coupon */}
           <CustomDrawerItem label="Promos" icon={icons.coupon} />
 
-          {/* icon setting */}
-          <CustomDrawerItem label="Configuracion" icon={icons.setting} />
         </View>
 
         {/* logout */}

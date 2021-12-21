@@ -16,7 +16,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, product
     setProductos([...productos, { name, price, id }]);
   }
 
- // console.log(item)
+ console.log(item)
 
   return (
     <TouchableOpacity 
