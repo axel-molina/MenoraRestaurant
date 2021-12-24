@@ -35,7 +35,7 @@ const UselessTextInput = (props) => {
 }
 
 const FoodDetail = ({ navigation }) => {
-  const [foodItem, setFoodItem] = React.useState(dummyData.hamburger);
+  const [foodItem, setFoodItem] = React.useState("");
   const [value, onChangeText] = React.useState('');
   const [qty, setQty] = React.useState(1)
 
@@ -155,7 +155,7 @@ const FoodDetail = ({ navigation }) => {
         </View>
         <View>
           <FlatList
-            data={dummyData.sizes}
+            //data={}
             keyExtractor={(item) => `${item.id}`}
             horizontal
             showsVerticalScrollIndicator={false}
@@ -166,8 +166,6 @@ const FoodDetail = ({ navigation }) => {
                   justifyContent: "center",
                   marginTop: SIZES.padding,
                   marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-                  marginRight:
-                    index == dummyData.sizes.length - 1 ? SIZES.padding : 0,
                   paddingHorizontal: 10,
                   borderRadius: SIZES.radius,
                   backgroundColor: COLORS.lightGray2,

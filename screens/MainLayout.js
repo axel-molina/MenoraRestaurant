@@ -23,7 +23,6 @@ import {
   SIZES,
   icons,
   constants,
-  dummyData,
 } from "../constants";
 
 const TabButton = ({

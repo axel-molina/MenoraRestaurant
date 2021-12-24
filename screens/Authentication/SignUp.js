@@ -7,13 +7,14 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Alert
 } from "react-native";
 import { AuthLayout } from "../";
 import { COLORS, FONTS, SIZES, icons } from "../../constants";
-import { FormInput, TextButton, TextIconButton } from "../../components";
+import { FormInput, TextButton } from "../../components";
 import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign";
-import LinearGradient from "react-native-linear-gradient";
+import Logo from "react-native-vector-icons/Entypo";
 import axios from "axios";
 
 const SignUp = ({ navigation }) => {
@@ -56,6 +57,7 @@ const SignUp = ({ navigation }) => {
   }
 
   const registrarUsuario = async () => {
+    console.log(usuario)
     try {
       if (isEnableSignUp()) {
         setError("");
@@ -67,7 +69,13 @@ const SignUp = ({ navigation }) => {
         };
         const response = await consultarAPI();
         //console.log("RESPUESTA: ", response.data);
-        navigation.navigate("SignIn");
+        Alert.alert(
+          "Registro exitoso",
+          "Ya puede iniciar sesión",
+          [
+            { text: "OK", onPress: () => navigation.navigate("SignIn") }
+          ]
+        );
       } else {
         setError("Todos los campos son obligatorios");
       }
@@ -76,7 +84,7 @@ const SignUp = ({ navigation }) => {
       if(error.message === "Request failed with status code 400"){
         setError("Este usuario ya está registrado")
       } else {
-        console.log("Registro exitoso");
+        console.log(error);
       }
     }
   };
@@ -173,7 +181,7 @@ const SignUp = ({ navigation }) => {
             label="Calle"
             value={address.street}
             prependComponent={
-              <Icon name="enviroment" size={30} color="white" />
+              <Logo name="address" size={30} color="white" />
             }
             onChange={(value) => {
               const address = { ...usuario.address, street: value.trim() };
@@ -202,7 +210,7 @@ const SignUp = ({ navigation }) => {
             label="Código postal"
             value={address.postalCode}
             prependComponent={
-              <Icon name="enviroment" size={30} color="white" />
+              <Icon name="inbox" size={30} color="white" />
             }
             onChange={(value) => {
               const address = { ...usuario.address, postalCode: value };

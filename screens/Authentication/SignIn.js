@@ -1,70 +1,110 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, StatusBar, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StatusBar,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { AuthLayout } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../constants";
-import {
-  FormInput,
-  CustomSwitch,
-  TextButton,
-  TextIconButton,
-} from "../../components";
+import { FormInput, TextButton } from "../../components";
 import { utils } from "../../utils";
-import CookieManager from '@react-native-cookies/cookies';
-import axios from 'axios';
+import CookieManager from "@react-native-cookies/cookies";
+import axios from "axios";
 
+// Actions Redux
+import { crearTokenAction } from "../../store/actions/tokenActions";
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [showPass, setShowPass] = React.useState(false);
-  const [token, setToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [userError, setUserError] = useState(false);
 
+  function isEnableSignIn() {
+    return email != "" && password != "" && emailError == "";
+  }
 
-function isEnableSignIn() {
-  return email != "" && password != "" && emailError == "";
-}
+  // utilizar use dispatch y crea una funcion
+  const dispatch = useDispatch();
 
-const iniciarSesion = (email, password) => {
-  if (isEnableSignIn()) {
-    //CookieManager.clearAll().then(() => {
+  // Acceder al state loading del store
+  const cargando = useSelector((state) => state.token.loading);
+  const stateError = useSelector((state) => state.token.error);
+  const token = useSelector((state) => state.token.token);
+
+  // Manda a llamar el action de tokenActions
+  const guardarToken = (token) => dispatch(crearTokenAction(token));
+
+  // Cuando el usuario inicie sesion
+  const iniciarSesion = (email, password) => {
+    console.log("Iniciano sesion...")
+    // Quita los errores
+    errorReset();
+
+    setIsLoading(true);
+
+
+    if (isEnableSignIn()) {
+      //CookieManager.clearAll().then(() => {
       const consultarAPI = async () => {
-        const url = "https://app-menora.herokuapp.com/login";
-        const data = await axios.post(url, {
-          email : email,
-          password : password
-        })
-        CookieManager.get('https://app-menora.herokuapp.com')
-        .then((cookies) => {
-          //console.log('CookieManager.get =>', cookies);
-        })
-        .catch((error) => {
-          setUserError(true);
-          
-        })
-        if(data.data.accessToken){
-          setError(false);
-          console.log('ESTO ES TOKEN', data.data.accessToken);
-          navigation.navigate("Home", {
-            token: data.data.accessToken
+        try {
+          const url = "https://app-menora.herokuapp.com/login";
+          const data = await axios.post(url, {
+            email: email,
+            password: password,
           });
+
+          CookieManager.get("https://app-menora.herokuapp.com")
+            .then((cookies) => {
+              console.log('CookieManager.get =>', cookies);
+            })
+            .catch((error) => {
+              console.log(error);
+              setIsLoading(false);
+            });
+          if (data.data.accessToken) {
+            setError(false);
+            guardarToken(data.data.accessToken);
+          }
+        } catch (error) {
+          console.log(error)
+          setUserError(true);
+          setIsLoading(false);
         }
-      }
+      };
+
       consultarAPI();
-      } else {
-        setError(true);
-      }
- 
+    } else {
+      setUserError(true);
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    if (token != null && token != "") {
+      setIsLoading(false);
+      errorReset();
+      navigation.navigate("Home");
+    }
+  }, [token]);
+
+  //Resetea los states de error a false
+  const errorReset = () => {
+    setError(false);
+      setUserError(false);
+  }
 
   return (
-    <AuthLayout
-      title="Iniciar Sesion"
-    >
-    <StatusBar backgroundColor='#000'></StatusBar>
+    <AuthLayout title="Iniciar Sesion">
+      <StatusBar backgroundColor="#000"></StatusBar>
       <View
         style={{
           flex: 1,
@@ -136,11 +176,18 @@ const iniciarSesion = (email, password) => {
           }
         />
 
-        {error ? <Text style={styles.error}>Todos los campos son obligatorios</Text> : null}
+        {error ? (
+          <Text style={styles.error}>Todos los campos son obligatorios</Text>
+        ) : null}
+        {stateError ? <Text style={styles.error}>Hubo un error</Text> : null}
+        {userError ? (
+          <Text style={styles.error}>Usuario o contraseña incorrecta</Text>
+        ) : null}
 
         {/* Sign In */}
-        <TextButton
-          label="Iniciar Sesión"
+
+          {isLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : <TextButton
+          label="Iniciar Sesion"
           buttonContainerStyle={{
             height: 55,
             alignItems: "center",
@@ -149,23 +196,25 @@ const iniciarSesion = (email, password) => {
             backgroundColor: COLORS.primary,
           }}
           onPress={() => iniciarSesion(email, password)}
-        />
+        />}
 
 
         {/*Forgot Password */}
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             marginTop: SIZES.radius,
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity  onPress={() => navigation.navigate("ForgotPassword")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
             <Text style={styles.olvidasteTuContraseña}>
               ¿Olvidaste tu contraseña?
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* Sign Up */}
         <View
@@ -181,19 +230,15 @@ const iniciarSesion = (email, password) => {
               ...FONTS.body3,
             }}
           >
-            No tienes una cuenta? 
+            No tienes una cuenta?
           </Text>
-          <TouchableOpacity  onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.olvidasteTuContraseña}>
-              {} Crear
-            </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.olvidasteTuContraseña}>{} Crear</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* Footer */}
-
-
     </AuthLayout>
   );
 };
@@ -203,11 +248,11 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     ...FONTS.body3,
   },
-  error:{
+  error: {
     color: COLORS.red,
     ...FONTS.body3,
     marginBottom: 25,
-  }
+  },
 });
 
 export default SignIn;

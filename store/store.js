@@ -1,12 +1,23 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from '../store/rootReducer';
 
-const initialState = {
-    productos: [],
-    precio: [],
-};
+const store = createStore(
+    reducer,
+    compose( applyMiddleware(thunk),
+        typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    )
+);
 
-const reducerProductos = (state = initialState, action) => {
-    return state
-}
+export default store;
 
-export default createStore(reducerProductos);
+// const initialState = {
+//     productos: [],
+//     precio: [],
+// };
+
+// const reducerProductos = (state = initialState, action) => {
+//     return state
+// }
+
+// export default createStore(reducerProductos);

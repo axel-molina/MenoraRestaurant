@@ -6,6 +6,7 @@ import SplashScreen from "react-native-splash-screen";
 
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import store from "./store/store";
 import thunk from "redux-thunk";
 import rootReducer from "./store/rootReducer";
 
@@ -22,7 +23,7 @@ import {
 
 import CustomDrawer from "./navigation/CustomDrawer";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+//const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const Stack = createStackNavigator();
 
@@ -43,7 +44,7 @@ const App = () => {
               screenOptions={{
                 headerShown: false,
               }}
-              initialRouteName={"Abonar"}
+              initialRouteName={"SignIn"}
             >
              
               <Stack.Screen name="PaginaDeBienvenida" component={PaginaDeBienvenida} />

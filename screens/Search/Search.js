@@ -39,19 +39,6 @@ const Search = () => {
           }}
           placeholder="Buscar"
         />
-            {/* Boton de filtos */}
-        <TouchableOpacity
-        //    onPress
-        >
-          <Image
-            source={icons.filter}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.black,
-            }}
-          />
-        </TouchableOpacity>
         </View>
     )
 }

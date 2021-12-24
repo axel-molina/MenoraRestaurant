@@ -16,7 +16,6 @@ import {
   SIZES,
   constants,
   icons,
-  dummyData,
 } from "../constants";
 
 const Drawer = createDrawerNavigator();
@@ -101,7 +100,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
         >
           {/* img user profile */}
           <Image
-            source={dummyData.myProfile?.profile_image}
+            source={"https://i.pravatar.cc/300"}
             style={{
               width: 50,
               height: 50,
@@ -116,7 +115,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
             }}
           >
             <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
-              {dummyData.myProfile?.name}
+              {}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.h4 }}>
               Ver mi perfil

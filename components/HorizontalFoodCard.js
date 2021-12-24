@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { TouchableOpacity, View, Text, Image, ToastAndroid } from "react-native";
+import { TouchableOpacity, View, Text, Image, ToastAndroid, ActivityIndicator } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
+import Icon from "react-native-vector-icons/AntDesign";
+
 //redux
 
 
@@ -31,8 +33,9 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, product
     >
         {/* Image */}
         <Image 
+            loadingIndicatorSource={<Icon name="phone" size={30} color="white" />}
             source={{ uri: item.image }}
-            style={imageStyle}
+            style={{...imageStyle}}
         />
 
         {/* Info */}
@@ -43,40 +46,41 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, product
 
         >
             {/* Name */}
-            <Text style={{...FONTS.h3, fontSize: 17, color: COLORS.white}}>
+            <Text style={{...FONTS.h3, fontSize: 17, color: COLORS.white, marginLeft: 20}}>
                 {item.name}
             </Text>
 
             {/* Description */}
 
-            <Text style={{color: COLORS.darkGray2, ...FONTS.body4}}>
-                {item.description}
+            <Text style={{color: COLORS.white, ...FONTS.body4, marginLeft: 20}}>
+            {item.description}
             </Text>
 
             {/* Price */}
-            <Text style={{ marginTop: SIZES.base, ...FONTS.h3, color: COLORS.white }}>
-                {item.price}
+            <Text style={{...FONTS.h3, color: COLORS.white, marginLeft: 20, marginTop: 20, }}>
+                $ {item.price}
             </Text>
 
         </View>
-
+        
         <TouchableOpacity
         style={{
           width:100,
-          height:30,
+          height:40,
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: COLORS.primary,
-          borderRadius: SIZES.radius,
-          marginTop: SIZES.radius,
-          marginRight: 10       
+          borderTopLeftRadius: SIZES.radius,
+          position: "absolute",
+          bottom: 0,
+          right: 0,
         }}
       >
         
         <TouchableOpacity
         onPress={() => añadirAlCarrito(item)}
         >
-          <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Agregar</Text>
+          <Text style={{ color: COLORS.white, ...FONTS.h3 }}>{<Icon name="plus" size={18} color="white" />}Añadir</Text>
         </TouchableOpacity>
       </TouchableOpacity>
 
