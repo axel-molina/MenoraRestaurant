@@ -15,6 +15,7 @@ import { FormInput, TextButton } from "../../components";
 import { utils } from "../../utils";
 import CookieManager from "@react-native-cookies/cookies";
 import axios from "axios";
+import LinearGradient from 'react-native-linear-gradient';
 
 // Actions Redux
 import { crearTokenAction } from "../../store/actions/tokenActions";
@@ -45,7 +46,7 @@ const SignIn = ({ navigation }) => {
 
   // Cuando el usuario inicie sesion
   const iniciarSesion = (email, password) => {
-    console.log("Iniciano sesion...")
+    console.log("Iniciando sesion...")
     // Quita los errores
     errorReset();
 
@@ -64,7 +65,7 @@ const SignIn = ({ navigation }) => {
 
           CookieManager.get("https://app-menora.herokuapp.com")
             .then((cookies) => {
-              console.log('CookieManager.get =>', cookies);
+              //console.log('CookieManager.get =>', cookies);
             })
             .catch((error) => {
               console.log(error);
@@ -186,17 +187,14 @@ const SignIn = ({ navigation }) => {
 
         {/* Sign In */}
 
-          {isLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : <TextButton
-          label="Iniciar Sesion"
-          buttonContainerStyle={{
-            height: 55,
-            alignItems: "center",
-            marginTop: SIZES.padding,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.primary,
-          }}
-          onPress={() => iniciarSesion(email, password)}
-        />}
+          {isLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> :
+          <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{padding: 12, borderRadius: 50, marginTop: 15,}}>
+          <TouchableOpacity onPress={() => iniciarSesion(email, password)}>
+            <Text style={styles.comprar}>INICIAR SESIÓN</Text>
+          </TouchableOpacity>
+          </LinearGradient>
+          
+        }
 
 
         {/*Forgot Password */}
@@ -252,6 +250,12 @@ const styles = StyleSheet.create({
     color: COLORS.red,
     ...FONTS.body3,
     marginBottom: 25,
+  },
+  comprar: {
+    color: COLORS.white,
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: "Poppins-Regular",
   },
 });
 

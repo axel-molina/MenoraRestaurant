@@ -6,7 +6,8 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  TextInput 
+  TextInput ,
+  styles
 } from "react-native";
 import {
   FONTS,
@@ -22,6 +23,8 @@ import {
   StepperInput,
   TextButton
 } from "../../components";
+import { RadioButton } from 'react-native-paper'
+
 
 
 const UselessTextInput = (props) => {
@@ -34,11 +37,24 @@ const UselessTextInput = (props) => {
   );
 }
 
-const FoodDetail = ({ navigation }) => {
-  const [foodItem, setFoodItem] = React.useState("");
+const FoodDetail = ({ navigation, route }) => {
   const [value, onChangeText] = React.useState('');
   const [qty, setQty] = React.useState(1)
+  const [stars, setStars] = React.useState([]);
 
+  //radio buttons
+  const [checked, setChecked] = React.useState([]);
+
+  const { producto } = route.params;
+  //console.log(producto.extras)
+
+  const handleChecked= (index) =>{
+    if(checked.includes(index)){
+      setChecked(checked.filter(item => item !== index))
+    } else {
+      setChecked([...checked, index])
+    }
+  }
 
   function renderHeader() {
     return (
@@ -76,7 +92,8 @@ const FoodDetail = ({ navigation }) => {
     );
   }
 
-  function renderDetails() {
+  function renderDetails( ) {
+ 
     return (
       <View
         style={{
@@ -93,34 +110,33 @@ const FoodDetail = ({ navigation }) => {
             backgroundColor: COLORS.lightGray1,
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: SIZES.base,
-              paddingHorizontal: SIZES.radius,
-            }}
-          >
-            {/* Icono Favorito */}
-            <Image
-              source={icons.love}
-              style={{
-                width: 20,
-                height: 20,
-                tintColor: foodItem?.isFavourite ? COLORS.primary : COLORS.gray,
-              }}
-            />
-          </View>
+          
           {/* Food Imagen */}
           <Image
-            source={foodItem?.image}
-            resizeMode="contain"
+            source={{ uri: producto.image }}
+            resizeMode="cover"
             style={{
-              height: 170,
+              height: '100%',
               width: "100%",
+              borderRadius: 15,
             }}
           />
         </View>
+
+        {/* Agregar mas de 1 */}
+        
+          <View style={{ display: 'flex', alignItems: 'center', marginTop: 30,}}>
+          <StepperInput
+            value={qty}
+            onAdd={()=> setQty(qty + 1)}
+            onMinus={()=>{
+              if (qty > 1){
+                setQty(qty - 1);
+              }
+            }}
+          />
+          </View>
+        
 
         {/* Nombre y descripcion */}
         <View
@@ -129,18 +145,12 @@ const FoodDetail = ({ navigation }) => {
           }}
         >
           <Text style={{ ...FONTS.h1, color: COLORS.white }}>
-            {foodItem?.name}
+            {producto.name}
           </Text>
-          <Text
-            style={{
-              marginTop: SIZES.padding,
-              color: COLORS.white,
-              textAlign: "center",
-              ...FONTS.body3,
-            }}
-          >
-            {foodItem?.description}
-          </Text>
+        </View>
+
+        <View>
+          {stars}
         </View>
 
         {/* Ingredientes */}
@@ -151,71 +161,45 @@ const FoodDetail = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ ...FONTS.h3, color: "white" }}>Ingredientes</Text>
+          <Text style={{ ...FONTS.h3, color: "white" }}>Ingredientes:</Text>
         </View>
-        <View>
-          <FlatList
-            //data={}
-            keyExtractor={(item) => `${item.id}`}
-            horizontal
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                style={{
-                  height: 95,
-                  justifyContent: "center",
-                  marginTop: SIZES.padding,
-                  marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-                  paddingHorizontal: 10,
-                  borderRadius: SIZES.radius,
-                  backgroundColor: COLORS.lightGray2,
-                }}
-              >
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Image
-                    source={item.icon}
-                    style={{
-                      height: 50,
-                      width: 50,
-                    }}
-                  />
-                </View>
-
-                <View>
-                  <Text
-                    style={{
-                      textAlignVertical: "center",
-                      alignSelf: "center",
-                      margin: SIZES.base,
-                      ...FONTS.h3,
-                      color: COLORS.white,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+        
 
         <View
           style={{
             flexDirection: "row",
-            marginTop: SIZES.padding,
+            marginTop: 5,
             alignItems: "center",
           }}
         >
           <Text style={{ ...FONTS.body3, color: "white" }}>
-            Hamburgesa con lechuga, doble carne, salsa Jack, cebolla Morda,
-            pickles
+            {producto.description}
           </Text>
         </View>
+
+        {/* Extras */}
+        <Text style={{ color: 'white', marginTop: 20, borderBottomColor: 'white', fontFamily: "Poppins-Regular"}}>¿Quiere agregar algún extra?</Text>
+
+        <FlatList
+        data={producto.extras}
+        keyExtractor={(item) => {item._id}}
+        renderItem={({ item, index }) => (
+          
+            <View style={{ flex: 1, flexDirection: 'row', marginTop: 2, justifyContent: 'space-between'}}>
+              <Text style={{ color: 'white', marginTop: 6 }}>{item.name}</Text>
+              <RadioButton
+              uncheckedColor={COLORS.primary}
+              color={COLORS.primary}
+              value={false}
+              status={checked.includes(index) ? 'checked' : 'unchecked'}
+              key={index}
+              onPress={() => handleChecked(index)}
+              />
+            </View>
+          
+          
+        )}
+        />
 
         <View
           style={{
@@ -243,43 +227,30 @@ const FoodDetail = ({ navigation }) => {
     return(
       <View
         style={{
-          flexDirection: 'row',
-          height:120,
+          height:100,
           alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: SIZES.padding,
           paddingHorizontal: SIZES.padding,
-          paddingBottom: SIZES.radius
+          paddingBottom: SIZES.radius,
         }}
       >
-        {/* Agregar mas de 1 */}
-        <StepperInput
-          value={qty}
-          onAdd={()=> setQty(qty + 1)}
-          onMinus={()=>{
-            if (qty > 1){
-              setQty(qty - 1);
-            }
-          }}
-        />
+        
 
         {/* Boton agregar al carrito */}
-          <TextButton
-            buttonContainerStyle={{
-              flex:1,
-              flexDirection: 'row',
-              height:60,
-              marginLeft: SIZES.radius,
-              paddingHorizontal: 40,
-              borderRadius: SIZES.radius,
-              backgroundColor: COLORS.primary
-            }}
-            label="Agregar"
-            label2= {foodItem?.price}
-            onPress={() =>{
-              
-              navigation.navigate('Home')
-            }}
-          />
 
+        <TextButton
+          label="Agregar al carrito"
+          buttonContainerStyle={{
+            width: 102,
+            height: 55,
+            alignItems: "center",
+            marginTop: SIZES.padding,
+            borderRadius: SIZES.radius,
+            backgroundColor: COLORS.primary,
+          }}
+            onPress={() =>{navigation.navigate('Home')}}
+        />         
       </View>
     )
   }

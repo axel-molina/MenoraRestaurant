@@ -1,7 +1,8 @@
-import React from "react";
-import { FONTS, COLORS, SIZES } from "../../constants";
+import React, { useEffect } from "react";
+import { FONTS, COLORS, SIZES, icons } from "../../constants";
 import { HorizontalFoodCard } from "../../components";
 import { useNavigation } from "@react-navigation/native";
+
 import {
   View,
   Text,
@@ -16,6 +17,10 @@ import Search from "../Search/Search";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { obtenerCategoriasAction } from "../../store/actions/categoriasActions";
+import { crearUsuarioAction } from "../../store/actions/usuarioActions";
+
+
 
 const Section = ({ title, children }) => {
   return (
@@ -44,22 +49,37 @@ const Home = () => {
 
   const [categoryIndex, setCategoryIndex] = React.useState(0);
 
-  const [popular, setPopular] = React.useState([]);
-
-  const [recommends, setRecommends] = React.useState([]);
-
-  const [menuList, setMenuList] = React.useState([]);
-
-  const [categoryList, setCategoryList] = React.useState([]);
-
   const [loader, setLoader] = React.useState(true);
 
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.token.token);
 
+      //accder a los states del store categorias
+      const loading = useSelector((state) => state.categorias.loading);
+      const error = useSelector((state) => state.categorias.error);
+      const categorias = useSelector((state) => state.categorias.categorias);
+
+      const guardarCategorias = (categorias) => dispatch(obtenerCategoriasAction(categorias));
+      const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
+      
+
   React.useEffect(async () => {
+
+   
     try {
+      const responseUser = await fetch('http://app-menora.herokuapp.com/users',
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data2 = await responseUser.json();
+    guardarUsuario(data2);
+    //console.log("DESDE HOME", data2)
       const response = await fetch(
         "https://app-menora.herokuapp.com/categories",
         {
@@ -71,12 +91,19 @@ const Home = () => {
         }
       );
       const data = await response.json();
-      setCategoryList(data);
+      //console.log("DESDE HOME", data[0].products);
+      guardarCategorias(data);
       setLoader(false);
     } catch (error) {
       console.log(error);
     }
+    
+
   }, []);
+
+  // obtener el state
+  
+  
 
   //Seleccion de tipo
   function renderFoodCategory() {
@@ -87,7 +114,7 @@ const Home = () => {
 
     return (
       <FlatList
-        data={categoryList}
+        data={categorias}
         keyExtractor={(item) => `${item._id}`}
         horizontal
         showsVerticalScrollIndicator={false}
@@ -98,7 +125,7 @@ const Home = () => {
               justifyContent: "center",
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
-              marginRight: index == categoryList.length - 1 ? SIZES.padding : 0,
+              marginRight: index == categorias.length - 1 ? SIZES.padding : 0,
               paddingHorizontal: 10,
               borderRadius: SIZES.radius,
             }}
@@ -150,7 +177,7 @@ const Home = () => {
     return (
       <FlatList
         horizontal
-        data={categoryList}
+        data={categorias}
         keyExtractor={(item) => `${item._id}`}
         showsHorizontalScrollIndicator={false}
         ListEmptyComponent={() => <Text>No hay productos</Text>}
@@ -164,7 +191,7 @@ const Home = () => {
             style={{
               marginLeft: SIZES.padding,
               marginRight:
-                index == categoryList.menu.length - 1 ? SIZES.padding : 0,
+                index == categorias.menu.length - 1 ? SIZES.padding : 0,
             }}
             onPress={() => {
               setSelectedMenuType(item._id);
@@ -195,12 +222,15 @@ const Home = () => {
       }}
     >
       <ScrollView style={{ marginBottom: 200, width: "100%" }}>
+
         {/* Buscador */}
-        <Search></Search>
+        <Search />
+
+
         {/* Lista */}
 
         <FlatList
-          data={categoryList.length && categoryList[categoryIndex].products}
+          data={categorias.length && categorias[categoryIndex].products}
           keyExtractor={(item) => `${item._id}`}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => <Text>No hay productos</Text>}
@@ -229,7 +259,9 @@ const Home = () => {
                   borderRadius: 10,
                 }}
                 item={item}
-                onPress={() => navigation.navigate("FoodDetail")}
+                onPress={() => navigation.navigate("FoodDetail", {
+                  producto: item,
+                })}
               />
             );
           }}

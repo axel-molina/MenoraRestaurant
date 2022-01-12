@@ -3,36 +3,39 @@ import {
     DESCARGA_PRODUCTOS_EXITO,
     DESCARGA_PRODUCTOS_ERROR,
 } from '../types';
+import { useDispatch, useSelector } from "react-redux";
 
 
-//Guardar categorias
-export function guardarCategorias(categorias){
-    return (dispatch)=>{
+//Descargar las categorias de la base de datos
+export function obtenerCategoriasAction(categorias){ 
+    
+    return async (dispatch)=>{
         
-        dispatch(guardarCategorias());
+        dispatch(descargarCategorias());
 
         try {
-            dispatch(guardarCategoriaExito(categorias));
+            dispatch(descargarCategoriaExito(categorias));
         } catch (error) {
-            dispatch(guardarCategoriaError(true));
+            dispatch(descargarCategoriaError(error));
         }
     }
 }
 
-const guardarCategorias = () => ({
+// si se descargo las categorias
+const descargarCategorias = () => ({
     type: COMENZAR_DESCARGA_PRODUCTOS,
     payload: true,
 });
 
-// si el guardado fue exitoso
-const guardarCategoriaExito = (categorias) => ({
+// si la descarga fue exitosa
+const descargarCategoriaExito = categorias => ({
     type: DESCARGA_PRODUCTOS_EXITO,
-    payload: token
+    payload: categorias,
 });
 
 
 // si hubo un error con las categorias
-const guardarCategoriaError = (error) => ({
-    type: TOKEN_ERROR,
+const descargarCategoriaError = (error) => ({
+    type: DESCARGA_PRODUCTOS_ERROR,
     payload: error
 });

@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
           justifyContent: "center",
           borderRadius: 120,
           height: 60,
+          width: "100%",
   },
 });
 

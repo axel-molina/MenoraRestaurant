@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, StatusBar } from "react-native";
-import { constants, images, FONTS, SIZES, COLORS } from "../../constants";
+import { images, FONTS, SIZES, COLORS } from "../../constants";
 import { TextButton } from "../../components";
 import Icon from 'react-native-vector-icons/AntDesign';
-import LinearGradient from 'react-native-linear-gradient';
+
 
 const PaginaDeBienvenida = ({ navigation }) => {
     return (

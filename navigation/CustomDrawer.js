@@ -100,7 +100,7 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
         >
           {/* img user profile */}
           <Image
-            source={"https://i.pravatar.cc/300"}
+            source={icons.cross}
             style={{
               width: 50,
               height: 50,

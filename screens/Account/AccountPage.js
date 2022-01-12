@@ -1,18 +1,11 @@
 import React from 'react';
 import {
-    View,
-    Text
+    View, Text, StyleSheet 
 } from 'react-native';
 
 const AccountPage = () => {
     return (
-        <View
-            style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}
-        >
+        <View style={styles.contain}>
             <Text
                 style={{
                     color: 'white'
@@ -21,5 +14,13 @@ const AccountPage = () => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    contain: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+})
 
 export default AccountPage

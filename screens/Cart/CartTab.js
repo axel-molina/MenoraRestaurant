@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Alert } from "react-native";
 import {
   FONTS,
@@ -6,8 +6,11 @@ import {
   SIZES,
   
 } from "../../constants";
-import MercadoPagoCheckout from '@blackbox-vision/react-native-mercadopago-px';
-import Checkout from '../../utils/Checkout';
+import { crearCarritoAction } from "../../store/actions/carritoActions";
+import { useDispatch, useSelector } from "react-redux";
+import LinearGradient from 'react-native-linear-gradient';
+
+
 
 
 
@@ -21,40 +24,78 @@ const UselessTextInput = (props) => {
   );
 }
 
-// function Checkout() {
-//   const [paymentResult, setPaymentResult] = useState(null);
-
-//   const startCheckout = async () => {
-//     try {
-//       const payment = await MercadoPagoCheckout.createPayment({
-//         publicKey: 'TEST-b56168fe-5b9b-49c0-9419-51cad5763a2c',
-//         preferenceId: "114746594-bd3e1ecd-2067-4c97-b8b2-5b2727d44996",
-//       });
-
-//       setPaymentResult(payment);
-//     } catch (err) {
-//       Alert.alert('Something went wrong', err.message);
-//     }
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <TouchableOpacity onPress={startCheckout}>
-//         <Text style={styles.text}>Start Payment</Text>
-//       </TouchableOpacity>
-//       <Text style={styles.text}>Payment: {JSON.stringify(paymentResult)}</Text>
-//     </View>
-//   );
-// }
 
 
-const CartTab = ({productos, setProductos}) => {
+const CartTab = () => {
 
+  // State para mostrar la cantidad de items en el carrito
+  const [qtyItems, setQtyItems] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [indexProd, setIndexProd] = useState(0);
+ 
 
- const renderPedido = ({ item }) => {
+  // Info de REDUX
+  const dispatch = useDispatch();
+  const carrito = useSelector((state) => state.carrito.carrito);
+  const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
+
+    //UseEffect para actualizar la cantidad de productos
+    useEffect(() => {
+      setQtyItems(carrito.length);
+      //console.log("Cantidad de items:", qtyItems);
+      //calcula el total del precio
+      let totalVar = 0;
+      for(let i = 0; i < carrito.length; i++){
+        //console.log("TOTALVAR:", totalVar);
+        //console.log(carrito[i].price);
+        totalVar += carrito[i].price;
+        for(let j = 0; j < carrito[i].extras.length; j++){
+          totalVar += carrito[i].extras[j].price;
+        }
+      }
+      setTotal(totalVar.toFixed(2));
+      //console.log("Total:", total);
+    } , [carrito]); //no lee el cambio en el estado de redux
+
+    
+
+  //console.log("CARRITO desde cartab: ", carrito[0].price + carrito[1].price);
+ const renderPedido = ( {item, index }) => { 
+   
   return (
-      <Text style={styles.numero}>{item.name} - {item.price}<Button onPress={() => eliminar(item.id)} title="Eliminar"></Button></Text>
+      <View style={styles.contain}>
+        <Text style={styles.text}>{item.name}</Text>
+        <Text style={styles.price}>${item.price}</Text>
+        <TouchableOpacity style={styles.button} onPress={() => {
+          setIndexProd(index);
+          return eliminar(index)
+          }}>
+          <Text style={styles.text}>Eliminar</Text>
+        </TouchableOpacity>
+        {item.extras.length > 0 ? <FlatList 
+        data={item.extras} 
+        keyExtractor={(item, index) => index}
+        renderItem={renderExtras}
+        /> : null}
+      </View>
     );
+}
+
+const renderExtras = ({ item, index}) => { 
+
+  if(item){
+  return (
+      <View style={styles.contain}>
+        <Text style={styles.text}>{item.name}</Text>
+        <Text style={styles.price}>${item.price}</Text>
+        <TouchableOpacity style={styles.button} onPress={() => eliminarExtras(index, indexProd)}>
+          <Text style={styles.text}>Eliminar</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  } else{
+    return null;
+  }
 }
 
   const [text, onChangeText] = React.useState("");
@@ -63,38 +104,46 @@ const CartTab = ({productos, setProductos}) => {
     onChangeText(text);
   }
 
-  const eliminar = (id) => {
-    const pedido = productos.filter(producto => producto.id !== id);
-    console.log(pedido)
-    setProductos(pedido);
+  const eliminar = (index) => {
+    //console.log("ELIMINAR", index)
+    
+    const pedido = carrito.filter((carrito, indice) => indice !== index);
+    //console.log("Pedido:", pedido)
+    guardarCarrito(pedido);
+  }
+
+  const eliminarExtras = (index, indexProd) => {
+    console.log("INDEXPROD:", indexProd)
+    //const pedido = carrito.filter((carrito, indice) => indice !== index);
+    //console.log("Pedido:", pedido)
+    //guardarCarrito(pedido);
   }
 
   const comprar = () => {
-    console.log(productos);
+    console.log("COMPRAR")
+    //console.log(productos);
     console.log("Aclaraciones: " + text);
-
-
   }
 
-
+  
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       
-     <Checkout/>
-      
-      { productos.length !== 0 ? 
-      (<View style={styles.inputContain}>
-        <Text style={styles.numero}>Número de orden: #28112396</Text>
-        <Text style={styles.numero}>Detalles de la orden:</Text>
+     
 
+      
+      { qtyItems !== 0 ? 
+      (<View style={styles.inputContain}>
+        <Text style={styles.detalles}>Detalles de la orden</Text>
+        <Text style={{color: 'white', fontSize: 20, borderBottomColor: 'white', borderBottomWidth: 1, marginBottom: 20,}}>• {qtyItems} items</Text>
         {/* Renderizado del pedido */}
       <FlatList 
-      data={productos} 
+      data={carrito} 
       keyExtractor={(item, index) => index}
       renderItem={renderPedido}
       />
 
-        <Text style={styles.numero}>Total:</Text>
+        <Text style={{ color: 'white', fontSize: 20, marginTop: 30,  borderTopColor: 'white', borderTopWidth: 1, }}>Total: ${total}</Text>
         <View style={styles.input}>
             <UselessTextInput
               multiline
@@ -105,11 +154,14 @@ const CartTab = ({productos, setProductos}) => {
               style={{ padding: SIZES.base }}
             />
         </View>
+        <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{padding: 12, borderRadius: 50, marginTop: 10, marginBottom: 30,}}>
         <TouchableOpacity onPress={comprar}>
           <Text style={styles.comprar}>COMPRAR</Text>
         </TouchableOpacity>
-      </View>) : <Text style={styles.aviso}>Aún no tenés productos en el carrito</Text>}
-    </ScrollView>
+        </LinearGradient>
+      </View>) : 
+        <Text style={styles.aviso}>Aún no hay productos en el carrito</Text> }
+    </View>
   );
 };
 
@@ -119,9 +171,20 @@ const styles = StyleSheet.create({
     marginTop: 22,
     marginHorizontal: 22,
   },
-  numero: {
-    color: '#fff',
+  detalles: {
+    color: '#828282',
     fontSize: 22,
+    marginBottom: 10,
+  },
+  text:{
+    color: 'white',
+    fontSize: 18,
+  },
+  contain: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
   inputContain:{
     flex: 1,
@@ -138,17 +201,24 @@ const styles = StyleSheet.create({
   comprar: {
     color: COLORS.white,
     fontSize: 22,
-    borderRadius: SIZES.radius,
-    backgroundColor: COLORS.primary,
-    padding: SIZES.radius,
-    marginTop: SIZES.padding,
-    marginBottom: SIZES.padding,
     textAlign: 'center',
     fontFamily: "Poppins-Regular",
   },
   aviso: {
+    color: 'white',
+    fontSize: 18,
     textAlign: 'center',
-  }
+    marginTop: SIZES.padding,
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+    borderRadius: SIZES.radius,
+    
+  },
+  price: {
+    color: 'white',
+    fontSize: 18,
+  },
 })
 
 

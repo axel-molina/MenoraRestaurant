@@ -23,6 +23,10 @@ import AccountPage from "./Account/AccountPage";
 
 import PaginaDeBienvenida from "./OnBoarding/PaginaDeBienvenida";
 
+import MedioDeEnvio from "./MedioDeEnvio/MedioDeEnvio";
+
+
+
 // Authentication
 import AuthLayout from "./Authentication/AuthLayout";
 import SignIn from "./Authentication/SignIn";
@@ -44,5 +48,6 @@ export {
   ForgotPassword,
   AuthLayout,
   FoodDetail,
-  Abonar
+  Abonar,
+  MedioDeEnvio,
 };

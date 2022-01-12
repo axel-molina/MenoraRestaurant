@@ -57,7 +57,6 @@ const SignUp = ({ navigation }) => {
   }
 
   const registrarUsuario = async () => {
-    console.log(usuario)
     try {
       if (isEnableSignUp()) {
         setError("");

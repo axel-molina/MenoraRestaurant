@@ -1,30 +1,30 @@
 import {
-    COMENZAR_DESCARGA_PRODUCTOS,
-    DESCARGA_PRODUCTOS_EXITO,
-    DESCARGA_PRODUCTOS_ERROR,
+    COMENZAR_GUARDAR_PRODUCTO,
+    GUARDAR_PRODUCTO_EXITO,
+    GUARDAR_PRODUCTO_ERROR,
 } from '../types';
 
 const initialState = {
-    categorias: [],
+    products: [],
     error: null,
     loading: false
  };
 
  export default function(state = initialState, action){
     switch(action.type){
-        case COMENZAR_DESCARGA_PRODUCTOS:
+        case COMENZAR_GUARDAR_PRODUCTO:
             return {
                 ...state,
                 loading: action.payload
             }
-        case DESCARGA_PRODUCTOS_EXITO:
+        case GUARDAR_PRODUCTO_EXITO:
             return {
                 ...state,
                 loading: false,
                 error: null,
-                categorias: action.payload,
+                products: action.payload,
             }
-        case DESCARGA_PRODUCTOS_ERROR:
+        case GUARDAR_PRODUCTO_ERROR:
             return {
                 ...state,
                 loading: false,

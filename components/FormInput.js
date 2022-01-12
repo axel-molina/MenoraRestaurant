@@ -21,13 +21,7 @@ const FormInput = ({
     <View style={{ ...containerStyle }}>
 
       {/*Linea separadora*/}
-    <View
-      style={{
-        borderBottomColor: 'white',
-        borderBottomWidth: 1,
-        marginBottom: 12,
-      }}
-    />
+      
 
       {/* Label & Error Messages */}
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -52,6 +46,9 @@ const FormInput = ({
             ...inputStyle,
             color: COLORS.white,
             fontSize: 20,
+            borderBottomColor: 'white',
+        borderBottomWidth: 1,
+        marginBottom: 12,
           }}
           placeholder={placeholder}
           placeholderTextColor={COLORS.gray}
@@ -61,7 +58,7 @@ const FormInput = ({
           autoCapitalize={autoCapitalize}
           onChangeText={(text) => onChange(text)}
           
-        />
+        />   
 
         {appendComponent}
       </View>
