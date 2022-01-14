@@ -9,9 +9,7 @@ import {
 import { crearCarritoAction } from "../../store/actions/carritoActions";
 import { useDispatch, useSelector } from "react-redux";
 import LinearGradient from 'react-native-linear-gradient';
-
-
-
+import RenderPedido from "./RenderPedido";
 
 
 const UselessTextInput = (props) => {
@@ -31,7 +29,7 @@ const CartTab = () => {
   // State para mostrar la cantidad de items en el carrito
   const [qtyItems, setQtyItems] = useState(0);
   const [total, setTotal] = useState(0);
-  const [indexProd, setIndexProd] = useState(0);
+  //const [indexProd, setIndexProd] = useState(0);
  
 
   // Info de REDUX
@@ -57,59 +55,12 @@ const CartTab = () => {
       //console.log("Total:", total);
     } , [carrito]); //no lee el cambio en el estado de redux
 
-    
-
   //console.log("CARRITO desde cartab: ", carrito[0].price + carrito[1].price);
- const renderPedido = ( {item, index }) => { 
-   
-  return (
-      <View style={styles.contain}>
-        <Text style={styles.text}>{item.name}</Text>
-        <Text style={styles.price}>${item.price}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => {
-          setIndexProd(index);
-          return eliminar(index)
-          }}>
-          <Text style={styles.text}>Eliminar</Text>
-        </TouchableOpacity>
-        {item.extras.length > 0 ? <FlatList 
-        data={item.extras} 
-        keyExtractor={(item, index) => index}
-        renderItem={renderExtras}
-        /> : null}
-      </View>
-    );
-}
-
-const renderExtras = ({ item, index}) => { 
-
-  if(item){
-  return (
-      <View style={styles.contain}>
-        <Text style={styles.text}>{item.name}</Text>
-        <Text style={styles.price}>${item.price}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => eliminarExtras(index, indexProd)}>
-          <Text style={styles.text}>Eliminar</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  } else{
-    return null;
-  }
-}
 
   const [text, onChangeText] = React.useState("");
 
   const alEscribir = (text) => {
     onChangeText(text);
-  }
-
-  const eliminar = (index) => {
-    //console.log("ELIMINAR", index)
-    
-    const pedido = carrito.filter((carrito, indice) => indice !== index);
-    //console.log("Pedido:", pedido)
-    guardarCarrito(pedido);
   }
 
   const eliminarExtras = (index, indexProd) => {
@@ -128,10 +79,6 @@ const renderExtras = ({ item, index}) => {
   
   return (
     <View style={styles.container}>
-      
-     
-
-      
       { qtyItems !== 0 ? 
       (<View style={styles.inputContain}>
         <Text style={styles.detalles}>Detalles de la orden</Text>
@@ -140,7 +87,7 @@ const renderExtras = ({ item, index}) => {
       <FlatList 
       data={carrito} 
       keyExtractor={(item, index) => index}
-      renderItem={renderPedido}
+      renderItem={({ item, index }) => <RenderPedido item={item} index={index} />}
       />
 
         <Text style={{ color: 'white', fontSize: 20, marginTop: 30,  borderTopColor: 'white', borderTopWidth: 1, }}>Total: ${total}</Text>
@@ -159,8 +106,7 @@ const renderExtras = ({ item, index}) => {
           <Text style={styles.comprar}>COMPRAR</Text>
         </TouchableOpacity>
         </LinearGradient>
-      </View>) : 
-        <Text style={styles.aviso}>Aún no hay productos en el carrito</Text> }
+      </View>) : <Text style={styles.aviso}>Aún no hay productos en el carrito</Text> }
     </View>
   );
 };
