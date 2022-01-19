@@ -1,15 +1,14 @@
 import React, {useState, useEffect} from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList } from "react-native";
 import {
-  FONTS,
   COLORS,
   SIZES,
   
 } from "../../constants";
-import { crearCarritoAction } from "../../store/actions/carritoActions";
 import { useDispatch, useSelector } from "react-redux";
 import LinearGradient from 'react-native-linear-gradient';
 import RenderPedido from "./RenderPedido";
+import { useNavigation } from '@react-navigation/native';
 
 
 const UselessTextInput = (props) => {
@@ -22,40 +21,26 @@ const UselessTextInput = (props) => {
   );
 }
 
-
-
 const CartTab = () => {
-
   // State para mostrar la cantidad de items en el carrito
   const [qtyItems, setQtyItems] = useState(0);
   const [total, setTotal] = useState(0);
-  //const [indexProd, setIndexProd] = useState(0);
- 
 
   // Info de REDUX
-  const dispatch = useDispatch();
   const carrito = useSelector((state) => state.carrito.carrito);
-  const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
 
     //UseEffect para actualizar la cantidad de productos
     useEffect(() => {
       setQtyItems(carrito.length);
-      //console.log("Cantidad de items:", qtyItems);
-      //calcula el total del precio
       let totalVar = 0;
       for(let i = 0; i < carrito.length; i++){
-        //console.log("TOTALVAR:", totalVar);
-        //console.log(carrito[i].price);
         totalVar += carrito[i].price;
         for(let j = 0; j < carrito[i].extras.length; j++){
           totalVar += carrito[i].extras[j].price;
         }
       }
       setTotal(totalVar.toFixed(2));
-      //console.log("Total:", total);
-    } , [carrito]); //no lee el cambio en el estado de redux
-
-  //console.log("CARRITO desde cartab: ", carrito[0].price + carrito[1].price);
+    } , [carrito]); 
 
   const [text, onChangeText] = React.useState("");
 
@@ -63,17 +48,13 @@ const CartTab = () => {
     onChangeText(text);
   }
 
-  const eliminarExtras = (index, indexProd) => {
-    console.log("INDEXPROD:", indexProd)
-    //const pedido = carrito.filter((carrito, indice) => indice !== index);
-    //console.log("Pedido:", pedido)
-    //guardarCarrito(pedido);
-  }
+  const navigation = useNavigation();
 
   const comprar = () => {
     console.log("COMPRAR")
     //console.log(productos);
     console.log("Aclaraciones: " + text);
+    navigation.navigate("MedioDeEnvio")
   }
 
   

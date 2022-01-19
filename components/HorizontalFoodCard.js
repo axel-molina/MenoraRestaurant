@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { TouchableOpacity, View, Text, Image, ToastAndroid, ActivityIndicator } from "react-native";
+import React from "react";
+import { TouchableOpacity, View, Text, Image, ToastAndroid, ScrollView } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
 import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from 'react-native-linear-gradient';
@@ -22,8 +22,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
     const price = item.price;
     const id = item._id;
     const extras = item.extras;
-    //setProductos([...productos, { name, price, id }]);
-   //console.log(item)
+    
     guardarCarrito([...carrito, { name, price, id, extras }]);
   }
 
@@ -51,22 +50,25 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
         <View
             style={{
                 flex: 1,
+                
             }}
 
         >
             {/* Name */}
-            <Text style={{...FONTS.h3, fontSize: 17, color: COLORS.white, marginLeft: 20}}>
+            <Text style={{...FONTS.h3, fontSize: 17, color: COLORS.white, marginLeft: 20, marginTop: 10}}>
                 {item.name}
             </Text>
             
             {/* Description */}
 
-            <Text style={{color: COLORS.white, ...FONTS.body4, marginLeft: 20}}>
-            {item.description}
-            </Text>
+            <ScrollView>
+              <Text style={{color: COLORS.white, ...FONTS.body4, marginLeft: 20, marginRight: 6}}>
+              {item.description}
+              </Text>
+            </ScrollView>
 
             {/* Price */}
-            <Text style={{...FONTS.h3, color: COLORS.white, marginLeft: 20, marginTop: 20, }}>
+            <Text style={{...FONTS.h3, color: COLORS.white, marginLeft: 20, marginBottom: 18, }}>
                 $ {item.price}
             </Text>
 

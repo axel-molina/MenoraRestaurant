@@ -56,8 +56,6 @@ const Home = () => {
   const token = useSelector((state) => state.token.token);
 
       //accder a los states del store categorias
-      const loading = useSelector((state) => state.categorias.loading);
-      const error = useSelector((state) => state.categorias.error);
       const categorias = useSelector((state) => state.categorias.categorias);
 
       const guardarCategorias = (categorias) => dispatch(obtenerCategoriasAction(categorias));
@@ -79,7 +77,6 @@ const Home = () => {
     );
     const data2 = await responseUser.json();
     guardarUsuario(data2);
-    //console.log("DESDE HOME", data2)
       const response = await fetch(
         "https://app-menora.herokuapp.com/categories",
         {
@@ -91,7 +88,6 @@ const Home = () => {
         }
       );
       const data = await response.json();
-      //console.log("DESDE HOME", data[0].products);
       guardarCategorias(data);
       setLoader(false);
     } catch (error) {
@@ -100,10 +96,6 @@ const Home = () => {
     
 
   }, []);
-
-  // obtener el state
-  
-  
 
   //Seleccion de tipo
   function renderFoodCategory() {

@@ -5,65 +5,54 @@ import Icon from "react-native-vector-icons/AntDesign";
 
 import { useDispatch, useSelector } from "react-redux";
 import { crearCarritoAction } from "../../store/actions/carritoActions";
+import { crearIndexAction } from '../../store/actions/indexProductAction';
 
 const RenderPedido = ( {item, index}) => { 
-    //console.log("ESTO ES index", index);
-    //console.log("ESTO ES ITEM", item);
-    // state para abrir los extras
     const [open, setOpen] = useState(false);
 
     // Info de REDUX
     const dispatch = useDispatch();
     const carrito = useSelector((state) => state.carrito.carrito);
     const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
+    const guardarIndex = (index) => dispatch(crearIndexAction(index));
+
+    const activeIndex = useSelector((state) => state.indexProductReducer.index); 
 
     //Funcion para abrir los extras
-    const handleOpen = () => {
-        setOpen(!open);
-        //console.log("OPEN:", open);
-    }
-
-    //Funcion que cambia el icono del boton
-    const handleIcon = () => {
-        if(open){
-            return(
-                <Icon name="minuscircle" size={20} color="white" />
-            )
-        } else{
-            return(
-              <Icon name="pluscircle" size={20} color="white" />
-            )
+    const handleOpen = (index) => {
+        //setOpen(!open);
+        if(index === activeIndex){
+          guardarIndex(null);
+        }
+        if(index !== activeIndex){
+          guardarIndex(index);  
         }
     }
-
+    
     const eliminar = (index) => {
-      //console.log("ELIMINAR", index)
       const pedido = carrito.filter((carrito, indice) => indice !== index);
-      //console.log("Pedido:", pedido)
       guardarCarrito(pedido);
     }
    
     return (
         <View>
           <View style={styles.containProd}>
-            { item.extras.length > 0 ? <TouchableOpacity onPress={() => handleOpen()}>
-              <Text style={styles.text}>{handleIcon()} {item.name}</Text>
+            { item.extras.length > 0 ? <TouchableOpacity onPress={() => handleOpen(index)}>
+              <Text style={styles.text}>{index !== activeIndex ? <Icon name="pluscircle" size={20} color="white" /> :
+              <Icon name="minuscircle" size={20} color="white" />} {item.name}</Text>
             </TouchableOpacity> :  <Text style={styles.text}> {item.name}</Text>}
             <View style={{ flexDirection: 'row'}}>
               <Text style={styles.price}>${item.price}</Text>
-              <TouchableOpacity style={styles.button} onPress={() => {
-                //setIndexProd(indexProducto);
-                return eliminar(index) /*Index del producto principal*/
-                }}>
+              <TouchableOpacity style={styles.button} onPress={() => eliminar(index)}>
                <Icon name="delete" size={25} color="orange" />
               </TouchableOpacity>
             </View>
             
           </View>
-          {open ? <FlatList 
+          {(typeof activeIndex === 'number' && activeIndex === index) ? <FlatList 
             data={item.extras} 
             keyExtractor={(item, index) => index}
-            renderItem={({ item }) => <RenderExtras item={item} indexProd={props.indexProducto} />}
+            renderItem={({ item, index }) => <RenderExtras item={item} index={index} />}
             /> : null}
         </View>
       );

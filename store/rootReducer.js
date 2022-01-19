@@ -6,6 +6,7 @@ import categoriasReducer from "./tab/categoriasReducer";
 import productsReducer from "./tab/productsReducer";
 import carritoReducer from "./tab/carritoReducer";
 import usuarioReducer from "./tab/usuarioReducer";
+import indexProductReducer from "./tab/indexProductReducer";
 
 export default combineReducers({
     tabReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
     products: productsReducer,
     carrito: carritoReducer,
     usuario: usuarioReducer,
+    indexProductReducer,
 })

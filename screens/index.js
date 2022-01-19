@@ -25,6 +25,10 @@ import PaginaDeBienvenida from "./OnBoarding/PaginaDeBienvenida";
 
 import MedioDeEnvio from "./MedioDeEnvio/MedioDeEnvio";
 
+import PagoExitoso from "./PagoExitoso/PagoExitoso";
+
+
+
 
 
 // Authentication
@@ -50,4 +54,5 @@ export {
   FoodDetail,
   Abonar,
   MedioDeEnvio,
+  PagoExitoso,
 };

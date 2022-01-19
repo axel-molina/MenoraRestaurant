@@ -10,7 +10,7 @@ export function crearCarritoAction(carrito){
     return (dispatch)=>{
         
         dispatch(agregarCarrito());
-        console.log("DESDE REDUX: ",carrito)
+        //console.log("DESDE REDUX: ",carrito)
         try {
             //console.log("DESDE REDUX: ",carrito)
             dispatch(agregarCarritoExito(carrito));

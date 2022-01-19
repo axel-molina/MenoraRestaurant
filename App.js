@@ -21,6 +21,8 @@ import {
   Abonar, 
   Search,
   MedioDeEnvio,
+  CartTab,
+  PagoExitoso
 } from "./screens";
 
 import CustomDrawer from "./navigation/CustomDrawer";
@@ -46,12 +48,12 @@ const App = () => {
               screenOptions={{
                 headerShown: false,
               }}
-              initialRouteName={"SignIn"}
+              initialRouteName={"PaginaDeBienvenida"}
             >
              
               <Stack.Screen name="PaginaDeBienvenida" component={PaginaDeBienvenida} />
           
-              <Stack.Screen name="Home" component={CustomDrawer} />
+              <Stack.Screen name="Home" component={CustomDrawer} /> 
 
               <Stack.Screen name="Search" component={Search} />
           
@@ -68,6 +70,10 @@ const App = () => {
               <Stack.Screen name="Abonar" component={Abonar} />
 
               <Stack.Screen name="MedioDeEnvio" component={MedioDeEnvio} />
+
+              <Stack.Screen name="CartTab" component={CartTab} />
+
+              <Stack.Screen name="PagoExitoso" component={PagoExitoso} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>
