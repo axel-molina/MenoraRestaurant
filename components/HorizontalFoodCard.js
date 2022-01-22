@@ -21,12 +21,10 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
     const name = item.name;
     const price = item.price;
     const id = item._id;
-    const extras = item.extras;
+    const extras = [];
     
     guardarCarrito([...carrito, { name, price, id, extras }]);
   }
-
- //console.log(item)
 
   return (
     <TouchableOpacity 
@@ -76,8 +74,6 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
         
         <TouchableOpacity
         style={{
-          //width:100,
-          //height:40,
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: COLORS.primary,

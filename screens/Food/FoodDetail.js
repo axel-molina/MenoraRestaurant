@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  ScrollView,
   FlatList,
   TouchableOpacity,
   TextInput,
@@ -44,22 +43,28 @@ const FoodDetail = ({ navigation, route }) => {
   const [stars, setStars] = React.useState([]);
 
   //estado para los extras seleccionados
-  const [extras, setExtras] = React.useState([]);
+  const [extrasEstado, setExtrasEstado] = React.useState([]);
 
   //radio buttons
   const [checked, setChecked] = React.useState([]);
 
   const { producto } = route.params;
-  //console.log(producto)
+  //console.log("esto es producto detalles",producto)
 
   const handleChecked= (index, item) =>{
-    setExtras([...extras, item._id])
-
+    if(extrasEstado.includes(item)){
+      let extrasAux = extrasEstado.filter(i => i._id !== item._id)
+      console.log("extrasAux: ",extrasAux)
+      setExtrasEstado(extrasAux)
+    } else{
+      setExtrasEstado([...extrasEstado, item])
+    }
     if(checked.includes(index)){
       setChecked(checked.filter(item => item !== index))
     } else {
       setChecked([...checked, index])
     }
+    //console.log("Extraaasss: ",extras)
   }
 
   function renderHeader() {
@@ -90,7 +95,7 @@ const FoodDetail = ({ navigation, route }) => {
               height: 20,
               tintColor: COLORS.gray2,
             }}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => {navigation.navigate("Home")}}
           />
         }
         rightComponent={<CartQuantityButton quantity={3} />}
@@ -190,7 +195,7 @@ const FoodDetail = ({ navigation, route }) => {
     const name = producto.name;
     const price = producto.price;
     const id = producto._id;
-    const extras = producto.extras;
+    const extras = extrasEstado;
     
     guardarCarrito([...carrito, { name, price, id, extras }]);
     navigation.navigate("Home");
@@ -213,7 +218,7 @@ const FoodDetail = ({ navigation, route }) => {
      
         <FlatList
           data={producto.extras}
-          keyExtractor={(item) => {item._id}}
+          keyExtractor={(item, index) => index}
           renderItem={({ item, index }) => (
             
               <View style={{ flex: 1, flexDirection: 'row', marginTop: 2, justifyContent: 'space-between', marginLeft: 20}}>
@@ -223,7 +228,7 @@ const FoodDetail = ({ navigation, route }) => {
                 color={COLORS.primary}
                 value={false}
                 status={checked.includes(index) ? 'checked' : 'unchecked'}
-                key={index}
+                //key={index}
                 onPress={() => handleChecked(index, item)}
                 />
               </View>

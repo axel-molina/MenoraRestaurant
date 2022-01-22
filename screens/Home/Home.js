@@ -11,7 +11,6 @@ import {
   FlatList,
   ScrollView,
   StatusBar,
-  ActivityIndicator,
 } from "react-native";
 import Search from "../Search/Search";
 

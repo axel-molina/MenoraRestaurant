@@ -33,13 +33,15 @@ const CartTab = () => {
     useEffect(() => {
       setQtyItems(carrito.length);
       let totalVar = 0;
-      for(let i = 0; i < carrito.length; i++){
+      if(carrito.length && carrito.length > 0 ){
+        for(let i = 0; i < carrito.length; i++){
         totalVar += carrito[i].price;
         for(let j = 0; j < carrito[i].extras.length; j++){
           totalVar += carrito[i].extras[j].price;
         }
       }
       setTotal(totalVar.toFixed(2));
+    }
     } , [carrito]); 
 
   const [text, onChangeText] = React.useState("");
