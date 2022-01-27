@@ -4,8 +4,9 @@ import RenderExtras from './RenderExtras';
 import Icon from "react-native-vector-icons/AntDesign";
 
 import { useDispatch, useSelector } from "react-redux";
-import { crearCarritoAction } from "../../store/actions/carritoActions";
+import { crearCarritoAction, crearDrinksAction } from "../../store/actions/carritoActions";
 import { crearIndexAction } from '../../store/actions/indexProductAction';
+
 
 const RenderPedido = ( {item, index}) => { 
     const [open, setOpen] = useState(false);
@@ -33,7 +34,18 @@ const RenderPedido = ( {item, index}) => {
       const pedido = carrito.filter((carrito, indice) => indice !== index);
       guardarCarrito(pedido);
     }
-   
+
+    const drinks = useSelector((state) => state.carrito.drinks);
+    const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
+    
+    const eliminarDrinks = (index) => {
+      const pedidoDrinks = drinks.filter((drinks, indice) => indice !== index);
+      guardarDrinks(pedidoDrinks);
+    }
+
+    const isDrink = item.hasOwnProperty('alcohol');
+
+    if(!isDrink){
     return (
         <View>
           <View style={styles.containProd}>
@@ -56,8 +68,21 @@ const RenderPedido = ( {item, index}) => {
             /> : null}
         </View>
       );
+  } else {
+    return (
+      <View style={styles.containProd}>
+        <Text style={styles.text}> {item.name}</Text>
+        <View style={{ flexDirection: 'row'}}>
+          <Text style={styles.price}>${item.price}</Text>
+          <TouchableOpacity style={styles.button} onPress={() => eliminarDrinks(index)}>
+           <Icon name="delete" size={25} color="orange" />
+          </TouchableOpacity>
+        </View>
+      </View>
+  
+  );
   }
-
+}
 export default RenderPedido
 
 const styles = StyleSheet.create({

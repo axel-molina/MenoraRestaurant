@@ -24,6 +24,9 @@ import {
   icons,
   constants,
 } from "../constants";
+import Icon from "react-native-vector-icons/AntDesign";
+// Redux
+import { useSelector } from "react-redux";
 
 const TabButton = ({
   label,
@@ -209,7 +212,8 @@ const MainLayout = ({
     }
   }, [selectedTab]);
 
- 
+   // Info de REDUX
+   const carrito = useSelector((state) => state.carrito.carrito);
 
   return (
     <Animated.View
@@ -236,9 +240,6 @@ const MainLayout = ({
               height: 45,
               alignItems: "center",
               justifyContent: "center",
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              borderRadius: SIZES.radius,
             }}
             onPress={() => navigation.openDrawer()}
           >
@@ -255,46 +256,26 @@ const MainLayout = ({
             height: 50,
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.lightOrange2,
-            ...containerStyle
           }}
           //se direcciona a la pestaña del carrito
           onPress={() => setSelectedTab(constants.screens.cart)}
         >
-          <Image
-            source={icons.cart}
-            style={{
-              width: 25,
-              height: 25,
-              tintColor: COLORS.black,
-              ...iconStyle
-            }}
-          />
+          <Icon name="shoppingcart" size={30} color="white" />
     
-          <View
+          {carrito.length > 0 ? <View
             style={{
               position: "absolute",
               top: 5,
               right: 5,
-              height: 15,
-              width: 15,
+              height: 20,
+              width: 20,
               alignItems: "center",
               justifyContent: "center",
               borderRadius: SIZES.radius,
               backgroundColor: COLORS.primary,
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.white,
-                ...FONTS.body5,
-                lineHeight: 0,
-                fontSize: 10,
-              }}
-            >
-            </Text>
-          </View>
+            }}>
+            <Text style={{ color: 'white' }}>{carrito.length}</Text>
+          </View> : null}
           
         </TouchableOpacity>
         }

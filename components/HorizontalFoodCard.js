@@ -1,29 +1,44 @@
 import React from "react";
-import { TouchableOpacity, View, Text, Image, ToastAndroid, ScrollView } from "react-native";
+import { TouchableOpacity, View, Text, Image, ToastAndroid, ScrollView, ActivityIndicator } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
 import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from 'react-native-linear-gradient';
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { crearCarritoAction } from "../store/actions/carritoActions";
+import { crearCarritoAction, crearDrinksAction } from "../store/actions/carritoActions";
+
 
 const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
   const dispatch = useDispatch();
 
   const carrito = useSelector((state) => state.carrito.carrito);
+  const drinks = useSelector((state) => state.carrito.drinks);
 
   const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
-
+  const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
   const añadirAlCarrito =  (item) => {
-    ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
-    //console.log("DESDE HORIZONTAL",item.extras)
+
+    if(item.hasOwnProperty('alcohol')){
+      ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
+    console.log("DESDE HORIZONTAL",item.name)
     const name = item.name;
     const price = item.price;
     const id = item._id;
-    const extras = [];
-    
-    guardarCarrito([...carrito, { name, price, id, extras }]);
+    const alcohol = item.alcohol;
+
+    guardarDrinks([...drinks, {name, price, id, alcohol}])
+    } else {
+
+      ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
+      console.log("DESDE HORIZONTAL",item.name)
+      const name = item.name;
+      const price = item.price;
+      const id = item._id;
+      const extras = item.extras;
+      
+      guardarCarrito([...carrito, { name, price, id, extras }]);
+    }
   }
 
   return (
@@ -39,7 +54,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
     >
         {/* Image */}
         <Image 
-            loadingIndicatorSource={<Icon name="phone" size={30} color="white" />}
+            loadingIndicatorSource={ <ActivityIndicator size="large" color={COLORS.primary} />}
             source={{ uri: item.image }}
             style={{...imageStyle}}
         />
@@ -59,11 +74,18 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
             
             {/* Description */}
 
-            <ScrollView>
+            {item.description !== null ? <ScrollView>
               <Text style={{color: COLORS.white, ...FONTS.body4, marginLeft: 20, marginRight: 6}}>
               {item.description}
               </Text>
-            </ScrollView>
+            </ScrollView> : null }
+
+            {item.hasOwnProperty('alcohol') && item.alcohol ? <ScrollView>
+              <Text style={{color: 'orange', ...FONTS.body4, marginLeft: 20, marginRight: 6}}>
+              Bebida con alcohol
+              </Text>
+            </ScrollView> : null }
+
 
             {/* Price */}
             <Text style={{...FONTS.h3, color: COLORS.white, marginLeft: 20, marginBottom: 18, }}>

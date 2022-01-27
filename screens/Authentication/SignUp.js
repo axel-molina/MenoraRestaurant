@@ -16,6 +16,7 @@ import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign";
 import Logo from "react-native-vector-icons/Entypo";
 import axios from "axios";
+import { crearTokenAction } from "../../store/actions/tokenActions";
 
 const SignUp = ({ navigation }) => {
   //State del formulario
@@ -40,6 +41,9 @@ const SignUp = ({ navigation }) => {
   const [emailError, setEmailError] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
   const [error, setError] = React.useState("");
+
+    // Manda a llamar el action de tokenActions
+    const guardarToken = (token) => dispatch(crearTokenAction(token));
 
   function isEnableSignUp() {
     return (
@@ -67,12 +71,11 @@ const SignUp = ({ navigation }) => {
           return data;
         };
         const response = await consultarAPI();
-        //console.log("RESPUESTA: ", response.data);
+        guardarToken(response.data.accessToken);
         Alert.alert(
           "Registro exitoso",
-          "Ya puede iniciar sesión",
           [
-            { text: "OK", onPress: () => navigation.navigate("SignIn") }
+            { text: "OK", onPress: () => navigation.navigate("Home") }
           ]
         );
       } else {

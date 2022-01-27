@@ -5,10 +5,11 @@ import {
   SIZES,
   
 } from "../../constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import LinearGradient from 'react-native-linear-gradient';
 import RenderPedido from "./RenderPedido";
 import { useNavigation } from '@react-navigation/native';
+import RenderDrinks from "./RenderDrinks";
 
 
 const UselessTextInput = (props) => {
@@ -28,10 +29,11 @@ const CartTab = () => {
 
   // Info de REDUX
   const carrito = useSelector((state) => state.carrito.carrito);
+  const drinks = useSelector((state) => state.carrito.drinks);
 
     //UseEffect para actualizar la cantidad de productos
     useEffect(() => {
-      setQtyItems(carrito.length);
+      setQtyItems(carrito.length + drinks.length);
       let totalVar = 0;
       if(carrito.length && carrito.length > 0 ){
         for(let i = 0; i < carrito.length; i++){
@@ -40,9 +42,14 @@ const CartTab = () => {
           totalVar += carrito[i].extras[j].price;
         }
       }
-      setTotal(totalVar.toFixed(2));
     }
-    } , [carrito]); 
+    if(drinks.length && drinks.length > 0 ){
+      for(let i = 0; i < drinks.length; i++){
+      totalVar += drinks[i].price;
+    }
+  }
+    setTotal(totalVar.toFixed(2));
+    } , [carrito, drinks]); 
 
   const [text, onChangeText] = React.useState("");
 
@@ -67,11 +74,11 @@ const CartTab = () => {
         <Text style={styles.detalles}>Detalles de la orden</Text>
         <Text style={{color: 'white', fontSize: 20, borderBottomColor: 'white', borderBottomWidth: 1, marginBottom: 20,}}>• {qtyItems} items</Text>
         {/* Renderizado del pedido */}
-      <FlatList 
-      data={carrito} 
+      {carrito.length || drinks.length ? <FlatList 
+      data={[...carrito, ...drinks]} 
       keyExtractor={(item, index) => index}
       renderItem={({ item, index }) => <RenderPedido item={item} index={index} />}
-      />
+      /> : null}
 
         <Text style={{ color: 'white', fontSize: 20, marginTop: 30,  borderTopColor: 'white', borderTopWidth: 1, }}>Total: ${total}</Text>
         <View style={styles.input}>

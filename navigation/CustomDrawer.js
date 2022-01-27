@@ -17,6 +17,10 @@ import {
   constants,
   icons,
 } from "../constants";
+import CookieManager from "@react-native-cookies/cookies";
+// Actions Redux
+import { useDispatch } from "react-redux";
+import { crearTokenAction } from "../store/actions/tokenActions";
 
 const Drawer = createDrawerNavigator();
 
@@ -58,6 +62,12 @@ const CustomDrawerItem = ({ label, icon, isFocused, onPress }) => {
 };
 
 const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
+
+  const dispatch = useDispatch();
+
+  // Manda a llamar el action de tokenActions
+  const guardarToken = (token) => dispatch(crearTokenAction(token));
+
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -89,39 +99,6 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Profile*/}
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.radius,
-            AlignItems: "center",
-          }}
-          onPress={() => console.log("Profile")}
-        >
-          {/* img user profile */}
-          <Image
-            source={icons.cross}
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: SIZES.radius,
-            }}
-          />
-
-          {/* Profile Name + View Profile */}
-          <View
-            style={{
-              marginLeft: SIZES.radius,
-            }}
-          >
-            <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
-              {}
-            </Text>
-            <Text style={{ color: COLORS.white, ...FONTS.h4 }}>
-              Ver mi perfil
-            </Text>
-          </View>
-        </TouchableOpacity>
 
         {/* Drawer Items */}
         <View
@@ -140,12 +117,6 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
               setSelectedTab(constants.screens.home)
               navigation.navigate('MainLayout')
             }}
-          />
-
-          {/* icon billeta */}
-          <CustomDrawerItem
-            label={constants.screens.my_wallet}
-            icon={icons.wallet}
           />
 
           {/* icon carrito */}
@@ -172,21 +143,10 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
           />
 
 
-          {/* Line Divider */}
-          <View
-            style={{
-              height: 1.5,
-              marginVertical: SIZES.radius,
-              marginLeft: SIZES.radius,
-              backgroundColor: COLORS.lightGray1,
-            }}
-          />
-
           {/* icon location */}
           <CustomDrawerItem label="Tus Direcciones" icon={icons.location} />
 
-          {/* icon coupon */}
-          <CustomDrawerItem label="Promos" icon={icons.coupon} />
+         
 
         </View>
 
@@ -198,7 +158,12 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
         >
           {/* icon logout */}
           <CustomDrawerItem label="Cerrar Sesion" icon={icons.logout} 
-          onPress={() =>navigation.navigate('SignIn')}
+          onPress={ async () =>{
+            await CookieManager.clearAll()
+            guardarToken(null)
+            navigation.navigate('SignIn')
+            }
+          }
           />
         </View>
       </View>

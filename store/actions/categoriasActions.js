@@ -3,7 +3,6 @@ import {
     DESCARGA_PRODUCTOS_EXITO,
     DESCARGA_PRODUCTOS_ERROR,
 } from '../types';
-import { useDispatch, useSelector } from "react-redux";
 
 
 //Descargar las categorias de la base de datos

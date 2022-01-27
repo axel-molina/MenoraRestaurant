@@ -15,7 +15,7 @@ import { FormInput, TextButton } from "../../components";
 import { utils } from "../../utils";
 import CookieManager from "@react-native-cookies/cookies";
 import axios from "axios";
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from "react-native-linear-gradient";
 
 // Actions Redux
 import { crearTokenAction } from "../../store/actions/tokenActions";
@@ -37,21 +37,47 @@ const SignIn = ({ navigation }) => {
   const dispatch = useDispatch();
 
   // Acceder al state loading del store
-  const cargando = useSelector((state) => state.token.loading);
   const stateError = useSelector((state) => state.token.error);
   const token = useSelector((state) => state.token.token);
 
   // Manda a llamar el action de tokenActions
   const guardarToken = (token) => dispatch(crearTokenAction(token));
 
+  const refreshLogin = async () => {
+    try {
+      const cookies = await CookieManager.get(
+        "https://app-menora.herokuapp.com"
+      );
+      if (cookies.jwt && cookies.jwt.value) {
+        const url = "https://app-menora.herokuapp.com/refresh";
+        const data = await axios.get(url);
+        if (data.data.accessToken) {
+          guardarToken(data.data.accessToken);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!token) {
+      errorReset()
+      setIsLoading(true);
+      refreshLogin();
+    }
+  }, []);
+
   // Cuando el usuario inicie sesion
   const iniciarSesion = (email, password) => {
-    console.log("Iniciando sesion...")
+    console.log("Iniciando sesion...");
     // Quita los errores
     errorReset();
 
-    setIsLoading(true);
-
+    setIsLoading(true); 
 
     if (isEnableSignIn()) {
       //CookieManager.clearAll().then(() => {
@@ -63,20 +89,12 @@ const SignIn = ({ navigation }) => {
             password: password,
           });
 
-          CookieManager.get("https://app-menora.herokuapp.com")
-            .then((cookies) => {
-              //console.log('CookieManager.get =>', cookies);
-            })
-            .catch((error) => {
-              console.log(error);
-              setIsLoading(false);
-            });
           if (data.data.accessToken) {
             setError(false);
             guardarToken(data.data.accessToken);
           }
         } catch (error) {
-          console.log(error)
+          console.log(error);
           setUserError(true);
           setIsLoading(false);
         }
@@ -100,8 +118,8 @@ const SignIn = ({ navigation }) => {
   //Resetea los states de error a false
   const errorReset = () => {
     setError(false);
-      setUserError(false);
-  }
+    setUserError(false);
+  };
 
   return (
     <AuthLayout title="Iniciar Sesion">
@@ -187,15 +205,18 @@ const SignIn = ({ navigation }) => {
 
         {/* Sign In */}
 
-          {isLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> :
-          <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{padding: 12, borderRadius: 50, marginTop: 15,}}>
-          <TouchableOpacity onPress={() => iniciarSesion(email, password)}>
-            <Text style={styles.comprar}>INICIAR SESIÓN</Text>
-          </TouchableOpacity>
+        {isLoading ? (
+          <ActivityIndicator size="small" color={COLORS.primary} />
+        ) : (
+          <LinearGradient
+            colors={["#ED1200", "#D9510C", "#EA8100"]}
+            style={{ padding: 12, borderRadius: 50, marginTop: 15 }}
+          >
+            <TouchableOpacity onPress={() => iniciarSesion(email, password)}>
+              <Text style={styles.comprar}>INICIAR SESIÓN</Text>
+            </TouchableOpacity>
           </LinearGradient>
-          
-        }
-
+        )}
 
         {/*Forgot Password */}
         {/* <View
@@ -254,7 +275,7 @@ const styles = StyleSheet.create({
   comprar: {
     color: COLORS.white,
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     fontFamily: "Poppins-Regular",
   },
 });

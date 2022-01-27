@@ -14,6 +14,8 @@ const AuthLayout = ({ title, children }) => {
       }}
     >
       <KeyboardAwareScrollView
+        extraScrollHeight={100}
+        extraHeight={100}
         keyboardDismissMode="on-drag"
         contentContainerStyle={{
           flex: 1,

@@ -18,6 +18,7 @@ import Search from "../Search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { obtenerCategoriasAction } from "../../store/actions/categoriasActions";
 import { crearUsuarioAction } from "../../store/actions/usuarioActions";
+import { crearBebidasAction } from "../../store/actions/bebidasActions";
 
 
 
@@ -48,53 +49,67 @@ const Home = () => {
 
   const [categoryIndex, setCategoryIndex] = React.useState(0);
 
-  const [loader, setLoader] = React.useState(true);
-
   const dispatch = useDispatch();
 
+  
+  //accder a los states del store categorias
+  const categorias = useSelector((state) => state.categorias.categorias);
   const token = useSelector((state) => state.token.token);
 
-      //accder a los states del store categorias
-      const categorias = useSelector((state) => state.categorias.categorias);
+      
 
       const guardarCategorias = (categorias) => dispatch(obtenerCategoriasAction(categorias));
       const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
+      const guardarBebidas = (bebidas) => dispatch(crearBebidasAction(bebidas));
+     
       
 
-  React.useEffect(async () => {
+  useEffect( async () => {
 
-   
-    try {
-      const responseUser = await fetch('http://app-menora.herokuapp.com/users',
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const data2 = await responseUser.json();
-    guardarUsuario(data2);
-      const response = await fetch(
-        "https://app-menora.herokuapp.com/categories",
+    
+      try {
+        const responseUser = await fetch("https://app-menora.herokuapp.com/users",
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
-      const data = await response.json();
-      guardarCategorias(data);
-      setLoader(false);
+        });
+        const data2 = await responseUser.json();
+    
+        guardarUsuario(data2);
+
+        const responseDrinks = await fetch("https://app-menora.herokuapp.com/drinks",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const dataDrinks = await responseDrinks.json();     
+        guardarBebidas(dataDrinks);
+
+        const response = await fetch("https://app-menora.herokuapp.com/categories",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        const drinksFalsos = {name: "Bebidas", image: 'https://www.costacruceros.com/content/dam/costa/costa-asset/costa-experience/dining/Pacchetto_bevande.jpg.image.750.563.low.jpg', description: 'Esto es bebidas', products: dataDrinks}     
+        data.push(drinksFalsos);
+        guardarCategorias(data);  
+
     } catch (error) {
       console.log(error);
     }
-    
 
   }, []);
+  
 
   //Seleccion de tipo
   function renderFoodCategory() {
@@ -205,6 +220,7 @@ const Home = () => {
   }
 
   const navigation = useNavigation();
+  
 
   return (
     <View
@@ -216,7 +232,9 @@ const Home = () => {
 
         {/* Buscador */}
         <Search />
+        {/* elemntos en Categorias */}
 
+       
 
         {/* Lista */}
 

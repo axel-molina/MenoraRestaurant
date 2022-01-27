@@ -4,7 +4,6 @@ import {
     Image,
     TextInput,
     Text,
-    ScrollView
 } from 'react-native';
 import { HorizontalFoodCard } from "../../components";
 import { FONTS, COLORS, SIZES, icons } from "../../constants";
@@ -12,7 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
+import { obtenerCategoriasAction } from "../../store/actions/categoriasActions";
+import { crearUsuarioAction } from "../../store/actions/usuarioActions";
 import { obtenerProductosAction } from "../../store/actions/productsActions";
+
 import { FlatList } from 'react-native-gesture-handler';
 
 const Search = () => {
@@ -23,10 +25,10 @@ const Search = () => {
   const token = useSelector((state) => state.token.token);
 
   //accder a los states del store
-  const loading = useSelector((state) => state.products.loading);
-  const error = useSelector((state) => state.products.error);
   const products = useSelector((state) => state.products.products);
 
+  const guardarCategorias = (categorias) => dispatch(obtenerCategoriasAction(categorias));
+  const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
   const guardarProductos = (products) => dispatch(obtenerProductosAction(products));
 
 
@@ -38,7 +40,7 @@ const Search = () => {
   //Obtener productos y guardarlos en redux
   useEffect(async () => {
     try {
-      const response = await fetch("https://app-menora.herokuapp.com/products",
+      const responseProd = await fetch("https://app-menora.herokuapp.com/products",
       {
         method: "GET",
         headers: {
@@ -46,19 +48,13 @@ const Search = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await response.json();
-      guardarProductos(data);
+      const dataProd = await responseProd.json();
+      guardarProductos(dataProd);
       
     } catch (error) {
       console.log(error);
     }
   }, []);
-
-  // useEffect(() => {
-  //   if(productos.length === 0 && !loading){
-  //     setProductos(products);
-  //   }
-  // },[products]);
 
   //Buscar productos
   useEffect(() => {

@@ -21,10 +21,12 @@ import {
 } from "../../components";
 import { RadioButton } from 'react-native-paper'
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from "react-native-vector-icons/AntDesign";
+
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { crearCarritoAction } from "../../store/actions/carritoActions"; 
+import { crearCarritoAction, crearDrinksAction } from "../../store/actions/carritoActions"; 
 
 
 
@@ -68,6 +70,10 @@ const FoodDetail = ({ navigation, route }) => {
   }
 
   function renderHeader() {
+
+       // Info de REDUX
+   const carrito = useSelector((state) => state.carrito.carrito);
+
     return (
       <Header
       
@@ -87,8 +93,6 @@ const FoodDetail = ({ navigation, route }) => {
               borderWidth: 1,
               alignItems: "center",
               justifyContent: "center",
-              borderColor: COLORS.gray2,
-              borderRadius: SIZES.radius,
             }}
             iconStyle={{
               width: 20,
@@ -98,7 +102,36 @@ const FoodDetail = ({ navigation, route }) => {
             onPress={() => {navigation.navigate("Home")}}
           />
         }
-        rightComponent={<CartQuantityButton quantity={3} />}
+        rightComponent={
+          <TouchableOpacity
+          style={{
+            width: 50,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          //se direcciona a la pestaña del carrito
+          onPress={() => setSelectedTab(constants.screens.cart)}
+        >
+          <Icon name="shoppingcart" size={30} color="white" />
+    
+          {carrito.length > 0 ? <View
+            style={{
+              position: "absolute",
+              top: 5,
+              right: 5,
+              height: 20,
+              width: 20,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: SIZES.radius,
+              backgroundColor: COLORS.primary,
+            }}>
+            <Text style={{ color: 'white' }}>{carrito.length}</Text>
+          </View> : null}
+          
+        </TouchableOpacity>
+        }
       />
     );
   }
@@ -158,25 +191,20 @@ const FoodDetail = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ ...FONTS.h3, color: "white" }}>Ingredientes:</Text>
+          <Text style={{ ...FONTS.h3, color: "white" }}>Descripción:</Text>
         </View>
         
 
-        <View
+        {producto.description !== null ? <View
           style={{
             flexDirection: "row",
             marginTop: 5,
             alignItems: "center",
-          }}
-        >
+          }}>
           <Text style={{ ...FONTS.body3, color: "white" }}>
             {producto.description}
           </Text>
-        </View>
-
-        {/* Extras */}
-        <Text style={{ color: 'white', marginTop: 20, borderBottomColor: 'white', fontFamily: "Poppins-Regular"}}>¿Quiere agregar algún extra?</Text>
-
+        </View> : null}
        
       </View>
     );
@@ -186,18 +214,34 @@ const FoodDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   const carrito = useSelector((state) => state.carrito.carrito);
+  const drinks = useSelector((state) => state.carrito.drinks);
 
   const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
+  const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
 
   const añadirAlCarrito = () => {
-    ToastAndroid.show(`${producto.name} agregado`, ToastAndroid.SHORT);
+
+    if(producto.hasOwnProperty('alcohol')){
+      ToastAndroid.show(`${producto.name} agregado`, ToastAndroid.SHORT);
     console.log("DESDE HORIZONTAL",producto.name)
     const name = producto.name;
     const price = producto.price;
     const id = producto._id;
-    const extras = extrasEstado;
-    
-    guardarCarrito([...carrito, { name, price, id, extras }]);
+    const alcohol = producto.alcohol;
+
+    guardarDrinks([...drinks, {name, price, id, alcohol}])
+    } else {
+
+      ToastAndroid.show(`${producto.name} agregado`, ToastAndroid.SHORT);
+      console.log("DESDE HORIZONTAL",producto.name)
+      const name = producto.name;
+      const price = producto.price;
+      const id = producto._id;
+      const extras = extrasEstado;
+      
+      guardarCarrito([...carrito, { name, price, id, extras }]);
+    }
+
     navigation.navigate("Home");
   }
 
@@ -215,6 +259,8 @@ const FoodDetail = ({ navigation, route }) => {
 
       {/* Body */}
       {renderDetails()} 
+
+      { producto.extras && producto.extras.length > 0 && producto.extras !== null ? <Text style={{ color: 'white', marginTop: 20, borderBottomColor: 'white', fontFamily: "Poppins-Regular", marginLeft: 20}}>¿Quiere agregar algún extra?</Text> : null}
      
         <FlatList
           data={producto.extras}
