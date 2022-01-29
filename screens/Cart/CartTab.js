@@ -61,7 +61,6 @@ const CartTab = () => {
 
   const comprar = () => {
     console.log("COMPRAR")
-    //console.log(productos);
     console.log("Aclaraciones: " + text);
     navigation.navigate("MedioDeEnvio")
   }

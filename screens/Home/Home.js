@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { FONTS, COLORS, SIZES, icons } from "../../constants";
 import { HorizontalFoodCard } from "../../components";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   View,
@@ -100,8 +101,10 @@ const Home = () => {
           },
         });
         const data = await response.json();
-        const drinksFalsos = {name: "Bebidas", image: 'https://www.costacruceros.com/content/dam/costa/costa-asset/costa-experience/dining/Pacchetto_bevande.jpg.image.750.563.low.jpg', description: 'Esto es bebidas', products: dataDrinks}     
-        data.push(drinksFalsos);
+        const drinksFalsos = { products: dataDrinks }     
+        if(dataDrinks.length > 0){
+          data.push(drinksFalsos);
+        }
         guardarCategorias(data);  
 
     } catch (error) {
@@ -146,14 +149,19 @@ const Home = () => {
                 justifyContent: "center",
               }}
             >
-              <Image
+              { index < categorias.length - 1 ?
+                <Image
                 source={{ uri: item.image }}
                 style={{
                   height: 65,
                   width: 100,
                   borderRadius: SIZES.radius,
                 }}
-              />
+              /> :
+              <View style={{ height: 65, width: 100, borderRadius: SIZES.radius, borderColor: 'white', borderWidth: 1, alignItems: 'center' }}>
+                <Icon name="bottle-soda-classic" size={60} color="white" />
+              </View>
+              }
             </View>
 
             <View>
@@ -169,7 +177,7 @@ const Home = () => {
                   ...FONTS.h3,
                 }}
               >
-                {item.name}
+                { index < categorias.length - 1 ? item.name : "Bebidas" }
               </Text>
             </View>
           </TouchableOpacity>

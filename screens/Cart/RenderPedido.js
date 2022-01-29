@@ -39,6 +39,7 @@ const RenderPedido = ( {item, index}) => {
     const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
     
     const eliminarDrinks = (index) => {
+      console.log("ESTO ES INDEX DE DRINKS", index)
       const pedidoDrinks = drinks.filter((drinks, indice) => indice !== index);
       guardarDrinks(pedidoDrinks);
     }
@@ -74,7 +75,7 @@ const RenderPedido = ( {item, index}) => {
         <Text style={styles.text}> {item.name}</Text>
         <View style={{ flexDirection: 'row'}}>
           <Text style={styles.price}>${item.price}</Text>
-          <TouchableOpacity style={styles.button} onPress={() => eliminarDrinks(index)}>
+          <TouchableOpacity style={styles.button} onPress={() => eliminarDrinks(index - carrito.length)}>
            <Icon name="delete" size={25} color="orange" />
           </TouchableOpacity>
         </View>

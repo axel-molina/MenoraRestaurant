@@ -21,7 +21,6 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
 
     if(item.hasOwnProperty('alcohol')){
       ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
-    console.log("DESDE HORIZONTAL",item.name)
     const name = item.name;
     const price = item.price;
     const id = item._id;
@@ -31,7 +30,6 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
     } else {
 
       ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
-      console.log("DESDE HORIZONTAL",item.name)
       const name = item.name;
       const price = item.price;
       const id = item._id;

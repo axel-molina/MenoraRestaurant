@@ -27,9 +27,7 @@ export function crearDrinksAction(drinks){
     return (dispatch)=>{
 
         dispatch(agregarDrinks());
-        //console.log("DESDE REDUX: ",carrito)
         try {
-            console.log("DESDE REDUX DRINKS: ",drinks)
             dispatch(agregarDrinksExito(drinks));
         } catch (error) {
             dispatch(agregarDrinksError(true));

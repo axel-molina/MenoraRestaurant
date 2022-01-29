@@ -7,7 +7,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Alert
+  Alert,
 } from "react-native";
 import { AuthLayout } from "../";
 import { COLORS, FONTS, SIZES, icons } from "../../constants";
@@ -15,6 +15,7 @@ import { FormInput, TextButton } from "../../components";
 import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign";
 import Logo from "react-native-vector-icons/Entypo";
+import Icono from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 import { crearTokenAction } from "../../store/actions/tokenActions";
 
@@ -28,22 +29,34 @@ const SignUp = ({ navigation }) => {
     address: {
       street: "",
       number: null,
+      apt: "",
       postalCode: "",
       latitude: null,
       longitude: null,
     },
     password: "",
+    passwordConfirmation: "",
   });
 
-  const { name, surname, phone, email, address, password } = usuario;
+  const {
+    name,
+    surname,
+    phone,
+    email,
+    address,
+    password,
+    passwordConfirmation,
+  } = usuario;
 
   const [showPass, setShowPass] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
   const [error, setError] = React.useState("");
+  const [passwordConfirmationError, setPasswordConfirmationError] = React.useState("");
 
-    // Manda a llamar el action de tokenActions
-    const guardarToken = (token) => dispatch(crearTokenAction(token));
+
+  // Manda a llamar el action de tokenActions
+  const guardarToken = (token) => dispatch(crearTokenAction(token));
 
   function isEnableSignUp() {
     return (
@@ -63,28 +76,31 @@ const SignUp = ({ navigation }) => {
   const registrarUsuario = async () => {
     try {
       if (isEnableSignUp()) {
+        if(password !== passwordConfirmation){
+          setError("La contraseña no coincide");
+        }
         setError("");
 
         const consultarAPI = async () => {
           const url = "https://app-menora.herokuapp.com/register";
-          const data = await axios.post(url, usuario);
+          const { passwordConfirmation,...userAux } = usuario
+          console.log("ESTO ES LO QUE SE ENVIA: ", userAux)
+          console.log("ESTO ES TYPEOF APT ", typeof userAux.address.apt)
+          const data = await axios.post(url, userAux);
           return data;
         };
         const response = await consultarAPI();
         guardarToken(response.data.accessToken);
-        Alert.alert(
-          "Registro exitoso",
-          [
-            { text: "OK", onPress: () => navigation.navigate("Home") }
-          ]
-        );
+        Alert.alert("Registro exitoso", [
+          { text: "OK", onPress: () => navigation.navigate("Home") },
+        ]);
       } else {
         setError("Todos los campos son obligatorios");
       }
     } catch (error) {
-      //console.log(error.message);
-      if(error.message === "Request failed with status code 400"){
-        setError("Este usuario ya está registrado")
+      console.log(error);
+      if (error.message === "Request failed with status code 400") {
+        setError("Este usuario ya está registrado");
       } else {
         console.log(error);
       }
@@ -182,9 +198,7 @@ const SignUp = ({ navigation }) => {
           <FormInput
             label="Calle"
             value={address.street}
-            prependComponent={
-              <Logo name="address" size={30} color="white" />
-            }
+            prependComponent={<Logo name="address" size={30} color="white" />}
             onChange={(value) => {
               const address = { ...usuario.address, street: value.trim() };
               setUsuario({ ...usuario, address });
@@ -200,10 +214,25 @@ const SignUp = ({ navigation }) => {
               <Icon name="enviroment" size={30} color="white" />
             }
             onChange={(value) => {
-              if(Number(value) > 0){
+              if (Number(value) > 0) {
                 const address = { ...usuario.address, number: Number(value) };
                 setUsuario({ ...usuario, address });
-              } else {console.log("No es un número")}
+              } else {
+                console.log("No es un número");
+              }
+            }}
+          />
+
+          {/* Input Depto */}
+          <FormInput
+            label="Dpto."
+            value={address.apt}
+            prependComponent={<Icono name="building-o" size={30} color="white" />}
+            onChange={(value) => {
+              if(address.apt.length < 16){
+                const address = { ...usuario.address, apt: value.trim() };
+                setUsuario({ ...usuario, address });
+              }
             }}
           />
 
@@ -211,9 +240,7 @@ const SignUp = ({ navigation }) => {
           <FormInput
             label="Código postal"
             value={address.postalCode}
-            prependComponent={
-              <Icon name="inbox" size={30} color="white" />
-            }
+            prependComponent={<Icon name="inbox" size={30} color="white" />}
             onChange={(value) => {
               const address = { ...usuario.address, postalCode: value };
               setUsuario({ ...usuario, address });
@@ -254,7 +281,45 @@ const SignUp = ({ navigation }) => {
             }
           />
 
-          { error ? <Text style={styles.error}>{error}</Text> : null }
+
+          {/*Confirmation Password */}
+          <FormInput
+            label="Confirmar contraseña"
+            secureTextEntry={!showPass}
+            value={passwordConfirmation}
+            prependComponent={<Icon name="lock1" size={30} color="white" />}
+            autoCompletType="password"
+            containerStyle={{ marginTop: SIZES.radius }}
+            onChange={(value) => {
+              //utils.validatePassword(value, setPasswordConfirmationError);
+              if(passwordConfirmation === password){
+                setPasswordConfirmationError("");
+              } 
+              setUsuario({ ...usuario, passwordConfirmation: value });
+            }}
+            errorMsg={passwordConfirmationError}
+            appendComponent={
+              <TouchableOpacity
+                style={{
+                  width: 40,
+                  alignItems: "flex-end",
+                  justifyContent: "center",
+                }}
+                onPress={() => setShowPass(!showPass)}
+              >
+                <Image
+                  source={showPass ? icons.eye_close : icons.eye}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    tintColor: COLORS.gray,
+                  }}
+                />
+              </TouchableOpacity>
+            }
+          />
+
+          {error ? <Text style={styles.error}>{error}</Text> : null}
 
           {/* Sign Up & Sign In Button */}
           <TextButton

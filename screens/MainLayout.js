@@ -214,6 +214,7 @@ const MainLayout = ({
 
    // Info de REDUX
    const carrito = useSelector((state) => state.carrito.carrito);
+   const drinks = useSelector((state) => state.carrito.drinks);
 
   return (
     <Animated.View
@@ -262,7 +263,7 @@ const MainLayout = ({
         >
           <Icon name="shoppingcart" size={30} color="white" />
     
-          {carrito.length > 0 ? <View
+          {carrito.length > 0 || drinks.length > 0 ? <View
             style={{
               position: "absolute",
               top: 5,
@@ -274,7 +275,7 @@ const MainLayout = ({
               borderRadius: SIZES.radius,
               backgroundColor: COLORS.primary,
             }}>
-            <Text style={{ color: 'white' }}>{carrito.length}</Text>
+            <Text style={{ color: 'white' }}>{carrito.length + drinks.length}</Text>
           </View> : null}
           
         </TouchableOpacity>

@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Icon from "react-native-vector-icons/AntDesign";
 
 import { useDispatch, useSelector } from "react-redux";
-import { crearCarritoAction } from "../../store/actions/carritoActions";
-import { crearIndexAction } from '../../store/actions/indexProductAction';
+
 
 const RenderDrinks = ( {item, index}) => { 
 
@@ -14,6 +13,7 @@ const RenderDrinks = ( {item, index}) => {
     const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
     
     const eliminarDrinks = (index) => {
+      console.log(index)
       const pedidoDrinks = drinks.filter((drinks, indice) => indice !== index);
       guardarDrinks(pedidoDrinks);
     }
@@ -23,7 +23,7 @@ const RenderDrinks = ( {item, index}) => {
             <Text style={styles.text}> {item.name}</Text>
             <View style={{ flexDirection: 'row'}}>
               <Text style={styles.price}>${item.price}</Text>
-              <TouchableOpacity style={styles.button} onPress={() => eliminar(index)}>
+              <TouchableOpacity style={styles.button} onPress={() => eliminarDrinks(index)}>
                <Icon name="delete" size={25} color="orange" />
               </TouchableOpacity>
             </View>
