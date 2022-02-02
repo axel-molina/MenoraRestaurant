@@ -17,8 +17,9 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
 
   const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
   const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
-  const añadirAlCarrito =  (item) => {
 
+  //Cuando se toca añadir en el producto desde el home
+  const añadirAlCarrito =  (item) => {
     if(item.hasOwnProperty('alcohol')){
       ToastAndroid.show(`${item.name} agregado`, ToastAndroid.SHORT);
     const name = item.name;
@@ -33,7 +34,7 @@ const HorizontalFoodCard = ({ containerStyle, imageStyle, item, onPress, }) => {
       const name = item.name;
       const price = item.price;
       const id = item._id;
-      const extras = item.extras;
+      const extras = [];
       
       guardarCarrito([...carrito, { name, price, id, extras }]);
     }

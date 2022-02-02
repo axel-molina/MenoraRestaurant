@@ -16,7 +16,10 @@ import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign";
 import Logo from "react-native-vector-icons/Entypo";
 import Icono from "react-native-vector-icons/FontAwesome";
+import LinearGradient from 'react-native-linear-gradient';
 import axios from "axios";
+
+import { useDispatch } from "react-redux";
 import { crearTokenAction } from "../../store/actions/tokenActions";
 
 const SignUp = ({ navigation }) => {
@@ -54,6 +57,7 @@ const SignUp = ({ navigation }) => {
   const [error, setError] = React.useState("");
   const [passwordConfirmationError, setPasswordConfirmationError] = React.useState("");
 
+  const dispatch = useDispatch();
 
   // Manda a llamar el action de tokenActions
   const guardarToken = (token) => dispatch(crearTokenAction(token));
@@ -84,16 +88,12 @@ const SignUp = ({ navigation }) => {
         const consultarAPI = async () => {
           const url = "https://app-menora.herokuapp.com/register";
           const { passwordConfirmation,...userAux } = usuario
-          console.log("ESTO ES LO QUE SE ENVIA: ", userAux)
-          console.log("ESTO ES TYPEOF APT ", typeof userAux.address.apt)
           const data = await axios.post(url, userAux);
           return data;
         };
         const response = await consultarAPI();
         guardarToken(response.data.accessToken);
-        Alert.alert("Registro exitoso", [
-          { text: "OK", onPress: () => navigation.navigate("Home") },
-        ]);
+        navigation.navigate("SignIn")
       } else {
         setError("Todos los campos son obligatorios");
       }
@@ -322,17 +322,12 @@ const SignUp = ({ navigation }) => {
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
           {/* Sign Up & Sign In Button */}
-          <TextButton
-            label="REGISTRARME"
-            buttonContainerStyle={{
-              height: 55,
-              alignItems: "center",
-              marginTop: SIZES.padding,
-              borderRadius: SIZES.radius,
-              backgroundColor: COLORS.primary,
-            }}
-            onPress={() => registrarUsuario()}
-          />
+          <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{padding: 12, borderRadius: 50, marginTop: 10, marginBottom: 10, marginHorizontal: 10}}>
+          <TouchableOpacity onPress={() =>registrarUsuario()}>
+            <Text style={{ color: 'white', fontSize: 22, textAlign: 'center', fontFamily: "Poppins-Regular", }}>REGRISTRARME</Text>
+          </TouchableOpacity>
+          </LinearGradient>  
+          
 
           <View
             style={{

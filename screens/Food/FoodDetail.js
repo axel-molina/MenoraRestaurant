@@ -17,7 +17,6 @@ import {
 import {
   Header,
   IconButton,
-  CartQuantityButton,
 } from "../../components";
 import { RadioButton } from 'react-native-paper'
 import LinearGradient from 'react-native-linear-gradient';
@@ -51,7 +50,6 @@ const FoodDetail = ({ navigation, route }) => {
   const [checked, setChecked] = React.useState([]);
 
   const { producto } = route.params;
-  //console.log("esto es producto detalles",producto)
 
   const handleChecked= (index, item) =>{
     if(extrasEstado.includes(item)){
@@ -66,7 +64,6 @@ const FoodDetail = ({ navigation, route }) => {
     } else {
       setChecked([...checked, index])
     }
-    //console.log("Extraaasss: ",extras)
   }
 
   function renderHeader() {
@@ -223,7 +220,6 @@ const FoodDetail = ({ navigation, route }) => {
 
     if(producto.hasOwnProperty('alcohol')){
       ToastAndroid.show(`${producto.name} agregado`, ToastAndroid.SHORT);
-    console.log("DESDE HORIZONTAL",producto.name)
     const name = producto.name;
     const price = producto.price;
     const id = producto._id;
@@ -233,7 +229,6 @@ const FoodDetail = ({ navigation, route }) => {
     } else {
 
       ToastAndroid.show(`${producto.name} agregado`, ToastAndroid.SHORT);
-      console.log("DESDE HORIZONTAL",producto.name)
       const name = producto.name;
       const price = producto.price;
       const id = producto._id;
@@ -260,7 +255,7 @@ const FoodDetail = ({ navigation, route }) => {
       {/* Body */}
       {renderDetails()} 
 
-      { producto.extras && producto.extras.length > 0 && producto.extras !== null ? <Text style={{ color: 'white', marginTop: 20, borderBottomColor: 'white', fontFamily: "Poppins-Regular", marginLeft: 20}}>¿Quiere agregar algún extra?</Text> : null}
+      { producto.extras && producto.extras.length > 0 && producto.extras !== null ? <Text style={{ color: 'white', borderBottomColor: 'white', fontFamily: "Poppins-Regular", marginLeft: 20}}>¿Quiere agregar algún extra?</Text> : null}
      
         <FlatList
           data={producto.extras}
@@ -269,14 +264,17 @@ const FoodDetail = ({ navigation, route }) => {
             
               <View style={{ flex: 1, flexDirection: 'row', marginTop: 2, justifyContent: 'space-between', marginLeft: 20}}>
                 <Text style={{ color: 'white', marginTop: 6 }}>{item.name}</Text>
-                <RadioButton
-                uncheckedColor={COLORS.primary}
-                color={COLORS.primary}
-                value={false}
-                status={checked.includes(index) ? 'checked' : 'unchecked'}
-                //key={index}
-                onPress={() => handleChecked(index, item)}
-                />
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: 'white', marginTop: 8 }}>${item.price}</Text>
+                  <RadioButton
+                  uncheckedColor={COLORS.primary}
+                  color={COLORS.primary}
+                  value={false}
+                  status={checked.includes(index) ? 'checked' : 'unchecked'}
+                  //key={index}
+                  onPress={() => handleChecked(index, item)}
+                  />
+                </View>
               </View>
           )}
           />

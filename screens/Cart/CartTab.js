@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import LinearGradient from 'react-native-linear-gradient';
 import RenderPedido from "./RenderPedido";
 import { useNavigation } from '@react-navigation/native';
-import RenderDrinks from "./RenderDrinks";
 
 
 const UselessTextInput = (props) => {
@@ -60,7 +59,6 @@ const CartTab = () => {
   const navigation = useNavigation();
 
   const comprar = () => {
-    console.log("COMPRAR")
     console.log("Aclaraciones: " + text);
     navigation.navigate("MedioDeEnvio")
   }

@@ -5508,6 +5508,11 @@
   "resolved" "https://registry.npmjs.org/pascalcase/-/pascalcase-0.1.1.tgz"
   "version" "0.1.1"
 
+"password-validator@^5.2.1":
+  "integrity" "sha512-EfNW0akQ+YrMawF5KNXoDBTdUvXwx2vxvIuq1XXUiDmti7aaBDnqTl/IAruxztWTCN0Bt+og3LL3I9E4blCRqQ=="
+  "resolved" "https://registry.npmjs.org/password-validator/-/password-validator-5.2.1.tgz"
+  "version" "5.2.1"
+
 "path-exists@^3.0.0":
   "integrity" "sha1-zg6+ql94yxiSXqfYENe1mwEP1RU="
   "resolved" "https://registry.npmjs.org/path-exists/-/path-exists-3.0.0.tgz"

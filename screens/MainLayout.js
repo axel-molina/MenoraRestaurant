@@ -156,10 +156,14 @@ const MainLayout = ({
   });
 
   React.useEffect(() => {
+    
     setSelectedTab(constants.screens.home);
   }, []);
 
   React.useEffect(() => {
+
+   
+
     if (selectedTab == constants.screens.home) {
       flatListRef?.current?.scrollToIndex({
         index: 0,
@@ -299,6 +303,7 @@ const MainLayout = ({
           data={constants.bottom_tabs}
           keyExtractor={(item) => `${item.id}`}
           renderItem={({ item, index }) => {
+         
             return (
               <View
                 style={{
@@ -306,6 +311,7 @@ const MainLayout = ({
                   width: SIZES.width,
                 }}
               >
+                
                 {item.label == constants.screens.home && <Home/>}
                 {item.label == constants.screens.search && <Search/>}
                 {item.label == constants.screens.cart && <CartTab/>}
@@ -407,3 +413,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+
+

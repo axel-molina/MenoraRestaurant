@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { AuthLayout } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../constants";
-import { FormInput, TextButton } from "../../components";
+import { FormInput } from "../../components";
 import { utils } from "../../utils";
 import CookieManager from "@react-native-cookies/cookies";
 import axios from "axios";
@@ -252,7 +252,7 @@ const SignIn = ({ navigation }) => {
             No tienes una cuenta?
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.olvidasteTuContraseña}>{} Crear</Text>
+            <Text style={styles.olvidasteTuContraseña}> Crear</Text>
           </TouchableOpacity>
         </View>
       </View>

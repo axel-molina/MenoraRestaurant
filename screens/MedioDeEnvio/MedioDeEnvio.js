@@ -5,12 +5,22 @@ import icon2 from '../../assets/images/opcion2.png'
 import icon3 from '../../assets/images/Vector.png'
 import LinearGradient from 'react-native-linear-gradient';
 
+//redux
+import { useDispatch } from "react-redux";
+import { crearTypeAction } from '../../store/actions/carritoActions'
+
 
 const MedioDeEnvio = ({ navigation }) => {
 
+
+    const dispatch = useDispatch();
+
+    const guardarType = (type) => dispatch(crearTypeAction(type));
+
+
     //Al hacer clic en medio de envio
     const alHacerClic = (opcion) => {
-        console.log("Hiciste clic en medio de envio: " + opcion)
+        guardarType(opcion)
         navigation.navigate("Abonar")
     }
 
@@ -18,19 +28,19 @@ const MedioDeEnvio = ({ navigation }) => {
         <View style={styles.contain}>
             <StatusBar backgroundColor="#000"></StatusBar>
                 <Text style={{ color: 'white', textAlign: 'center', fontSize: 22, marginTop: 10}}>DELIVERY</Text>
-            <TouchableOpacity onPress={() => alHacerClic("DELIVERY")}>
+            <TouchableOpacity onPress={() => alHacerClic("delivery")}>
                 <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{ width: 150, borderRadius: 100, height: 150, justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={icon1}></Image>
                 </LinearGradient>
             </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center', fontSize: 22}}>LOCAL</Text>
-            <TouchableOpacity onPress={() => alHacerClic("LOCAL")}>
+            <TouchableOpacity onPress={() => alHacerClic("local")}>
                 <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{ width: 150, borderRadius: 100, height:150, justifyContent: 'center', alignItems: 'center'  }}>
                     <Image source={icon2}></Image>
                 </LinearGradient>
             </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center', fontSize: 22}}>PICK UP</Text>
-            <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => alHacerClic("PICK UP")}>
+            <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => alHacerClic("pickup")}>
                 <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{ width: 150, borderRadius: 100, height: 150, justifyContent: 'center', alignItems: 'center'  }}>
                     <Image source={icon3}></Image>
                 </LinearGradient>

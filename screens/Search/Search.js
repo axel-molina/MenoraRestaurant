@@ -11,8 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { obtenerCategoriasAction } from "../../store/actions/categoriasActions";
-import { crearUsuarioAction } from "../../store/actions/usuarioActions";
 import { obtenerProductosAction } from "../../store/actions/productsActions";
 
 import { FlatList } from 'react-native-gesture-handler';
@@ -23,12 +21,12 @@ const Search = () => {
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token.token);
+  const drinks = useSelector((state) => state.bebidas.bebidas);
 
   //accder a los states del store
   const products = useSelector((state) => state.products.products);
 
-  const guardarCategorias = (categorias) => dispatch(obtenerCategoriasAction(categorias));
-  const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
+
   const guardarProductos = (products) => dispatch(obtenerProductosAction(products));
 
 
@@ -59,7 +57,10 @@ const Search = () => {
   //Buscar productos
   useEffect(() => {
     if(text.length > 0 && text !== ""){
-    setProductos(products.filter((product) => product.name.toLowerCase().includes(text.toLowerCase())));
+      //const filtroAux = [...products, ...drinks]
+      const filtrados = products.filter((product) => product.name.toLowerCase().includes(text.toLowerCase()));
+      
+    setProductos(filtrados);
     }
   } , [text]);
     
@@ -69,6 +70,14 @@ const Search = () => {
     }
   
   } , [productos, text]);
+
+  // useEffect(() => {
+  //   if(text.length === 0 && bebidas.length === 0){
+  //     setBebidas(drinks);
+  //   }
+  //   //console.log(bebidas)
+  
+  // } , [bebidas, text]);
 
     return (
         <View>
@@ -137,6 +146,38 @@ const Search = () => {
             }}
            /> 
           }
+
+          {/* {text.length === 0 ? null : 
+            <FlatList
+            data={bebidas}
+            keyExtractor={(item) => `${item._id}`}
+            ListEmptyComponent={() => <Text>No hay resultados</Text>}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) => {
+              return (
+                <HorizontalFoodCard
+                  containerStyle={{
+                    height: 140,
+                    alignItems: "center",
+                    marginHorizontal: SIZES.padding,
+                    marginBottom: SIZES.radius,
+                  }}
+                  imageStyle={{
+                    marginLeft: 10,
+                    height: "80%",
+                    width: "40%",
+                    resizeMode: "contain",
+                    borderRadius: 10,
+                  }}
+                  item={item}
+                  onPress={() => navigation.navigate("FoodDetail", {
+                    producto: item,
+                  })}
+                />
+              );
+            }}
+           /> 
+          } */}
         </View>
     )
 }
