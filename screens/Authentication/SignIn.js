@@ -219,7 +219,7 @@ const SignIn = ({ navigation }) => {
         )}
 
         {/*Forgot Password */}
-        {/* <View
+        <View
           style={{
             flexDirection: "row",
             marginTop: SIZES.radius,
@@ -233,7 +233,7 @@ const SignIn = ({ navigation }) => {
               ¿Olvidaste tu contraseña?
             </Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
 
         {/* Sign Up */}
         <View

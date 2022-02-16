@@ -1,130 +1,43 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { FONTS, COLORS, SIZES } from "../../constants";
-import OTPInputView from "@twotalltotems/react-native-otp-input";
-import { AuthLayout } from "../";
-import { TextButton } from "../../components";
+import { View, Text, StatusBar, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
+import LinearGradient from "react-native-linear-gradient";
+
 
 const Otp = ({ navigation }) => {
-  const [timer, setTimer] = React.useState(60);
-
-  React.useEffect(() => {
-    let interval = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer > 0) {
-          return prevTimer - 1;
-        } else {
-          return prevTimer;
-        }
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  
 
   return (
-    <AuthLayout
-      title="OTP Authentication"
-      subtitle="Un codigo de autenticacion se ah enviado a tu correo ejemplo@ejemplo.com"
-      titleContainerStyle={{
-        marginTop: SIZES.padding * 2,
-      }}
-    >
-      {/* OTP inputs */}
-      <View
+    <View style={{ flex:1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center'}}>
+      <StatusBar backgroundColor="#000"></StatusBar>
+      <Icon name="checkcircle" size={160} color="green" />
+      <Text style={{ color: 'white', fontSize: 20, textAlign: 'center', marginTop: 40, fontWeight: 'bold', marginHorizontal: 20}}>
+        Tu nueva contraseña se encuentra en el email que te acabamos de enviar, revisa tu correo y sigue los pasos para continuar
+      </Text>
+      <LinearGradient
+        colors={["#ED1200", "#D9510C", "#EA8100"]}
         style={{
-          flex: 1,
-          marginTop: SIZES.padding * 2,
+          padding: 12,
+          borderRadius: 50,
+          marginTop: 90,
+          marginBottom: 30,
+          marginHorizontal: 10,
         }}
       >
-        <OTPInputView
-          pinCount={4}
-          style={{
-            width: "100%",
-            height: 50,
-          }}
-          codeInputFieldStyle={{
-            width: 65,
-            height: 65,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.lightGray1,
-            color: COLORS.black,
-            ...FONTS.h3,
-          }}
-          onCodeChange={(code) => {
-            console.log(code);
-          }}
-        />
-
-        {/* Cuenta atras del timer */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: SIZES.padding,
-          }}
-        >
-          <Text style={{ color: COLORS.darkGray, ...FONTS.body3 }}>
-            Didn't receive code?
-          </Text>
-
-          <TextButton
-            label={`Resend (${timer})`}
-            disabled={timer == 0 ? false : true}
-            buttonContainerStyle={{
-              marginLeft: SIZES.base,
-              backgroundColor: null,
-            }}
-            labelStyle={{
-              color: COLORS.primary,
-              ...FONTS.h3,
-            }}
-            onPress={() => setTimer(60)}
-          />
-        </View>
-      </View>
-
-      {/* Footer */}
-      <View>
-        <TextButton
-          label="Continue"
-          buttonContainerStyle={{
-            height: 50,
-            alignItems: "center",
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.primary,
-          }}
-          onPress={() => console.log("Continue")}
-        />
-
-        <View
-          style={{
-            marginTop: SIZES.padding,
-            alignItems: "center",
-          }}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
           <Text
             style={{
-              color: COLORS.darkGray,
-              ...FONTS.body3,
+              color: "white",
+              fontSize: 20,
+              textAlign: "center",
+              fontFamily: "Poppins-Regular",
             }}
           >
-            Al registrarse, acepta nuestros.
+            VOLVER A INICIAR SESIÓN
           </Text>
-          <TextButton
-            label="terminos y condiciones"
-            buttonContainerStyle={{
-              backgroundColor: null,
-            }}
-            labelStyle={{
-              color: COLORS.primary,
-              ...FONTS.body3,
-            }}
-            onPress={() => console.log("TnC")}
-          />
-        </View>
-      </View>
-    </AuthLayout>
+        </TouchableOpacity>
+      </LinearGradient>
+    </View>
   );
 };
 

@@ -9,18 +9,22 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
-  Alert
+  Alert,
 } from "react-native";
 import { COLORS, images } from "../../constants";
 import { RadioButton } from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
 import LinearGradient from "react-native-linear-gradient";
-import { useNavigation } from '@react-navigation/native';
-import axios from 'axios'
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { crearPaymentAction, crearCarritoAction, crearDrinksAction, crearTypeAction } from "../../store/actions/carritoActions";
-
+import {
+  crearPaymentAction,
+  crearCarritoAction,
+  crearDrinksAction,
+  crearTypeAction,
+} from "../../store/actions/carritoActions";
 
 const Abonar = () => {
   const dispatch = useDispatch();
@@ -53,7 +57,7 @@ const Abonar = () => {
   };
 
   const navigation = useNavigation();
-  
+
   // Abrir el browser de mercado pago
   const openBrowser = async (url) => {
     const isSupported = await Linking.canOpenURL(url);
@@ -62,11 +66,10 @@ const Abonar = () => {
     } else {
       Alert.alert("Error", "No se pudo abrir el link");
     }
-  }
+  };
 
   //Cuando se preciona abonar
   const abonar = async () => {
-
     //console.log(value);
     guardarPayment(value);
 
@@ -118,38 +121,55 @@ const Abonar = () => {
 
     // Enviar orden al servidor
     const consultarApi = async (orden) => {
-        //console.log(orden)
-        try {
-            const url = "https://app-menora.herokuapp.com/orders";
-            const data = await axios.post(url, orden, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
-            return(data.data)
-          } catch (error) {
-              console.log("ERROR DE ABONAR(CONSULTA DE API): ", error)
-          }
-    }
+      //console.log(orden)
+      try {
+        const url = "https://app-menora.herokuapp.com/orders";
+        const data = await axios.post(url, orden, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        return data.data;
+      } catch (error) {
+        console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
+      }
+    };
 
     const ordenApi = await consultarApi(orden);
-    
-    //Abrir el link de mercado pago
-    if(ordenApi.checkout && (value === 'account_money' || value === 'credit_card')){
-        openBrowser(ordenApi.checkout)
-        guardarPayment("");
-        guardarType("");
-        guardarCarrito([]);
-        guardarDrinks([]);
-        navigation.navigate('Home');
-    }
-    else if(value === 'cash' && type !== 'delivery' && ordenApi === 'La orden se ha creado correctamente'){
-        navigation.navigate('PagoExitoso');
-    } else {
-        Alert.alert("Error", "No se pudo abonar");
-    }
 
+    //Abrir el link de mercado pago
+    if (
+      ordenApi.checkout &&
+      (value === "account_money" || value === "credit_card")
+    ) {
+      openBrowser(ordenApi.checkout);
+      guardarPayment("");
+      guardarType("");
+      guardarCarrito([]);
+      guardarDrinks([]);
+      navigation.navigate("Home");
+    } else if (
+      value === "cash" &&
+      type !== "delivery" &&
+      ordenApi === "La orden se ha creado correctamente"
+    ) {
+      navigation.navigate("PagoExitoso");
+    } else {
+      Alert.alert("Error", "No se pudo abonar");
+    }
   };
+
+  // Al verificar cupon
+  const verificarCupon = async () => {
+    // verificar si el cupon no fue utilizado en la lista de users (redux), no deberia dejar enviar el pedido
+    // si es valido que aparezca cupón valido y que permita abonar
+    // hacer una request a url/discounts, esto me trae el descuento (fijo o porcentaje)
+    // validar que el pedido minimo se cumpla
+    // validar que no haya expirado
+
+    //modiicar el front del precio con el descuento aplicado
+    //mandar el codigo de descuento a la api
+  }
 
   return (
     <ScrollView style={{ backgroundColor: "black" }}>
@@ -239,25 +259,38 @@ const Abonar = () => {
         </RadioButton.Group>
       </View>
 
-      {/* <TouchableOpacity onPress={() => handleCupon()}>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 5, marginLeft: 17 }}>
-                        <Icon name="ticket" size={25} color={COLORS.primary} />
-                        <Text style={{ color: 'white', marginLeft: 5 }}>Tengo un cupón</Text>
-                    </View>
-                </TouchableOpacity>  */}
+      <TouchableOpacity onPress={() => handleCupon()}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            marginTop: 5,
+            marginLeft: 17,
+          }}
+        >
+          <Icon name="ticket" size={25} color={COLORS.primary} />
+          <Text style={{ color: "white", marginLeft: 5 }}>Tengo un cupón</Text>
+        </View>
+      </TouchableOpacity>
 
-      {showCupon ? (
-        <View style={{ marginHorizontal: 10 }}>
-          <TextInput
-            placeholder="Ingresar cupón"
-            style={{
-              borderRadius: 10,
-              backgroundColor: "white",
-              padding: 10,
-              marginTop: 10,
-              marginBottom: 10,
-            }}
-          ></TextInput>
+      {showCupon
+       ? (
+        <View>
+          <View style={{ marginHorizontal: 10 }}>
+            <TextInput
+              placeholder="Ingresar cupón"
+              style={{
+                borderRadius: 10,
+                backgroundColor: "white",
+                padding: 10,
+                marginTop: 10,
+                marginBottom: 10,
+              }}
+            ></TextInput>
+          </View>
+          <TouchableOpacity>
+            <Text style={{ color: COLORS.primary, fontSize: 18, marginHorizontal: 15 }}>Verificar cupón</Text>
+          </TouchableOpacity>
         </View>
       ) : null}
       <Text style={styles.text}>Precio Total:</Text>
