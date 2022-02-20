@@ -32,24 +32,27 @@ const Abonar = () => {
   const guardarType = (type) => dispatch(crearTypeAction(type));
   const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
   const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
-
+  
   const carrito = useSelector((state) => state.carrito.carrito);
   const drinks = useSelector((state) => state.carrito.drinks);
-  const payment = useSelector((state) => state.carrito.payment);
+  //const payment = useSelector((state) => state.carrito.payment);
   const type = useSelector((state) => state.carrito.type);
   const usuario = useSelector((state) => state.usuario.usuario);
   const token = useSelector((state) => state.token.token);
-
+  
   const guardarPayment = (payment) => dispatch(crearPaymentAction(payment));
-
+  
   //State del radio button
-  const [value, setValue] = React.useState("efectivo");
+  const [value, setValue] = React.useState("");
 
   //state para mostrar input cupon
   const [showCupon, setShowCupon] = useState(false);
 
   //state para el cupon
   const [cupon, setCupon] = React.useState("");
+
+  //state para el error
+  const [error, setError] = React.useState("");
 
   //Cuando se precione cupon
   const handleCupon = () => {
@@ -70,7 +73,11 @@ const Abonar = () => {
 
   //Cuando se preciona abonar
   const abonar = async () => {
-    //console.log(value);
+
+    setError("");
+
+    if(value !== "" ) { // && cupon === ""
+      
     guardarPayment(value);
 
     //Extraer id drinks
@@ -155,13 +162,27 @@ const Abonar = () => {
     ) {
       navigation.navigate("PagoExitoso");
     } else {
-      Alert.alert("Error", "No se pudo abonar");
+      Alert.alert("Tu pedido ah sido enviado", "Gracias por tu compra", [
+        { text: "OK", onPress: () => {
+          guardarPayment("");
+                    guardarType("");
+                    guardarCarrito([]);
+                    guardarDrinks([]);
+          navigation.navigate("Home")
+        } 
+        }
+      ]);
     }
+  } else {
+    setError("Seleccione una forma de pago");
+  }
   };
 
   // Al verificar cupon
   const verificarCupon = async () => {
+    console.log("Cupon: ", cupon);
     // verificar si el cupon no fue utilizado en la lista de users (redux), no deberia dejar enviar el pedido
+    console.log(usuario.cupons);
     // si es valido que aparezca cupón valido y que permita abonar
     // hacer una request a url/discounts, esto me trae el descuento (fijo o porcentaje)
     // validar que el pedido minimo se cumpla
@@ -172,7 +193,9 @@ const Abonar = () => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: "black" }}>
+    <ScrollView style={{ backgroundColor: "black" }}
+    keyboardShouldPersistTaps='always'
+    >
       <StatusBar backgroundColor="#000"></StatusBar>
       <Text
         style={{
@@ -286,13 +309,17 @@ const Abonar = () => {
                 marginTop: 10,
                 marginBottom: 10,
               }}
+              onChangeText={(text) => setCupon(text)}
             ></TextInput>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => verificarCupon()}>
             <Text style={{ color: COLORS.primary, fontSize: 18, marginHorizontal: 15 }}>Verificar cupón</Text>
           </TouchableOpacity>
         </View>
       ) : null}
+
+      <Text style={{ color: 'red', textAlign: 'center', fontSize: 20, marginTop: 15 }}>{error}</Text>
+
       <Text style={styles.text}>Precio Total:</Text>
 
       <LinearGradient

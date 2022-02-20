@@ -4,11 +4,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import SplashScreen from "react-native-splash-screen";
 
-import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import thunk from "redux-thunk";
-import rootReducer from "./store/rootReducer";
+
 
 
 import {
@@ -22,7 +20,10 @@ import {
   Search,
   MedioDeEnvio,
   CartTab,
-  PagoExitoso
+  PagoExitoso,
+  CambioDeContraseña,
+  AccountPage,
+  CambioDeContraseñaExitoso
 } from "./screens";
 
 import CustomDrawer from "./navigation/CustomDrawer";
@@ -74,6 +75,12 @@ const App = () => {
               <Stack.Screen name="CartTab" component={CartTab} />
 
               <Stack.Screen name="PagoExitoso" component={PagoExitoso} />
+
+              <Stack.Screen name="AccountPage" component={AccountPage} />
+
+              <Stack.Screen name="CambioDeContraseña" component={CambioDeContraseña} />
+              
+              <Stack.Screen name="CambioDeContraseñaExitoso" component={CambioDeContraseñaExitoso} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

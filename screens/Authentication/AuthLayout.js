@@ -1,22 +1,23 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
-import { images, FONTS, SIZES, COLORS } from "../../constants";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, Text, ScrollView } from "react-native";
+import { FONTS, SIZES, COLORS } from "../../constants";
 
 const AuthLayout = ({ title, children }) => {
   return (
-    <View
+    <ScrollView
+    keyboardShouldPersistTaps='handled'
       style={{
         flex: 1,
         paddingVertical: SIZES.padding,
         backgroundColor: COLORS.white,
         backgroundColor: COLORS.black,
+        paddingHorizontal: SIZES.padding,
       }}
     >
-      <KeyboardAwareScrollView
-        extraScrollHeight={100}
-        extraHeight={100}
-        keyboardDismissMode="on-drag"
+      <View
+        //extraScrollHeight={100}
+        //extraHeight={100}
+       
         contentContainerStyle={{
           flex: 1,
           paddingHorizontal: SIZES.padding,
@@ -48,8 +49,8 @@ const AuthLayout = ({ title, children }) => {
         {/* Content / Children */}
         {children}
 
-      </KeyboardAwareScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 

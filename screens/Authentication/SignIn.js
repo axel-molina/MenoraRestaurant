@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   ActivityIndicator,
+  ScrollView
 } from "react-native";
 import { AuthLayout } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../constants";
@@ -123,142 +124,145 @@ const SignIn = ({ navigation }) => {
 
   return (
     <AuthLayout title="Iniciar Sesion">
-      <StatusBar backgroundColor="#000"></StatusBar>
-      <View
-        style={{
-          flex: 1,
-          marginTop: SIZES.padding * 2,
-        }}
-      >
-        {/* Form Inputs */}
-        <FormInput
-          label="Email"
-          keyboardType="email-address"
-          autoCompleteType="email"
-          onChange={(value) => {
-            // validate email
-            utils.validateEmail(value, setEmailError);
-            setEmail(value);
-          }}
-          errorMsg={emailError}
-          appendComponent={
-            <View
-              style={{
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                source={
-                  email == "" || (email != "" && emailError == "")
-                    ? icons.correct
-                    : icons.cross
-                }
-                style={{
-                  height: 20,
-                  width: 20,
-                  tintColor:
-                    email == ""
-                      ? COLORS.gray
-                      : email != "" && emailError == ""
-                      ? COLORS.green
-                      : COLORS.red,
-                }}
-              />
-            </View>
-          }
-        />
-
-        <FormInput
-          label="Contraseña"
-          secureTextEntry={!showPass}
-          autoCompletType="password"
-          containerStyle={{ marginTop: SIZES.radius }}
-          onChange={(value) => setPassword(value)}
-          appendComponent={
-            <TouchableOpacity
-              style={{
-                width: 40,
-                alignItems: "flex-end",
-                justifyContent: "center",
-              }}
-              onPress={() => setShowPass(!showPass)}
-            >
-              <Image
-                source={showPass ? icons.eye_close : icons.eye}
-                style={{
-                  height: 20,
-                  width: 20,
-                  tintColor: COLORS.gray,
-                }}
-              />
-            </TouchableOpacity>
-          }
-        />
-
-        {error ? (
-          <Text style={styles.error}>Todos los campos son obligatorios</Text>
-        ) : null}
-        {stateError ? <Text style={styles.error}>Hubo un error</Text> : null}
-        {userError ? (
-          <Text style={styles.error}>Usuario o contraseña incorrecta</Text>
-        ) : null}
-
-        {/* Sign In */}
-
-        {isLoading ? (
-          <ActivityIndicator size="small" color={COLORS.primary} />
-        ) : (
-          <LinearGradient
-            colors={["#ED1200", "#D9510C", "#EA8100"]}
-            style={{ padding: 12, borderRadius: 50, marginTop: 15 }}
-          >
-            <TouchableOpacity onPress={() => iniciarSesion(email, password)}>
-              <Text style={styles.comprar}>INICIAR SESIÓN</Text>
-            </TouchableOpacity>
-          </LinearGradient>
-        )}
-
-        {/*Forgot Password */}
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.radius,
-            justifyContent: "center",
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ForgotPassword")}
-          >
-            <Text style={styles.olvidasteTuContraseña}>
-              ¿Olvidaste tu contraseña?
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Sign Up */}
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.radius,
-            justifyContent: "center",
-          }}
-        >
-          <Text
+          <StatusBar backgroundColor="#000"></StatusBar>
+          
+          <ScrollView
+          keyboardShouldPersistTaps='handled'
             style={{
-              color: COLORS.white,
-              ...FONTS.body3,
+              flex: 1,
+              marginTop: SIZES.padding * 2,
             }}
           >
-            No tienes una cuenta?
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.olvidasteTuContraseña}> Crear</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Footer */}
-    </AuthLayout>
+            {/* Form Inputs */}
+          
+              <FormInput
+                label="Email"
+                keyboardType="email-address"
+                autoCompleteType="email"
+                onChange={(value) => {
+                  // validate email
+                  utils.validateEmail(value, setEmailError);
+                  setEmail(value);
+                }}
+                errorMsg={emailError}
+                appendComponent={
+                  <View
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Image
+                      source={
+                        email == "" || (email != "" && emailError == "")
+                          ? icons.correct
+                          : icons.cross
+                      }
+                      style={{
+                        height: 20,
+                        width: 20,
+                        tintColor:
+                          email == ""
+                            ? COLORS.gray
+                            : email != "" && emailError == ""
+                            ? COLORS.green
+                            : COLORS.red,
+                      }}
+                    />
+                  </View>
+                }
+              />
+              
+              <FormInput
+                label="Contraseña"
+                secureTextEntry={!showPass}
+                autoCompletType="password"
+                containerStyle={{ marginTop: SIZES.radius }}
+                onChange={(value) => setPassword(value)}
+                appendComponent={
+                  <TouchableOpacity
+                    style={{
+                      width: 40,
+                      alignItems: "flex-end",
+                      justifyContent: "center",
+                    }}
+                    onPress={() => setShowPass(!showPass)}
+                  >
+                    <Image
+                      source={showPass ? icons.eye_close : icons.eye}
+                      style={{
+                        height: 20,
+                        width: 20,
+                        tintColor: COLORS.gray,
+                      }}
+                    />
+                  </TouchableOpacity>
+                }
+              />
+            
+        
+            {error ? (
+              <Text style={styles.error}>Todos los campos son obligatorios</Text>
+            ) : null}
+            {stateError ? <Text style={styles.error}>Hubo un error</Text> : null}
+            {userError ? (
+              <Text style={styles.error}>Usuario o contraseña incorrecta</Text>
+            ) : null}
+        
+            {/* Sign In */}
+        
+            {isLoading ? (
+              <ActivityIndicator size="small" color={COLORS.primary} />
+            ) : (
+              <LinearGradient
+                colors={["#ED1200", "#D9510C", "#EA8100"]}
+                style={{ padding: 12, borderRadius: 50, marginTop: 15 }}
+              >
+                <TouchableOpacity onPress={() => iniciarSesion(email, password)}>
+                  <Text style={styles.comprar}>INICIAR SESIÓN</Text>
+                </TouchableOpacity>
+              </LinearGradient>
+            )}
+        
+            {/*Forgot Password */}
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: SIZES.radius,
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ForgotPassword")}
+              >
+                <Text style={styles.olvidasteTuContraseña}>
+                  ¿Olvidaste tu contraseña?
+                </Text>
+              </TouchableOpacity>
+            </View>
+        
+            {/* Sign Up */}
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: SIZES.radius,
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.white,
+                  ...FONTS.body3,
+                }}
+              >
+                No tienes una cuenta?
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                <Text style={styles.olvidasteTuContraseña}> Crear</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+          {/* Footer */}
+        </AuthLayout>
   );
 };
 

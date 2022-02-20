@@ -37,6 +37,8 @@ import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
 import Otp from "./Authentication/Otp";
 import ForgotPassword from "./Authentication/ForgotPassword";
+import CambioDeContraseña from "./CambioDeContraseña/CambioDeContraseña";
+import CambioDeContraseñaExitoso from "./CambioDeContraseña/CambioDeContraseñaExitoso";
 
 export {
   MainLayout,
@@ -55,4 +57,6 @@ export {
   Abonar,
   MedioDeEnvio,
   PagoExitoso,
+  CambioDeContraseña,
+  CambioDeContraseñaExitoso
 };

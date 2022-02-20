@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, ScrollView } from "react-native";
 import { FONTS, COLORS, SIZES } from "../constants";
 
 
@@ -31,38 +31,40 @@ const FormInput = ({
 
       {/* Text input */}
       
-      <View
-        style={{
-          flexDirection: "row",
-          height: 55,
-          margiTop: SIZES.base,
-        }}
-      >
-        {prependComponent}
-
-        <TextInput
+      
+        <View
           style={{
-            flex: 1,
-            ...inputStyle,
-            color: COLORS.white,
-            fontSize: 20,
-            borderBottomColor: 'white',
-        borderBottomWidth: 1,
-        marginBottom: 12,
+            flexDirection: "row",
+            height: 55,
+            margiTop: SIZES.base,
           }}
-          placeholder={placeholder}
-          placeholderTextColor={COLORS.gray}
-          secureTextEntry={secureTextEntry}
-          keyboardType={keyboardType}
-          autoCompleteType={autoCompleteType}
-          autoCapitalize={autoCapitalize}
-          onChangeText={(text) => onChange(text)}
+        >
+          {prependComponent}
           
-        />   
-
-        {appendComponent}
-      </View>
+          <TextInput
+            style={{
+              flex: 1,
+              ...inputStyle,
+              color: COLORS.white,
+              fontSize: 20,
+              borderBottomColor: 'white',
+          borderBottomWidth: 1,
+          marginBottom: 12,
+            }}
+            placeholder={placeholder}
+            placeholderTextColor={COLORS.gray}
+            secureTextEntry={secureTextEntry}
+            keyboardType={keyboardType}
+            autoCompleteType={autoCompleteType}
+            autoCapitalize={autoCapitalize}
+            onChangeText={(text) => onChange(text)}
+            
+          />   
+        
+          {appendComponent}
+        </View>
     </View>
+
   );
 };
 

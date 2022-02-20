@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Alert } from "react-native";
 import {
   COLORS,
   SIZES,
@@ -60,7 +60,19 @@ const CartTab = () => {
 
   const comprar = () => {
     console.log("Aclaraciones: " + text);
-    navigation.navigate("MedioDeEnvio")
+    console.log(carrito)
+    if(carrito.length > 0){
+      navigation.navigate("MedioDeEnvio")
+    } else {
+      Alert.alert(
+        "Error",
+        "No puedes comprar solo bebidas",
+        [
+          { text: "OK"}
+        ]
+      );
+      //Alert.alert("Debes añadir al menos un producto al carrito", [ {text: "OK"}]);
+    }
   }
 
   

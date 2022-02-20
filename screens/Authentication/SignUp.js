@@ -108,7 +108,9 @@ const SignUp = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+    keyboardShouldPersistTaps='always'
+    >
       <StatusBar backgroundColor="#000"></StatusBar>
       <AuthLayout
         title="Registro"

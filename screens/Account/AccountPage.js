@@ -4,12 +4,14 @@ import {
 } from 'react-native';
 import Icon from "react-native-vector-icons/AntDesign";
 import Icons from "react-native-vector-icons/Entypo";
+import { useNavigation } from '@react-navigation/native';
 
 // Redux
 import { useSelector } from "react-redux";
 
 
 const AccountPage = () => {
+    const navigation = useNavigation();
     const usuario = useSelector((state) => state.usuario.usuario);
 
 
@@ -35,13 +37,13 @@ const AccountPage = () => {
                 </TouchableOpacity>
                 <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10, marginTop: 10  }}></View>
                 <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}}>
-                    <Icon name="creditcard" size={20} color="white" />
-                    <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}}>Metodos de pago</Text>
+                <Icons name="ticket" size={20} color='grey' />
+                    <Text style={{ color: 'grey', fontSize: 22, marginLeft: 10}}>Promos</Text>
                 </TouchableOpacity>
                 <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10, marginTop: 10  }}></View>
-                <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}}>
-                <Icons name="ticket" size={20} color='white' />
-                    <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}}>Promos</Text>
+                <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}} onPress = {() => navigation.navigate("CambioDeContraseña")}>
+                <Icons name="lock" size={22} color='white' />
+                    <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}}>Cambiar contraseña</Text>
                 </TouchableOpacity>
                 <View style={{ borderWidth: 0.5, borderColor: 'white', marginTop: 10  }}></View>
             </View>
