@@ -93,10 +93,6 @@ const MainLayout = ({
   navigation,
   selectedTab,
   setSelectedTab,
-  containerStyle,
-  iconStyle,
-  quantity,
-  onPress,
 }) => {
   const flatListRef = React.useRef();
 

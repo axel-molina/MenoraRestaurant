@@ -6,6 +6,7 @@ import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign"; 
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
 
 
 // Redux
@@ -50,20 +51,31 @@ const CambioDeContraseña = () => {
           try {
               if (isEnablePass()) {
                   
-                  const enviarPass = await fetch("https://app-menora.herokuapp.com/password/update",
-                  {
-                      method: "PUT",
-                      headers: {
-                          "Content-Type": "application/json",
-                          Authorization: `Bearer ${token}`,
-                        },
-                        body: JSON.stringify(newPass)
-                    });
-                    const data = await enviarPass.json();
-                    
-                    console.log("ESTO ES DATA",data);
-                    setIsLoading(false);
-                } else if(password === newPassword && passwordError == ""){
+                  // const enviarPass = await fetch("https://app-menora.herokuapp.com/password/update",
+                  // {
+                  //     method: "PUT",
+                  //     headers: {
+                  //         "Content-Type": "application/json",
+                  //         Authorization: `Bearer ${token}`,
+                  //       },
+                  //       body: JSON.stringify(newPass)
+                  //   });
+                  //   const data = await enviarPass.json();
+                  //   console.log(data)
+                  //   setIsLoading(false);
+
+                  const url = "https://app-menora.herokuapp.com/password/update";
+                  const data = await axios.put(url, newPass, { headers: {
+                            Authorization: `Bearer ${token}`,
+                           }
+                          }
+                        )
+                  
+                    if(data.status == 200){
+                        setIsLoading(false);
+                        navigation.navigate("CambioDeContraseñaExitoso");
+                    }
+                } else if(password === newPassword && passwordError === ""){
                     setError("Las contraseñas deben ser diferentes");
                     setIsLoading(false);
                 } else {
@@ -84,6 +96,7 @@ const CambioDeContraseña = () => {
                     setIsLoading(false);
                 }
             }
+            
             
             //navigation.navigate('CambioDeContraseñaExitoso');
         }

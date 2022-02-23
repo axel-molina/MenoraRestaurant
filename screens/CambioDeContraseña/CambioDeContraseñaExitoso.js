@@ -12,7 +12,7 @@ const CambioDeContraseñaExitoso = ({ navigation }) => {
       <StatusBar backgroundColor="#000"></StatusBar>
       <Icon name="checkcircle" size={160} color="green" />
       <Text style={{ color: 'white', fontSize: 20, textAlign: 'center', marginTop: 40, fontWeight: 'bold', marginHorizontal: 20}}>
-        Tu contraseña ah sido actualizada, revisa tu correo y sigue los pasos para continuar
+        Revisa tu correo y sigue los pasos para continuar con el cambio de contraseña
       </Text>
       <LinearGradient
         colors={["#ED1200", "#D9510C", "#EA8100"]}

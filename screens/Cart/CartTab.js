@@ -60,9 +60,9 @@ const CartTab = () => {
 
   const comprar = () => {
     console.log("Aclaraciones: " + text);
-    console.log(carrito)
+    //console.log(carrito)
     if(carrito.length > 0){
-      navigation.navigate("MedioDeEnvio")
+      navigation.navigate("MedioDeEnvio", { total: total })
     } else {
       Alert.alert(
         "Error",
@@ -71,7 +71,6 @@ const CartTab = () => {
           { text: "OK"}
         ]
       );
-      //Alert.alert("Debes añadir al menos un producto al carrito", [ {text: "OK"}]);
     }
   }
 

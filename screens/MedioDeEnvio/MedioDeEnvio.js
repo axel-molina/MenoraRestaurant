@@ -10,8 +10,10 @@ import { useDispatch } from "react-redux";
 import { crearTypeAction } from '../../store/actions/carritoActions'
 
 
-const MedioDeEnvio = ({ navigation }) => {
+const MedioDeEnvio = ({ navigation, route}) => {
 
+    const { total } = route.params;
+    
 
     const dispatch = useDispatch();
 
@@ -21,7 +23,7 @@ const MedioDeEnvio = ({ navigation }) => {
     //Al hacer clic en medio de envio
     const alHacerClic = (opcion) => {
         guardarType(opcion)
-        navigation.navigate("Abonar")
+        navigation.navigate("Abonar", { total: total })
     }
 
     return (

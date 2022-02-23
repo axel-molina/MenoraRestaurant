@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -26,24 +26,29 @@ import {
   crearTypeAction,
 } from "../../store/actions/carritoActions";
 
-const Abonar = () => {
+const Abonar = ({ route }) => {
+  const { total } = route.params;
+
   const dispatch = useDispatch();
 
   const guardarType = (type) => dispatch(crearTypeAction(type));
   const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
   const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
-  
+
   const carrito = useSelector((state) => state.carrito.carrito);
   const drinks = useSelector((state) => state.carrito.drinks);
-  //const payment = useSelector((state) => state.carrito.payment);
+  const payment = useSelector((state) => state.carrito.payment);
   const type = useSelector((state) => state.carrito.type);
   const usuario = useSelector((state) => state.usuario.usuario);
   const token = useSelector((state) => state.token.token);
-  
+
   const guardarPayment = (payment) => dispatch(crearPaymentAction(payment));
-  
+
   //State del radio button
   const [value, setValue] = React.useState("");
+
+  //state para el precio con descuento
+  const [precio, setPrecio] = useState(total);
 
   //state para mostrar input cupon
   const [showCupon, setShowCupon] = useState(false);
@@ -53,6 +58,13 @@ const Abonar = () => {
 
   //state para el error
   const [error, setError] = React.useState("");
+
+  //state para el mensaje de aplicado
+  const [aplicado, setAplicado] = React.useState(false);	
+
+  //state para enviar el cupon verificado
+  const [cuponVerificado, setCuponVerificado] = React.useState("");
+
 
   //Cuando se precione cupon
   const handleCupon = () => {
@@ -69,132 +81,177 @@ const Abonar = () => {
     } else {
       Alert.alert("Error", "No se pudo abrir el link");
     }
-  };
+  }
 
+  //Descontar el cupon al total
+  const descontarCupon = (monto, tipo) => {
+    if(tipo === "fixed"){
+      setPrecio(total - monto);
+    } else {
+      setPrecio(total - (total * (monto / 100)));
+    }
+  }
+
+  
   //Cuando se preciona abonar
   const abonar = async () => {
-
     setError("");
 
-    if(value !== "" ) { // && cupon === ""
-      
-    guardarPayment(value);
+    if (value !== "") {
+      // && cupon === ""
 
-    //Extraer id drinks
-    const filtrarIdDrinks = (drinks) => {
-      const drinksAux = [];
-      if (drinks.length && drinks.length > 0) {
-        for (let i = 0; i < drinks.length; i++) {
-          drinksAux.push(drinks[i].id);
-        }
-      }
-      return drinksAux;
-    };
-    const idDrinks = filtrarIdDrinks(drinks);
+      guardarPayment(value);
 
-    //Extraer id productos
-    const filtrarIdProductos = (carrito) => {
-      const productosAux = [];
-      if (carrito.length && carrito.length > 0) {
-        for (let i = 0; i < carrito.length; i++) {
-          const aux = { extras: [] };
-          aux.product = carrito[i].id;
-          if (
-            carrito[i].extras &&
-            carrito[i].extras.length &&
-            carrito[i].extras.length > 0
-          ) {
-            for (let j = 0; j < carrito[i].extras.length; j++) {
-              aux.extras.push(carrito[i].extras[j]._id);
-            }
+      //Extraer id drinks
+      const filtrarIdDrinks = (drinks) => {
+        const drinksAux = [];
+        if (drinks.length && drinks.length > 0) {
+          for (let i = 0; i < drinks.length; i++) {
+            drinksAux.push(drinks[i].id);
           }
-          productosAux.push(aux);
         }
-      }
+        return drinksAux;
+      };
+      const idDrinks = filtrarIdDrinks(drinks);
 
-      return productosAux;
-    };
-    const idProducts = filtrarIdProductos(carrito);
+      //Extraer id productos
+      const filtrarIdProductos = (carrito) => {
+        const productosAux = [];
+        if (carrito.length && carrito.length > 0) {
+          for (let i = 0; i < carrito.length; i++) {
+            const aux = { extras: [] };
+            aux.product = carrito[i].id;
+            if (
+              carrito[i].extras &&
+              carrito[i].extras.length &&
+              carrito[i].extras.length > 0
+            ) {
+              for (let j = 0; j < carrito[i].extras.length; j++) {
+                aux.extras.push(carrito[i].extras[j]._id);
+              }
+            }
+            productosAux.push(aux);
+          }
+        }
 
-    //Crear objeto de pago
-    const orden = {
-      products: idProducts,
-      drinks: idDrinks,
-      paymentType: value,
-      type: type,
-      address: usuario.address.lastUsed,
-      comment: "",
-    };
+        return productosAux;
+      };
+      const idProducts = filtrarIdProductos(carrito);
 
-    // Enviar orden al servidor
-    const consultarApi = async (orden) => {
-      //console.log(orden)
-      try {
-        const url = "https://app-menora.herokuapp.com/orders";
-        const data = await axios.post(url, orden, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      //Crear objeto de pago
+      const orden = {
+        products: idProducts,
+        drinks: idDrinks,
+        paymentType: value,
+        type: type,
+        address: usuario.address.lastUsed,
+        comment: "",
+        discount: cuponVerificado,
+      };
+
+      // Enviar orden al servidor
+      const consultarApi = async (orden) => {
+        //console.log(orden)
+        try {
+          const url = "https://app-menora.herokuapp.com/orders";
+          const data = await axios.post(url, orden, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          return data.data;
+        } catch (error) {
+          console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
+        }
+      };
+
+      const ordenApi = await consultarApi(orden);
+
+      //Abrir el link de mercado pago
+      if (
+        ordenApi.checkout &&
+        (value === "account_money" || value === "credit_card")
+      ) {
+        openBrowser(ordenApi.checkout);
+        guardarPayment("");
+        guardarType("");
+        guardarCarrito([]);
+        guardarDrinks([]);
+        navigation.navigate("Home");
+      } else if (
+        value === "cash" &&
+        type !== "delivery" &&
+        ordenApi === "La orden se ha creado correctamente"
+      ) {
+        navigation.navigate("PagoExitoso");
+      } else {
+        Alert.alert("Tu pedido ha sido enviado", "Gracias por tu compra", [
+          {
+            text: "OK",
+            onPress: () => {
+              guardarPayment("");
+              guardarType("");
+              guardarCarrito([]);
+              guardarDrinks([]);
+              navigation.navigate("Home");
+            },
           },
-        });
-        return data.data;
-      } catch (error) {
-        console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
+        ]);
       }
-    };
-
-    const ordenApi = await consultarApi(orden);
-
-    //Abrir el link de mercado pago
-    if (
-      ordenApi.checkout &&
-      (value === "account_money" || value === "credit_card")
-    ) {
-      openBrowser(ordenApi.checkout);
-      guardarPayment("");
-      guardarType("");
-      guardarCarrito([]);
-      guardarDrinks([]);
-      navigation.navigate("Home");
-    } else if (
-      value === "cash" &&
-      type !== "delivery" &&
-      ordenApi === "La orden se ha creado correctamente"
-    ) {
-      navigation.navigate("PagoExitoso");
     } else {
-      Alert.alert("Tu pedido ah sido enviado", "Gracias por tu compra", [
-        { text: "OK", onPress: () => {
-          guardarPayment("");
-                    guardarType("");
-                    guardarCarrito([]);
-                    guardarDrinks([]);
-          navigation.navigate("Home")
-        } 
-        }
-      ]);
+      setError("Seleccione una forma de pago");
     }
-  } else {
-    setError("Seleccione una forma de pago");
-  }
   };
 
   // Al verificar cupon
   const verificarCupon = async () => {
-    console.log("Cupon: ", cupon);
-    // verificar si el cupon no fue utilizado en la lista de users (redux), no deberia dejar enviar el pedido
-    console.log(usuario.cupons);
-    // si es valido que aparezca cupón valido y que permita abonar
-    // hacer una request a url/discounts, esto me trae el descuento (fijo o porcentaje)
-    // validar que el pedido minimo se cumpla
-    // validar que no haya expirado
+    setAplicado(false);
+    setError("");
+    if (cupon !== "") {
+      // Enviar cupon al servidor
+      const consultarApi = async (cupon) => {
+        try {
+          const url = `https://app-menora.herokuapp.com/discounts?code=${cupon}`;
+          const data = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(data.data);
+          // validar que el pedido minimo se cumpla
+          if (data.data.minimum > total) {
+            setError(
+              "El pedido debe ser mayor a $" +
+                data.data.minimum +
+                " para usar este cupon"
+            );
+          } else {
+            if(data.data.enabled){
+              descontarCupon(data.data.amount, data.data.type);
+              setAplicado(true);
+              setError("");
+              setCuponVerificado(data.data.id)
+              return data.data;
+            }
+          }
+        } catch (error) {
+          setError("Cupon no válido");
+          console.log("ERROR DE ABONAR(CONSULTA DE API): ", error.message);
+        }
+      };
+      consultarApi(cupon.toUpperCase());
+    } else {
+      setError("Ingrese un cupon");
+    }
 
-    //modiicar el front del precio con el descuento aplicado
     //mandar el codigo de descuento a la api
-  }
+    
+  };
 
   return (
-    <ScrollView style={{ backgroundColor: "black" }}
-    keyboardShouldPersistTaps='always'
+    <ScrollView
+      style={{ backgroundColor: "black" }}
+      keyboardShouldPersistTaps="always"
     >
       <StatusBar backgroundColor="#000"></StatusBar>
       <Text
@@ -296,8 +353,7 @@ const Abonar = () => {
         </View>
       </TouchableOpacity>
 
-      {showCupon
-       ? (
+      {showCupon && !aplicado ? (
         <View>
           <View style={{ marginHorizontal: 10 }}>
             <TextInput
@@ -309,18 +365,51 @@ const Abonar = () => {
                 marginTop: 10,
                 marginBottom: 10,
               }}
-              onChangeText={(text) => setCupon(text)}
+              onChangeText={(text) => setCupon(text.toUpperCase())}
             ></TextInput>
           </View>
           <TouchableOpacity onPress={() => verificarCupon()}>
-            <Text style={{ color: COLORS.primary, fontSize: 18, marginHorizontal: 15 }}>Verificar cupón</Text>
+            <Text
+              style={{
+                color: COLORS.primary,
+                fontSize: 18,
+                marginHorizontal: 15,
+              }}
+            >
+              Verificar cupón
+            </Text>
           </TouchableOpacity>
         </View>
       ) : null}
 
-      <Text style={{ color: 'red', textAlign: 'center', fontSize: 20, marginTop: 15 }}>{error}</Text>
+      <Text
+        style={{
+          color: "red",
+          textAlign: "center",
+          fontSize: 20,
+          marginTop: 15,
+          marginBottom: 15,
+          marginHorizontal: 10,
+        }}
+      >
+        {error}
+      </Text>
 
-      <Text style={styles.text}>Precio Total:</Text>
+      {aplicado ? <Text
+        style={{
+          color: "green",
+          fontSize: 20,
+          marginTop: 15,
+          marginBottom: 15,
+          marginHorizontal: 20,
+        }}
+      >
+        El descuento fue aplicado
+      </Text> : null}
+
+      <Text style={{ color: "white", fontSize: 22, marginLeft: 22 }}>
+        Precio Total: ${precio}
+      </Text>
 
       <LinearGradient
         colors={["#ED1200", "#D9510C", "#EA8100"]}
