@@ -74,7 +74,6 @@ const SignIn = ({ navigation }) => {
 
   // Cuando el usuario inicie sesion
   const iniciarSesion = (email, password) => {
-    console.log("Iniciando sesion...");
     // Quita los errores
     errorReset();
 

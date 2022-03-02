@@ -9,6 +9,7 @@ import usuarioReducer from "./tab/usuarioReducer";
 import indexProductReducer from "./tab/indexProductReducer";
 import booleanReducer from "./tab/booleanReducer";
 import bebidasReducer from "./tab/bebidasReducer";
+import ordenesReducer from "./tab/ordenesReducer";
 
 export default combineReducers({
     tabReducer,
@@ -20,4 +21,5 @@ export default combineReducers({
     indexProductReducer,
     boolean: booleanReducer,
     bebidas: bebidasReducer,
+    ordenes: ordenesReducer,
 })

@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { obtenerCategoriasAction } from "../../store/actions/categoriasActions";
 import { crearUsuarioAction } from "../../store/actions/usuarioActions";
 import { crearBebidasAction } from "../../store/actions/bebidasActions";
+import { obtenerOrdenesAction } from "../../store/actions/ordenesActions";
 
 
 
@@ -62,6 +63,7 @@ const Home = () => {
       const guardarCategorias = (categorias) => dispatch(obtenerCategoriasAction(categorias));
       const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
       const guardarBebidas = (bebidas) => dispatch(crearBebidasAction(bebidas));
+      const guardarOrdenes = (ordenes) => dispatch(obtenerOrdenesAction(ordenes));
      
       
 
@@ -106,6 +108,17 @@ const Home = () => {
           data.push(drinksFalsos);
         }
         guardarCategorias(data);  
+
+        const responseOrders = await fetch("https://app-menora.herokuapp.com/orders",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const dataOrder = await responseOrders.json();     
+        guardarOrdenes(dataOrder);
 
     } catch (error) {
       console.log(error);

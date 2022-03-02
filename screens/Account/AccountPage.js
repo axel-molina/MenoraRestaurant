@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 // Redux
 import { useSelector } from "react-redux";
-
+ 
 
 const AccountPage = () => {
     const navigation = useNavigation();
@@ -26,7 +26,7 @@ const AccountPage = () => {
             }
             <View style={{ marginTop: 30}}>
                 <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10 }}></View>
-                <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10 }}>
+                <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10 }} onPress={()=> navigation.navigate("Pedidos")}>
                     <Icon name="shoppingcart" size={20} color="white" />
                     <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}}>Pedidos</Text>
                 </TouchableOpacity>

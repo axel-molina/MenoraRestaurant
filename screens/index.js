@@ -15,6 +15,8 @@ import FoodDetail from "./Food/FoodDetail"
 //Abonar
 import Abonar from "./Abonar/Abonar"
 
+import Valorar from "./Valorar/Valorar"
+
 // Favourite
 import Favourite from "./Favourite/Favourite";
 
@@ -26,6 +28,8 @@ import PaginaDeBienvenida from "./OnBoarding/PaginaDeBienvenida";
 import MedioDeEnvio from "./MedioDeEnvio/MedioDeEnvio";
 
 import PagoExitoso from "./PagoExitoso/PagoExitoso";
+
+import Pedidos from "./Pedidos/Pedidos";
 
 
 
@@ -58,5 +62,7 @@ export {
   MedioDeEnvio,
   PagoExitoso,
   CambioDeContraseña,
-  CambioDeContraseñaExitoso
+  CambioDeContraseñaExitoso,
+  Pedidos,
+  Valorar
 };

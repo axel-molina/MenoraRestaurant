@@ -23,7 +23,9 @@ import {
   PagoExitoso,
   CambioDeContraseña,
   AccountPage,
-  CambioDeContraseñaExitoso
+  CambioDeContraseñaExitoso,
+  Pedidos,
+  Valorar
 } from "./screens";
 
 import CustomDrawer from "./navigation/CustomDrawer";
@@ -81,6 +83,10 @@ const App = () => {
               <Stack.Screen name="CambioDeContraseña" component={CambioDeContraseña} />
               
               <Stack.Screen name="CambioDeContraseñaExitoso" component={CambioDeContraseñaExitoso} />
+
+              <Stack.Screen name="Pedidos" component={Pedidos} />
+
+              <Stack.Screen name="Valorar" component={Valorar} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>
