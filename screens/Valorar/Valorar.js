@@ -58,7 +58,7 @@ const Valorar = ({ navigation, route }) => {
 
     // Enviar valoración al servidor
     const enviar = async (valoracion) => {
-      console.log(valoracion);
+      
       try {
         const url = "https://app-menora.herokuapp.com/reviews";
         const data = await axios.post(url, valoracion, {
@@ -67,7 +67,7 @@ const Valorar = ({ navigation, route }) => {
           },
         });
         console.log(data.data);
-        if (data.data === "OK") {
+        if (data.data === "Review creada correctamente") {
           Alert.alert("Gracias!", "Tu valoración fue enviada", [
             {
               text: "OK",

@@ -53,16 +53,19 @@ const CartTab = () => {
   const [text, onChangeText] = React.useState("");
 
   const alEscribir = (text) => {
-    onChangeText(text);
+    if(text.length < 200)
+    {
+      onChangeText(text);
+    }
   }
 
   const navigation = useNavigation();
 
   const comprar = () => {
-    console.log("Aclaraciones: " + text);
+    
     //console.log(carrito)
     if(carrito.length > 0){
-      navigation.navigate("MedioDeEnvio", { total: total })
+      navigation.navigate("MedioDeEnvio", { total: total, text: text })
     } else {
       Alert.alert(
         "Error",

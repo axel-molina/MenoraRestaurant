@@ -50,19 +50,6 @@ const CambioDeContraseña = () => {
           setError("");
           try {
               if (isEnablePass()) {
-                  
-                  // const enviarPass = await fetch("https://app-menora.herokuapp.com/password/update",
-                  // {
-                  //     method: "PUT",
-                  //     headers: {
-                  //         "Content-Type": "application/json",
-                  //         Authorization: `Bearer ${token}`,
-                  //       },
-                  //       body: JSON.stringify(newPass)
-                  //   });
-                  //   const data = await enviarPass.json();
-                  //   console.log(data)
-                  //   setIsLoading(false);
 
                   const url = "https://app-menora.herokuapp.com/password/update";
                   const data = await axios.put(url, newPass, { headers: {

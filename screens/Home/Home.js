@@ -51,12 +51,15 @@ const Home = () => {
 
   const [categoryIndex, setCategoryIndex] = React.useState(0);
 
+  const [ordenesPendientes, setOrdenesPendientes] = React.useState([]);
+
   const dispatch = useDispatch();
 
   
   //accder a los states del store categorias
   const categorias = useSelector((state) => state.categorias.categorias);
   const token = useSelector((state) => state.token.token);
+  const ordenes = useSelector((state) => state.ordenes.ordenes);
 
       
 
@@ -64,6 +67,37 @@ const Home = () => {
       const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
       const guardarBebidas = (bebidas) => dispatch(crearBebidasAction(bebidas));
       const guardarOrdenes = (ordenes) => dispatch(obtenerOrdenesAction(ordenes));
+
+      // Recorrer ordenes
+      const recorrerOrdenes = () => {
+        setOrdenesPendientes([]);
+        ordenes.length > 0 && ordenes.map((orden) => {
+         
+          if(orden.status === "pending" || orden.status === "in progress"){
+           
+            setOrdenesPendientes(ordenesPendientes => [...ordenesPendientes]);
+          }
+        });  
+      }
+
+     
+
+      const actualizar = async () => {
+        const responseOrders = await fetch("https://app-menora.herokuapp.com/orders",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const dataOrder = await responseOrders.json();     
+        guardarOrdenes(dataOrder);
+
+        recorrerOrdenes()
+      };
+      
+     
      
       
 
@@ -123,6 +157,8 @@ const Home = () => {
     } catch (error) {
       console.log(error);
     }
+
+    actualizar()
 
   }, []);
   
@@ -244,16 +280,41 @@ const Home = () => {
   
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <ScrollView style={{ marginBottom: 200, width: "100%" }}>
+    
+      <ScrollView style={{flex: 1, marginBottom: 200, width: "100%" }}>
 
         {/* Buscador */}
         <Search />
-        {/* elemntos en Categorias */}
+
+
+        {/* Ordenes pendientes */}
+
+        <FlatList
+        data={ordenes}
+        keyExtractor={(item) => `${item._id}`}
+        renderItem={({ item }) => (
+          <View>
+            {item.status === "pending" ? 
+            <View style={{height: 150, marginHorizontal: 10, marginBottom: 20, backgroundColor: '#282828', borderRadius: 10 }}>
+              <Text style={{ color: 'white', fontSize: 18, textAlign: 'center', marginTop: 10, fontWeight: 'bold' }}>Pedido pendiente</Text>
+              <Text style={{ color: 'gray', fontSize: 18, textAlign: 'center', marginTop: 5, fontWeight: 'bold' }}>#{item.orderNumber}</Text>
+              <Text style={{ color: 'gray', fontSize: 18, textAlign: 'center', marginTop: 5 }} onPress={() => navigation.navigate('Pedidos')}>Ver pedidos</Text>
+              <Text style={{ color: 'orange', fontSize: 18, textAlign: 'center', marginTop: 10, fontWeight: 'bold' }} onPress={() => actualizar()}>Actualizar</Text>
+            </View> : null}
+            {item.status === 'in progress' ? 
+            <View style={{height: 130, marginHorizontal: 10, marginBottom: 20, backgroundColor: '#282828', borderRadius: 10 }}>
+              <Text style={{ color: 'white', fontSize: 22, textAlign: 'center', marginTop: 20, fontWeight: 'bold' }}>Pedido en proceso...</Text>
+              <Text style={{ color: 'gray', fontSize: 18, textAlign: 'center', marginTop: 5, fontWeight: 'bold' }}>#{item.orderNumber}</Text>
+              <Text style={{ color: 'gray', fontSize: 18, textAlign: 'center', marginTop: 5 }}>Ver pedidos</Text>
+              <Text style={{ color: 'gray', fontSize: 18, textAlign: 'center', marginTop: 5 }} onPress={() => navigation.navigate('Pedidos')}>Ver pedidos</Text>
+              <Text style={{ color: 'gray', fontSize: 18, textAlign: 'center', marginTop: 20, fontWeight: 'bold' }} onPress={() => actualizar()}>Actualizar</Text>
+            </View> : null}
+          </View>
+        )}
+        />
+
+
+
 
        
 
@@ -297,7 +358,7 @@ const Home = () => {
           }}
         />
       </ScrollView>
-    </View>
+    
   );
 };
 

@@ -24,16 +24,18 @@ import {
   crearCarritoAction,
   crearDrinksAction,
   crearTypeAction,
+  crearUsuarioAction
 } from "../../store/actions/carritoActions";
 
 const Abonar = ({ route }) => {
-  const { total } = route.params;
+  const { total, text, direccion } = route.params;
 
   const dispatch = useDispatch();
 
   const guardarType = (type) => dispatch(crearTypeAction(type));
   const guardarCarrito = (carrito) => dispatch(crearCarritoAction(carrito));
   const guardarDrinks = (drinks) => dispatch(crearDrinksAction(drinks));
+  const guardarUsuario = (usuario) => dispatch(crearUsuarioAction(usuario));
 
   const carrito = useSelector((state) => state.carrito.carrito);
   const drinks = useSelector((state) => state.carrito.drinks);
@@ -63,7 +65,7 @@ const Abonar = ({ route }) => {
   const [aplicado, setAplicado] = React.useState(false);	
 
   //state para enviar el cupon verificado
-  const [cuponVerificado, setCuponVerificado] = React.useState("");
+  const [cuponVerificado, setCuponVerificado] = React.useState(undefined);
 
 
   //Cuando se precione cupon
@@ -80,6 +82,24 @@ const Abonar = ({ route }) => {
       await Linking.openURL(url);
     } else {
       Alert.alert("Error", "No se pudo abrir el link");
+    }
+  }
+
+  const actualizarPedidos = async () => {
+    try {
+      const responseUser = await fetch("https://app-menora.herokuapp.com/users",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data2 = await responseUser.json();
+  
+      guardarUsuario(data2);
+    } catch (error) {
+      //console.log(error);
     }
   }
 
@@ -144,14 +164,14 @@ const Abonar = ({ route }) => {
         drinks: idDrinks,
         paymentType: value,
         type: type,
-        address: usuario.address.lastUsed,
-        comment: "",
+        address: direccion,
+        comment: text,
         discount: cuponVerificado,
       };
 
       // Enviar orden al servidor
       const consultarApi = async (orden) => {
-        //console.log(orden)
+        
         try {
           const url = "https://app-menora.herokuapp.com/orders";
           const data = await axios.post(url, orden, {
@@ -159,9 +179,12 @@ const Abonar = ({ route }) => {
               Authorization: `Bearer ${token}`,
             },
           });
+
+          
+
           return data.data;
         } catch (error) {
-          console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
+          //console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
         }
       };
 
@@ -185,6 +208,8 @@ const Abonar = ({ route }) => {
       ) {
         navigation.navigate("PagoExitoso");
       } else {
+        actualizarPedidos();
+        
         Alert.alert("Tu pedido ha sido enviado", "Gracias por tu compra", [
           {
             text: "OK",
@@ -197,6 +222,7 @@ const Abonar = ({ route }) => {
             },
           },
         ]);
+        
       }
     } else {
       setError("Seleccione una forma de pago");
@@ -217,7 +243,7 @@ const Abonar = ({ route }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(data.data);
+         
           // validar que el pedido minimo se cumpla
           if (data.data.minimum > total) {
             setError(
@@ -236,7 +262,7 @@ const Abonar = ({ route }) => {
           }
         } catch (error) {
           setError("Cupon no válido");
-          console.log("ERROR DE ABONAR(CONSULTA DE API): ", error.message);
+          //console.log("ERROR DE ABONAR(CONSULTA DE API): ", error.message);
         }
       };
       consultarApi(cupon.toUpperCase());

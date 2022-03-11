@@ -6,24 +6,34 @@ import icon3 from '../../assets/images/Vector.png'
 import LinearGradient from 'react-native-linear-gradient';
 
 //redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { crearTypeAction } from '../../store/actions/carritoActions'
 
 
 const MedioDeEnvio = ({ navigation, route}) => {
 
-    const { total } = route.params;
+    const { total, text } = route.params;
     
 
     const dispatch = useDispatch();
 
     const guardarType = (type) => dispatch(crearTypeAction(type));
+    const usuario = useSelector((state) => state.usuario.usuario); 
+    const direccion = usuario.address.lastUsed;
 
 
     //Al hacer clic en medio de envio
     const alHacerClic = (opcion) => {
         guardarType(opcion)
-        navigation.navigate("Abonar", { total: total })
+        if(opcion === "delivery"){
+            navigation.navigate('ListaDeDirecciones', {
+                total: total,
+                text: text,
+                direccion: direccion
+            })
+        }else{
+            navigation.navigate("Abonar", { total: total, text: text })
+        }
     }
 
     return (

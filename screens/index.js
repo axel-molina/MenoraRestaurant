@@ -31,6 +31,13 @@ import PagoExitoso from "./PagoExitoso/PagoExitoso";
 
 import Pedidos from "./Pedidos/Pedidos";
 
+import VerPedido from "./Pedidos/VerPedido";
+
+import Direcciones from "./Direcciones/Direcciones";
+
+import ListaDeDirecciones from "./Direcciones/ListaDeDirecciones";
+
+import QuitarDirecciones from "./Direcciones/QuitarDirecciones";
 
 
 
@@ -64,5 +71,9 @@ export {
   CambioDeContraseña,
   CambioDeContraseñaExitoso,
   Pedidos,
-  Valorar
+  Valorar,
+  VerPedido,
+  Direcciones,
+  ListaDeDirecciones,
+  QuitarDirecciones,
 };

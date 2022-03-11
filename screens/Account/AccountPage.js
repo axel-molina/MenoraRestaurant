@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     View, Text, TouchableOpacity, ActivityIndicator
 } from 'react-native';
@@ -7,12 +7,39 @@ import Icons from "react-native-vector-icons/Entypo";
 import { useNavigation } from '@react-navigation/native';
 
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { obtenerOrdenesAction } from "../../store/actions/ordenesActions";
  
 
 const AccountPage = () => {
+
+    const dispatch = useDispatch();
+
     const navigation = useNavigation();
     const usuario = useSelector((state) => state.usuario.usuario);
+    const token = useSelector((state) => state.token.token);
+
+    const guardarOrdenes = (ordenes) => dispatch(obtenerOrdenesAction(ordenes));
+
+    useEffect( async () => {
+        
+        try {
+          const responseOrders = await fetch("https://app-menora.herokuapp.com/orders",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const dataOrder = await responseOrders.json();     
+            guardarOrdenes(dataOrder);
+        
+        } catch (error) {
+          console.log(error);
+        }
+    
+      }),[];
 
 
     return (
@@ -33,14 +60,14 @@ const AccountPage = () => {
                 <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10, marginTop: 10 }}></View>
                 <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}}>
                     <Icon name="enviromento" size={20} color="white" />
-                    <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}}>Dirección para delivery</Text>
+                    <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}} onPress={()=> navigation.navigate("Direcciones")}>Agregar dirección</Text>
                 </TouchableOpacity>
                 <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10, marginTop: 10  }}></View>
-                <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}}>
-                <Icons name="ticket" size={20} color='grey' />
-                    <Text style={{ color: 'grey', fontSize: 22, marginLeft: 10}}>Promos</Text>
+                <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}} onPress={()=> navigation.navigate("QuitarDirecciones")}>
+                    <Icon name="home" size={22} color="white" />
+                    <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}} >Quitar dirección</Text>
                 </TouchableOpacity>
-                <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10, marginTop: 10  }}></View>
+                <View style={{ borderWidth: 0.5, borderColor: 'white', marginBottom: 10, marginTop: 10 }}></View>
                 <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 10}} onPress = {() => navigation.navigate("CambioDeContraseña")}>
                 <Icons name="lock" size={22} color='white' />
                     <Text style={{ color: 'white', fontSize: 22, marginLeft: 10}}>Cambiar contraseña</Text>

@@ -1,10 +1,11 @@
-import React from "react";
-import { View, Text, StatusBar, FlatList, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StatusBar, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 // Redux
 import { useSelector } from "react-redux";
 
 const Pedidos = ({ navigation }) => {
+
   const ordenes = useSelector((state) => state.ordenes.ordenes);
 
   //console.log("DESDE PEDIDOS", ordenes);
@@ -77,7 +78,7 @@ const Pedidos = ({ navigation }) => {
                     Valorar
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: "row" }}>
+                <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate('VerPedido', { item: item})}>
                   <Icon name="profile" size={30} color="white" />
                   <Text
                     style={{
@@ -89,7 +90,7 @@ const Pedidos = ({ navigation }) => {
                       marginLeft: 10,
                     }}
                   >
-                    Repetir
+                    Ver
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -106,23 +107,25 @@ const Pedidos = ({ navigation }) => {
       }}
     >
       <StatusBar backgroundColor="#000"> </StatusBar>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 45,
-          fontWeight: "bold",
-          textAlign: "center",
-          marginTop: 20,
-          marginBottom: 20,
-        }}
-      >
-        Pedidos
-      </Text>
-      <FlatList
-        data={ordenes}
-        keyExtractor={(item) => `${item._id}`}
-        renderItem={ordenItem}
-      />
+      <View>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 45,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginTop: 20,
+            marginBottom: 20,
+          }}
+        >
+          Pedidos
+        </Text>
+        <FlatList
+          data={ordenes}
+          keyExtractor={(item) => `${item._id}`}
+          renderItem={ordenItem}
+        />
+      </View>
     </View>
   );
 };

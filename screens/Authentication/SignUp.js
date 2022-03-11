@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { AuthLayout } from "../";
 import { COLORS, FONTS, SIZES, icons } from "../../constants";
-import { FormInput, TextButton } from "../../components";
+import { FormInput } from "../../components";
 import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign";
 import Logo from "react-native-vector-icons/Entypo";
@@ -34,8 +34,6 @@ const SignUp = ({ navigation }) => {
       number: null,
       apt: "",
       postalCode: "",
-      latitude: null,
-      longitude: null,
     },
     password: "",
     passwordConfirmation: "",

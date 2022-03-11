@@ -25,7 +25,11 @@ import {
   AccountPage,
   CambioDeContraseñaExitoso,
   Pedidos,
-  Valorar
+  Valorar,
+  VerPedido,
+  Direcciones,
+  ListaDeDirecciones,
+  QuitarDirecciones
 } from "./screens";
 
 import CustomDrawer from "./navigation/CustomDrawer";
@@ -87,6 +91,15 @@ const App = () => {
               <Stack.Screen name="Pedidos" component={Pedidos} />
 
               <Stack.Screen name="Valorar" component={Valorar} />
+
+              <Stack.Screen name="VerPedido" component={VerPedido} />
+
+              <Stack.Screen name="Direcciones" component={Direcciones} />
+
+              <Stack.Screen name="ListaDeDirecciones" component={ListaDeDirecciones} />
+
+              <Stack.Screen name="QuitarDirecciones" component={QuitarDirecciones} />
+              
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>
