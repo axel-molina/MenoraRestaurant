@@ -144,7 +144,9 @@ const CustomDrawerContent = ({ navigation, selectedTab, setSelectedTab }) => {
 
 
           {/* icon location */}
-          <CustomDrawerItem label="Tus Direcciones" icon={icons.location} />
+          <CustomDrawerItem label="Agregar direcciones" icon={icons.location} 
+          onPress={() =>{navigation.navigate('Direcciones')}}
+          />
 
          
 

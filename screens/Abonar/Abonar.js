@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  ActivityIndicator
 } from "react-native";
 import { COLORS, images } from "../../constants";
 import { RadioButton } from "react-native-paper";
@@ -67,6 +68,8 @@ const Abonar = ({ route }) => {
   //state para enviar el cupon verificado
   const [cuponVerificado, setCuponVerificado] = React.useState(undefined);
 
+  const [isLoading, setIsLoading] = useState(false);
+
 
   //Cuando se precione cupon
   const handleCupon = () => {
@@ -116,6 +119,7 @@ const Abonar = ({ route }) => {
   //Cuando se preciona abonar
   const abonar = async () => {
     setError("");
+    setIsLoading(true);
 
     if (value !== "") {
       // && cupon === ""
@@ -184,7 +188,8 @@ const Abonar = ({ route }) => {
 
           return data.data;
         } catch (error) {
-          //console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
+          console.log("ERROR DE ABONAR(CONSULTA DE API): ", error);
+          setIsLoading(false);
         }
       };
 
@@ -200,16 +205,18 @@ const Abonar = ({ route }) => {
         guardarType("");
         guardarCarrito([]);
         guardarDrinks([]);
+        setIsLoading(false);
         navigation.navigate("Home");
       } else if (
         value === "cash" &&
         type !== "delivery" &&
         ordenApi === "La orden se ha creado correctamente"
       ) {
+        setIsLoading(false);
         navigation.navigate("PagoExitoso");
       } else {
         actualizarPedidos();
-        
+        setIsLoading(false);
         Alert.alert("Tu pedido ha sido enviado", "Gracias por tu compra", [
           {
             text: "OK",
@@ -226,7 +233,9 @@ const Abonar = ({ route }) => {
       }
     } else {
       setError("Seleccione una forma de pago");
+      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   // Al verificar cupon
@@ -437,7 +446,7 @@ const Abonar = ({ route }) => {
         Precio Total: ${precio}
       </Text>
 
-      <LinearGradient
+      {isLoading ? <ActivityIndicator size="large" color="#ED1200" /> : <LinearGradient
         colors={["#ED1200", "#D9510C", "#EA8100"]}
         style={{
           padding: 12,
@@ -459,7 +468,7 @@ const Abonar = ({ route }) => {
             ABONAR
           </Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </LinearGradient>}
     </ScrollView>
   );
 };

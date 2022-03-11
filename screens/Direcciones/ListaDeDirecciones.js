@@ -6,9 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
-  TextInput,
-  ActivityIndicator,
-  Alert,
+
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { RadioButton } from "react-native-paper";

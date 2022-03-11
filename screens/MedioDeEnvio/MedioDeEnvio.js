@@ -29,10 +29,10 @@ const MedioDeEnvio = ({ navigation, route}) => {
             navigation.navigate('ListaDeDirecciones', {
                 total: total,
                 text: text,
-                direccion: direccion
+
             })
         }else{
-            navigation.navigate("Abonar", { total: total, text: text })
+            navigation.navigate("Abonar", { total: total, text: text, direccion: direccion })
         }
     }
 

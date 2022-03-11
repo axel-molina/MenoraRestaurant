@@ -6,6 +6,7 @@ import { Home, Search, CartTab, AccountPage } from "../screens";
 import { Header} from "../components";
 import {
   View,
+  ScrollView,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
