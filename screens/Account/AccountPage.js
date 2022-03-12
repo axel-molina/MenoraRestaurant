@@ -21,6 +21,8 @@ const AccountPage = () => {
 
     const guardarOrdenes = (ordenes) => dispatch(obtenerOrdenesAction(ordenes));
 
+    //console.log("Esto es cupones: ", usuario.orders)
+
     useEffect( async () => {
         
         try {

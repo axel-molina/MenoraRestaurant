@@ -163,6 +163,8 @@ const Home = () => {
   }, []);
   
 
+  
+
   //Seleccion de tipo
   function renderFoodCategory() {
 

@@ -47,6 +47,8 @@ const Abonar = ({ route }) => {
 
   const guardarPayment = (payment) => dispatch(crearPaymentAction(payment));
 
+  
+
   //State del radio button
   const [value, setValue] = React.useState("");
 
@@ -175,6 +177,7 @@ const Abonar = ({ route }) => {
 
       // Enviar orden al servidor
       const consultarApi = async (orden) => {
+        console.log(orden)
         
         try {
           const url = "https://app-menora.herokuapp.com/orders";
@@ -183,7 +186,6 @@ const Abonar = ({ route }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-
           
 
           return data.data;
@@ -252,9 +254,10 @@ const Abonar = ({ route }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-         
+         //console.log(data.data);
           // validar que el pedido minimo se cumpla
-          if (data.data.minimum > total) {
+          
+            if (data.data.minimum > total) {
             setError(
               "El pedido debe ser mayor a $" +
                 data.data.minimum +
@@ -265,10 +268,11 @@ const Abonar = ({ route }) => {
               descontarCupon(data.data.amount, data.data.type);
               setAplicado(true);
               setError("");
-              setCuponVerificado(data.data.id)
+              setCuponVerificado(data.data._id)
               return data.data;
             }
           }
+        
         } catch (error) {
           setError("Cupon no válido");
           //console.log("ERROR DE ABONAR(CONSULTA DE API): ", error.message);
