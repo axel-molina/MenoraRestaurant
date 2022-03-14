@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* FoodDeliveryAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FoodDeliveryAppTests.m */; };
+		00E356F31AD99517003FC87E /* menoradeliveryappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* menoradeliveryappTests.m */; };
 		072D5499A26B4069A74DEAA9 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDD60FB19D5F4E3681ADD4DC /* Poppins-ThinItalic.ttf */; };
 		07EA3DB02FD64716A55E8DC2 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93DE011CD8124A0EA285B8F5 /* Poppins-LightItalic.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -16,14 +16,14 @@
 		2E99A76574CF48E3ABED6B63 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4EA933358E64C2F93030FC5 /* Poppins-ExtraLight.ttf */; };
 		308A1A45B6F64A9E9DD465C9 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71698132972746279559E193 /* Poppins-ExtraBold.ttf */; };
 		43A4DF161C444290AD7929C6 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B271ACDFEE64674989B5A35 /* Poppins-BoldItalic.ttf */; };
-		577E3471F39683D54943F40E /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FE8B342AD24F6964743C9EE /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a */; };
+		577E3471F39683D54943F40E /* libPods-menoradeliveryapp-menoradeliveryappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FE8B342AD24F6964743C9EE /* libPods-menoradeliveryapp-menoradeliveryappTests.a */; };
 		634414E645114D0F8A2E6D83 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A7A605FC9E647C5A4A416D0 /* Poppins-SemiBold.ttf */; };
 		6638FC4EFC26492E893406B3 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C5C33D885C144438A4D1949 /* Poppins-Black.ttf */; };
 		7EFA17ED5D7A4BF8A4FB1C55 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 867BDC9A8CD44E75B97645F9 /* Poppins-BlackItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		850FD2D33ED745AE935421E6 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB1DB13CBDA9475BBABFA471 /* Poppins-Thin.ttf */; };
 		86472E63140A4CADA4B60A07 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0E685F1E28E496FAB7CDC7C /* Poppins-ExtraBoldItalic.ttf */; };
-		88DBDEA8CD287742089A0F49 /* libPods-FoodDeliveryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 590B3F4BFA31D5EB708218F1 /* libPods-FoodDeliveryApp.a */; };
+		88DBDEA8CD287742089A0F49 /* libPods-menoradeliveryapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 590B3F4BFA31D5EB708218F1 /* libPods-menoradeliveryapp.a */; };
 		92CBD5D0D5F140F28E6E5819 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F79BF82C68924DF7BD10530F /* Poppins-Italic.ttf */; };
 		97782B336F344ED2B852A6FC /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11E9596079AA4189854CC313 /* Poppins-ExtraLightItalic.ttf */; };
 		A1602625158445E98A977082 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4C247EB73154B68969ACB0F /* Poppins-SemiBoldItalic.ttf */; };
@@ -56,39 +56,39 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = FoodDeliveryApp;
+			remoteInfo = menoradeliveryapp;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* FoodDeliveryAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodDeliveryAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* menoradeliveryappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = menoradeliveryappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* FoodDeliveryAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FoodDeliveryAppTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* menoradeliveryappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = menoradeliveryappTests.m; sourceTree = "<group>"; };
 		0A7A605FC9E647C5A4A416D0 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		11E9596079AA4189854CC313 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLightItalic.ttf"; path = "../assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* FoodDeliveryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodDeliveryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FoodDeliveryApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FoodDeliveryApp/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FoodDeliveryApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FoodDeliveryApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FoodDeliveryApp/main.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* menoradeliveryapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = menoradeliveryapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = menoradeliveryapp/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = menoradeliveryapp/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = menoradeliveryapp/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = menoradeliveryapp/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = menoradeliveryapp/main.m; sourceTree = "<group>"; };
 		2C5C33D885C144438A4D1949 /* Poppins-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Black.ttf"; path = "../assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; };
 		3192A3B812744DD3A8B8694A /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
-		47ABE96C8A47ACDBB9D379B1 /* Pods-FoodDeliveryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.release.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.release.xcconfig"; sourceTree = "<group>"; };
-		4A27A8B99DA0E6118B8FEEA9 /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp-FoodDeliveryAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4CFD66A3D3C852C6970BBE14 /* Pods-FoodDeliveryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.debug.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.debug.xcconfig"; sourceTree = "<group>"; };
-		590B3F4BFA31D5EB708218F1 /* libPods-FoodDeliveryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FoodDeliveryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47ABE96C8A47ACDBB9D379B1 /* Pods-menoradeliveryapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-menoradeliveryapp.release.xcconfig"; path = "Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp.release.xcconfig"; sourceTree = "<group>"; };
+		4A27A8B99DA0E6118B8FEEA9 /* Pods-menoradeliveryapp-menoradeliveryappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-menoradeliveryapp-menoradeliveryappTests.debug.xcconfig"; path = "Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4CFD66A3D3C852C6970BBE14 /* Pods-menoradeliveryapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-menoradeliveryapp.debug.xcconfig"; path = "Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp.debug.xcconfig"; sourceTree = "<group>"; };
+		590B3F4BFA31D5EB708218F1 /* libPods-menoradeliveryapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-menoradeliveryapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E48325AD0AA42C29CBEE60F /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-MediumItalic.ttf"; path = "../assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		71698132972746279559E193 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
 		7B271ACDFEE64674989B5A35 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BoldItalic.ttf"; path = "../assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
-		7FE8B342AD24F6964743C9EE /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FoodDeliveryApp-FoodDeliveryAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FoodDeliveryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7FE8B342AD24F6964743C9EE /* libPods-menoradeliveryapp-menoradeliveryappTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-menoradeliveryapp-menoradeliveryappTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = menoradeliveryapp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		867BDC9A8CD44E75B97645F9 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BlackItalic.ttf"; path = "../assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
 		93DE011CD8124A0EA285B8F5 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-LightItalic.ttf"; path = "../assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
 		A4EA933358E64C2F93030FC5 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
 		AB1DB13CBDA9475BBABFA471 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		AD72AC26205041D08B0890FB /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
-		B4CCB815ECE8DD880F2F7B3F /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		B4CCB815ECE8DD880F2F7B3F /* Pods-menoradeliveryapp-menoradeliveryappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-menoradeliveryapp-menoradeliveryappTests.release.xcconfig"; path = "Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests.release.xcconfig"; sourceTree = "<group>"; };
 		C03AF5E1BE7346DDBD4DC420 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		C0E685F1E28E496FAB7CDC7C /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBoldItalic.ttf"; path = "../assets/fonts/Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		C80EEB6EE31B4584B6BAE8C5 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				577E3471F39683D54943F40E /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a in Frameworks */,
+				577E3471F39683D54943F40E /* libPods-menoradeliveryapp-menoradeliveryappTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,20 +127,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88DBDEA8CD287742089A0F49 /* libPods-FoodDeliveryApp.a in Frameworks */,
+				88DBDEA8CD287742089A0F49 /* libPods-menoradeliveryapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* FoodDeliveryAppTests */ = {
+		00E356EF1AD99517003FC87E /* menoradeliveryappTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* FoodDeliveryAppTests.m */,
+				00E356F21AD99517003FC87E /* menoradeliveryappTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = FoodDeliveryAppTests;
+			path = menoradeliveryappTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -151,7 +151,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* FoodDeliveryApp */ = {
+		13B07FAE1A68108700A75B9A /* menoradeliveryapp */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -161,7 +161,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = FoodDeliveryApp;
+			name = menoradeliveryapp;
 			sourceTree = "<group>";
 		};
 		1C1198330FA2491AAC431098 /* Resources */ = {
@@ -210,8 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				590B3F4BFA31D5EB708218F1 /* libPods-FoodDeliveryApp.a */,
-				7FE8B342AD24F6964743C9EE /* libPods-FoodDeliveryApp-FoodDeliveryAppTests.a */,
+				590B3F4BFA31D5EB708218F1 /* libPods-menoradeliveryapp.a */,
+				7FE8B342AD24F6964743C9EE /* libPods-menoradeliveryapp-menoradeliveryappTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -226,9 +226,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* FoodDeliveryApp */,
+				13B07FAE1A68108700A75B9A /* menoradeliveryapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* FoodDeliveryAppTests */,
+				00E356EF1AD99517003FC87E /* menoradeliveryappTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9D22194FA72B97D3F6B80285 /* Pods */,
@@ -242,8 +242,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* FoodDeliveryApp.app */,
-				00E356EE1AD99517003FC87E /* FoodDeliveryAppTests.xctest */,
+				13B07F961A680F5B00A75B9A /* menoradeliveryapp.app */,
+				00E356EE1AD99517003FC87E /* menoradeliveryappTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,10 +251,10 @@
 		9D22194FA72B97D3F6B80285 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4CFD66A3D3C852C6970BBE14 /* Pods-FoodDeliveryApp.debug.xcconfig */,
-				47ABE96C8A47ACDBB9D379B1 /* Pods-FoodDeliveryApp.release.xcconfig */,
-				4A27A8B99DA0E6118B8FEEA9 /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.debug.xcconfig */,
-				B4CCB815ECE8DD880F2F7B3F /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig */,
+				4CFD66A3D3C852C6970BBE14 /* Pods-menoradeliveryapp.debug.xcconfig */,
+				47ABE96C8A47ACDBB9D379B1 /* Pods-menoradeliveryapp.release.xcconfig */,
+				4A27A8B99DA0E6118B8FEEA9 /* Pods-menoradeliveryapp-menoradeliveryappTests.debug.xcconfig */,
+				B4CCB815ECE8DD880F2F7B3F /* Pods-menoradeliveryapp-menoradeliveryappTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -262,9 +262,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* FoodDeliveryAppTests */ = {
+		00E356ED1AD99517003FC87E /* menoradeliveryappTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FoodDeliveryAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "menoradeliveryappTests" */;
 			buildPhases = (
 				4CFC39C6389B24538DA16B65 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -278,14 +278,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = FoodDeliveryAppTests;
-			productName = FoodDeliveryAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* FoodDeliveryAppTests.xctest */;
+			name = menoradeliveryappTests;
+			productName = menoradeliveryappTests;
+			productReference = 00E356EE1AD99517003FC87E /* menoradeliveryappTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* FoodDeliveryApp */ = {
+		13B07F861A680F5B00A75B9A /* menoradeliveryapp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FoodDeliveryApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "menoradeliveryapp" */;
 			buildPhases = (
 				67EB54D224BA27DACD591D14 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -300,9 +300,9 @@
 			);
 			dependencies = (
 			);
-			name = FoodDeliveryApp;
-			productName = FoodDeliveryApp;
-			productReference = 13B07F961A680F5B00A75B9A /* FoodDeliveryApp.app */;
+			name = menoradeliveryapp;
+			productName = menoradeliveryapp;
+			productReference = 13B07F961A680F5B00A75B9A /* menoradeliveryapp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -322,7 +322,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FoodDeliveryApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "menoradeliveryapp" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -335,8 +335,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* FoodDeliveryApp */,
-				00E356ED1AD99517003FC87E /* FoodDeliveryAppTests */,
+				13B07F861A680F5B00A75B9A /* menoradeliveryapp */,
+				00E356ED1AD99517003FC87E /* menoradeliveryappTests */,
 			);
 		};
 /* End PBXProject section */
@@ -424,7 +424,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FoodDeliveryApp-FoodDeliveryAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-menoradeliveryapp-menoradeliveryappTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -446,7 +446,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FoodDeliveryApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-menoradeliveryapp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -459,15 +459,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DA519F7A2CC125C70DB52056 /* [CP] Embed Pods Frameworks */ = {
@@ -476,15 +476,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ECC08615B20D604F3098F60B /* [CP] Copy Pods Resources */ = {
@@ -493,15 +493,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp-FoodDeliveryAppTests/Pods-FoodDeliveryApp-FoodDeliveryAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp-menoradeliveryappTests/Pods-menoradeliveryapp-menoradeliveryappTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F359DD04989739A550B23C85 /* [CP] Copy Pods Resources */ = {
@@ -510,15 +510,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-menoradeliveryapp/Pods-menoradeliveryapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -547,7 +547,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* FoodDeliveryAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* menoradeliveryappTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,7 +565,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* FoodDeliveryApp */;
+			target = 13B07F861A680F5B00A75B9A /* menoradeliveryapp */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -573,14 +573,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A27A8B99DA0E6118B8FEEA9 /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.debug.xcconfig */;
+			baseConfigurationReference = 4A27A8B99DA0E6118B8FEEA9 /* Pods-menoradeliveryapp-menoradeliveryappTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = FoodDeliveryAppTests/Info.plist;
+				INFOPLIST_FILE = menoradeliveryappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -594,17 +594,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodDeliveryApp.app/FoodDeliveryApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/menoradeliveryapp.app/menoradeliveryapp";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4CCB815ECE8DD880F2F7B3F /* Pods-FoodDeliveryApp-FoodDeliveryAppTests.release.xcconfig */;
+			baseConfigurationReference = B4CCB815ECE8DD880F2F7B3F /* Pods-menoradeliveryapp-menoradeliveryappTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = FoodDeliveryAppTests/Info.plist;
+				INFOPLIST_FILE = menoradeliveryappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -618,20 +618,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodDeliveryApp.app/FoodDeliveryApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/menoradeliveryapp.app/menoradeliveryapp";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CFD66A3D3C852C6970BBE14 /* Pods-FoodDeliveryApp.debug.xcconfig */;
+			baseConfigurationReference = 4CFD66A3D3C852C6970BBE14 /* Pods-menoradeliveryapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64246H4M77;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = FoodDeliveryApp/Info.plist;
+				INFOPLIST_FILE = menoradeliveryapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -641,8 +641,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jacktiong.FoodDeliveryApp;
-				PRODUCT_NAME = FoodDeliveryApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jacktiong.menoradeliveryapp;
+				PRODUCT_NAME = menoradeliveryapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -651,13 +651,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47ABE96C8A47ACDBB9D379B1 /* Pods-FoodDeliveryApp.release.xcconfig */;
+			baseConfigurationReference = 47ABE96C8A47ACDBB9D379B1 /* Pods-menoradeliveryapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64246H4M77;
-				INFOPLIST_FILE = FoodDeliveryApp/Info.plist;
+				INFOPLIST_FILE = menoradeliveryapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -667,8 +667,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jacktiong.FoodDeliveryApp;
-				PRODUCT_NAME = FoodDeliveryApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jacktiong.menoradeliveryapp;
+				PRODUCT_NAME = menoradeliveryapp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -800,7 +800,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FoodDeliveryAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "menoradeliveryappTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -809,7 +809,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FoodDeliveryApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "menoradeliveryapp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -818,7 +818,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FoodDeliveryApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "menoradeliveryapp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
