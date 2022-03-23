@@ -27,7 +27,7 @@ function validateEmail(value, setEmailError) {
         setEmailError("")
     }
     else {
-        setEmailError("Email no valido")
+        setEmailError("")
     }
 }
 

@@ -85,7 +85,7 @@ const SignIn = ({ navigation }) => {
         try {
           const url = "https://app-menora.herokuapp.com/login";
           const data = await axios.post(url, {
-            email: email,
+            email: (email).trim(),
             password: password,
           });
 
