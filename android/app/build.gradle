@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "es.menoradeliveryapp.paquete"
+        applicationId "es.menorarestaurantapp.paquete"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
