@@ -11,7 +11,7 @@ const PaginaDeBienvenida = ({ navigation }) => {
             <StatusBar backgroundColor='#000'></StatusBar>
             <View style={styles.containLogo}>
                 <Image
-                    source={images.logo_02}
+                    source={images.logo_01} 
                     resizeMode="contain"
                     style={styles.logo}
                 />
