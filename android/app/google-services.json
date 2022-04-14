@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "920337938322",
+    "project_id": "menorarestaurant-2ff30",
+    "storage_bucket": "menorarestaurant-2ff30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920337938322:android:9f2ac36a54d1a3d856334b",
+        "android_client_info": {
+          "package_name": "com.fooddeliveryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920337938322-jfl0qgjs5malaftm72328m7bil59mv1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJaeAm1O_LxoUrKm1tl0isTBfxyBzMK4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920337938322-jfl0qgjs5malaftm72328m7bil59mv1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
