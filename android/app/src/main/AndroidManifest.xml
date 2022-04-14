@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="es.menorarestaurantapp.paquete">
+  package="com.jacktiong.menoradeliveryapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

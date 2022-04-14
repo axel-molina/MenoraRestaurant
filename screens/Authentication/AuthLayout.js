@@ -8,7 +8,7 @@ const AuthLayout = ({ title, children }) => {
     keyboardShouldPersistTaps='handled'
       style={{
         flex: 1,
-        paddingVertical: SIZES.padding *4,
+        paddingVertical: SIZES.padding,
         backgroundColor: COLORS.white,
         backgroundColor: COLORS.black,
         paddingHorizontal: SIZES.padding,

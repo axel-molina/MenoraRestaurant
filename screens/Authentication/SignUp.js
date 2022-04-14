@@ -16,12 +16,11 @@ import { utils } from "../../utils";
 import Icon from "react-native-vector-icons/AntDesign";
 import Logo from "react-native-vector-icons/Entypo";
 import Icono from "react-native-vector-icons/FontAwesome";
-import LinearGradient from "react-native-linear-gradient";
+import LinearGradient from 'react-native-linear-gradient';
 import axios from "axios";
 
 import { useDispatch } from "react-redux";
 import { crearTokenAction } from "../../store/actions/tokenActions";
-import { red100 } from "react-native-paper/lib/typescript/styles/colors";
 
 const SignUp = ({ navigation }) => {
   //State del formulario
@@ -54,8 +53,7 @@ const SignUp = ({ navigation }) => {
   const [emailError, setEmailError] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
   const [error, setError] = React.useState("");
-  const [passwordConfirmationError, setPasswordConfirmationError] =
-    React.useState("");
+  const [passwordConfirmationError, setPasswordConfirmationError] = React.useState("");
 
   const dispatch = useDispatch();
 
@@ -80,20 +78,20 @@ const SignUp = ({ navigation }) => {
   const registrarUsuario = async () => {
     try {
       if (isEnableSignUp()) {
-        if (password !== passwordConfirmation) {
+        if(password !== passwordConfirmation){
           setError("La contraseña no coincide");
         }
         setError("");
 
         const consultarAPI = async () => {
           const url = "https://app-menora.herokuapp.com/register";
-          const { passwordConfirmation, ...userAux } = usuario;
+          const { passwordConfirmation,...userAux } = usuario
           const data = await axios.post(url, userAux);
           return data;
         };
         const response = await consultarAPI();
         guardarToken(response.data.accessToken);
-        navigation.navigate("SignIn");
+        navigation.navigate("SignIn")
       } else {
         setError("Todos los campos son obligatorios");
       }
@@ -108,7 +106,9 @@ const SignUp = ({ navigation }) => {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always">
+    <ScrollView
+    keyboardShouldPersistTaps='always'
+    >
       <StatusBar backgroundColor="#000"></StatusBar>
       <AuthLayout
         title="Registro"
@@ -227,11 +227,9 @@ const SignUp = ({ navigation }) => {
           <FormInput
             label="Dpto."
             value={address.apt}
-            prependComponent={
-              <Icono name="building-o" size={30} color="white" />
-            }
+            prependComponent={<Icono name="building-o" size={30} color="white" />}
             onChange={(value) => {
-              if (address.apt.length < 16) {
+              if(address.apt.length < 16){
                 const address = { ...usuario.address, apt: value.trim() };
                 setUsuario({ ...usuario, address });
               }
@@ -251,7 +249,7 @@ const SignUp = ({ navigation }) => {
 
           {/*Input Password */}
           <FormInput
-            label="Contraseña "
+            label="Contraseña"
             secureTextEntry={!showPass}
             value={password}
             prependComponent={<Icon name="lock1" size={30} color="white" />}
@@ -261,7 +259,7 @@ const SignUp = ({ navigation }) => {
               utils.validatePassword(value, setPasswordError);
               setUsuario({ ...usuario, password: value });
             }}
-            /* errorMsg={passwordError} */
+            errorMsg={passwordError}
             appendComponent={
               <TouchableOpacity
                 style={{
@@ -282,7 +280,7 @@ const SignUp = ({ navigation }) => {
               </TouchableOpacity>
             }
           />
-          <Text style={{color:"red"}}>{passwordError}</Text>
+
 
           {/*Confirmation Password */}
           <FormInput
@@ -294,9 +292,9 @@ const SignUp = ({ navigation }) => {
             containerStyle={{ marginTop: SIZES.radius }}
             onChange={(value) => {
               //utils.validatePassword(value, setPasswordConfirmationError);
-              if (passwordConfirmation === password) {
+              if(passwordConfirmation === password){
                 setPasswordConfirmationError("");
-              }
+              } 
               setUsuario({ ...usuario, passwordConfirmation: value });
             }}
             errorMsg={passwordConfirmationError}
@@ -324,29 +322,12 @@ const SignUp = ({ navigation }) => {
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
           {/* Sign Up & Sign In Button */}
-          <LinearGradient
-            colors={["#ED1200", "#D9510C", "#EA8100"]}
-            style={{
-              padding: 12,
-              borderRadius: 50,
-              marginTop: 10,
-              marginBottom: 10,
-              marginHorizontal: 10,
-            }}
-          >
-            <TouchableOpacity onPress={() => registrarUsuario()}>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 22,
-                  textAlign: "center",
-                  fontFamily: "Poppins-Regular",
-                }}
-              >
-                REGRISTRARME
-              </Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          <LinearGradient colors={['#ED1200', '#D9510C', '#EA8100']} style={{padding: 12, borderRadius: 50, marginTop: 10, marginBottom: 10, marginHorizontal: 10}}>
+          <TouchableOpacity onPress={() =>registrarUsuario()}>
+            <Text style={{ color: 'white', fontSize: 22, textAlign: 'center', fontFamily: "Poppins-Regular", }}>REGRISTRARME</Text>
+          </TouchableOpacity>
+          </LinearGradient>  
+          
 
           <View
             style={{
