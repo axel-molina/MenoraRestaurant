@@ -1,4 +1,4 @@
-package com.jacktiong.menoradeliveryapp;
+package es.menorarestaurantapp.paquete;
 
 import android.os.Bundle; 
 import com.facebook.react.ReactActivity;
