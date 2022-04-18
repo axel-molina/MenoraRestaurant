@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Necesitamos permisos para hacer el seguimiento de su informacion para continuar.</string>
 	<key>CFBundleDisplayName</key>
 	<string>MenoraRestaurantApp</string>
 	<key>CFBundleExecutable</key>

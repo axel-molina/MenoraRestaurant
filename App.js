@@ -6,8 +6,7 @@ import SplashScreen from "react-native-splash-screen";
 
 import { Provider } from "react-redux";
 import store from "./store/store";
-
-
+import { requestTrackingPermission } from "react-native-tracking-transparency";
 
 import {
   PaginaDeBienvenida,
@@ -43,6 +42,17 @@ const Stack = createStackNavigator();
 const App = () => {
   React.useEffect(() => {
     SplashScreen.hide();
+  }, []);
+
+  React.useEffect(() => {
+    ( async () => {
+      const { status } = await requestTrackingPermission();
+      if (status === "authorized" || status === "unavailable") {
+        console.log("Permission granted");
+        //startNotifications(notificationListener, responseListener) aca deberia ir una funcion sobre notificaciones
+      }
+    })
+  
   }, []);
 
   
