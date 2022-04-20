@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import { AuthLayout } from "../";
 import { COLORS, FONTS, SIZES, icons } from "../../constants";
@@ -108,269 +109,274 @@ const SignUp = ({ navigation }) => {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps="always">
-      <StatusBar backgroundColor="#000"></StatusBar>
-      <AuthLayout
-        title="Registro"
-        titleContainerStyle={{
-          marginTop: SIZES.radius,
-        }}
-      >
-        {/* Form Input And Sign Up */}
-
-        <View
-          style={{
-            flex: 1,
-            marginTop: SIZES.padding,
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <ScrollView keyboardShouldPersistTaps="always">
+        <StatusBar backgroundColor="#000"></StatusBar>
+        <AuthLayout
+          title="Registro"
+          titleContainerStyle={{
+            marginTop: SIZES.radius,
           }}
         >
-          {/* Input Nombre */}
-          <FormInput
-            label="Nombre"
-            value={name}
-            prependComponent={<Icon name="user" size={30} color="white" />}
-            onChange={(value) => {
-              setUsuario({ ...usuario, name: value });
-            }}
-          />
-
-          {/* Input Apellido */}
-          <FormInput
-            label="Apellido"
-            value={surname}
-            prependComponent={<Icon name="user" size={30} color="white" />}
-            onChange={(value) => {
-              setUsuario({ ...usuario, surname: value });
-            }}
-          />
-
-          {/* Input Telefono */}
-          <FormInput
-            label="Número de teléfono"
-            value={phone}
-            prependComponent={<Icon name="phone" size={30} color="white" />}
-            onChange={(value) => {
-              setUsuario({ ...usuario, phone: value });
-            }}
-          />
-
-          {/* Input email */}
-          <FormInput
-            label="Email"
-            value={email}
-            prependComponent={<Icon name="mail" size={30} color="white" />}
-            keyboardType="email-address"
-            autoCompleteType="email"
-            onChange={(value) => {
-              // validate email
-              utils.validateEmail(value, setEmailError);
-              setUsuario({ ...usuario, email: value });
-            }}
-            errorMsg={emailError}
-            appendComponent={
-              <View
-                style={{
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  source={
-                    email == "" || (email != "" && emailError == "")
-                      ? icons.correct
-                      : icons.cross
-                  }
-                  style={{
-                    height: 20,
-                    width: 20,
-                    tintColor:
-                      email == ""
-                        ? COLORS.gray
-                        : email != "" && emailError == ""
-                        ? COLORS.green
-                        : COLORS.red,
-                  }}
-                />
-              </View>
-            }
-          />
-
-          {/* Input Street */}
-          <FormInput
-            label="Calle"
-            value={address.street}
-            prependComponent={<Logo name="address" size={30} color="white" />}
-            onChange={(value) => {
-              const address = { ...usuario.address, street: value.trim() };
-              setUsuario({ ...usuario, address });
-            }}
-          />
-
-          {/* Input number */}
-          <FormInput
-            label="Número"
-            value={address.number}
-            keyboardType="numeric"
-            prependComponent={
-              <Icon name="enviroment" size={30} color="white" />
-            }
-            onChange={(value) => {
-              if (Number(value) > 0) {
-                const address = { ...usuario.address, number: Number(value) };
-                setUsuario({ ...usuario, address });
-              } else {
-                console.log("No es un número");
-              }
-            }}
-          />
-
-          {/* Input Depto */}
-          <FormInput
-            label="Dpto."
-            value={address.apt}
-            prependComponent={
-              <Icono name="building-o" size={30} color="white" />
-            }
-            onChange={(value) => {
-              if (address.apt.length < 16) {
-                const address = { ...usuario.address, apt: value.trim() };
-                setUsuario({ ...usuario, address });
-              }
-            }}
-          />
-
-          {/* Input PostalCode */}
-          <FormInput
-            label="Código postal"
-            value={address.postalCode}
-            prependComponent={<Icon name="inbox" size={30} color="white" />}
-            onChange={(value) => {
-              const address = { ...usuario.address, postalCode: value };
-              setUsuario({ ...usuario, address });
-            }}
-          />
-
-          {/*Input Password */}
-          <FormInput
-            label="Contraseña "
-            secureTextEntry={!showPass}
-            value={password}
-            prependComponent={<Icon name="lock1" size={30} color="white" />}
-            autoCompletType="password"
-            containerStyle={{ marginTop: SIZES.radius }}
-            onChange={(value) => {
-              utils.validatePassword(value, setPasswordError);
-              setUsuario({ ...usuario, password: value });
-            }}
-            /* errorMsg={passwordError} */
-            appendComponent={
-              <TouchableOpacity
-                style={{
-                  width: 40,
-                  alignItems: "flex-end",
-                  justifyContent: "center",
-                }}
-                onPress={() => setShowPass(!showPass)}
-              >
-                <Image
-                  source={showPass ? icons.eye_close : icons.eye}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    tintColor: COLORS.gray,
-                  }}
-                />
-              </TouchableOpacity>
-            }
-          />
-          <Text style={{color:"red"}}>{passwordError}</Text>
-
-          {/*Confirmation Password */}
-          <FormInput
-            label="Confirmar contraseña"
-            secureTextEntry={!showPass}
-            value={passwordConfirmation}
-            prependComponent={<Icon name="lock1" size={30} color="white" />}
-            autoCompletType="password"
-            containerStyle={{ marginTop: SIZES.radius }}
-            onChange={(value) => {
-              //utils.validatePassword(value, setPasswordConfirmationError);
-              if (passwordConfirmation === password) {
-                setPasswordConfirmationError("");
-              }
-              setUsuario({ ...usuario, passwordConfirmation: value });
-            }}
-            errorMsg={passwordConfirmationError}
-            appendComponent={
-              <TouchableOpacity
-                style={{
-                  width: 40,
-                  alignItems: "flex-end",
-                  justifyContent: "center",
-                }}
-                onPress={() => setShowPass(!showPass)}
-              >
-                <Image
-                  source={showPass ? icons.eye_close : icons.eye}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    tintColor: COLORS.gray,
-                  }}
-                />
-              </TouchableOpacity>
-            }
-          />
-
-          {error ? <Text style={styles.error}>{error}</Text> : null}
-
-          {/* Sign Up & Sign In Button */}
-          <LinearGradient
-            colors={["#ED1200", "#D9510C", "#EA8100"]}
-            style={{
-              padding: 12,
-              borderRadius: 50,
-              marginTop: 10,
-              marginBottom: 10,
-              marginHorizontal: 10,
-            }}
-          >
-            <TouchableOpacity onPress={() => registrarUsuario()}>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 22,
-                  textAlign: "center",
-                  fontFamily: "Poppins-Regular",
-                }}
-              >
-                REGRISTRARME
-              </Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          {/* Form Input And Sign Up */}
 
           <View
             style={{
-              flexDirection: "row",
-              marginTop: SIZES.radius,
-              justifyContent: "center",
+              flex: 1,
+              marginTop: SIZES.padding,
             }}
           >
-            <Text style={{ color: COLORS.white, ...FONTS.body3 }}>
-              Ya tienes una cuenta?{" "}
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("SignIn");
+            {/* Input Nombre */}
+            <FormInput
+              label="Nombre"
+              value={name}
+              prependComponent={<Icon name="user" size={30} color="white" />}
+              onChange={(value) => {
+                setUsuario({ ...usuario, name: value });
+              }}
+            />
+
+            {/* Input Apellido */}
+            <FormInput
+              label="Apellido"
+              value={surname}
+              prependComponent={<Icon name="user" size={30} color="white" />}
+              onChange={(value) => {
+                setUsuario({ ...usuario, surname: value });
+              }}
+            />
+
+            {/* Input Telefono */}
+            <FormInput
+              label="Número de teléfono"
+              value={phone}
+              prependComponent={<Icon name="phone" size={30} color="white" />}
+              onChange={(value) => {
+                setUsuario({ ...usuario, phone: value });
+              }}
+            />
+
+            {/* Input email */}
+            <FormInput
+              label="Email"
+              value={email}
+              prependComponent={<Icon name="mail" size={30} color="white" />}
+              keyboardType="email-address"
+              autoCompleteType="email"
+              onChange={(value) => {
+                // validate email
+                utils.validateEmail(value, setEmailError);
+                setUsuario({ ...usuario, email: value });
+              }}
+              errorMsg={emailError}
+              appendComponent={
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image
+                    source={
+                      email == "" || (email != "" && emailError == "")
+                        ? icons.correct
+                        : icons.cross
+                    }
+                    style={{
+                      height: 20,
+                      width: 20,
+                      tintColor:
+                        email == ""
+                          ? COLORS.gray
+                          : email != "" && emailError == ""
+                          ? COLORS.green
+                          : COLORS.red,
+                    }}
+                  />
+                </View>
+              }
+            />
+
+            {/* Input Street */}
+            <FormInput
+              label="Calle"
+              value={address.street}
+              prependComponent={<Logo name="address" size={30} color="white" />}
+              onChange={(value) => {
+                const address = { ...usuario.address, street: value.trim() };
+                setUsuario({ ...usuario, address });
+              }}
+            />
+
+            {/* Input number */}
+            <FormInput
+              label="Número"
+              value={address.number}
+              keyboardType="numeric"
+              prependComponent={
+                <Icon name="enviroment" size={30} color="white" />
+              }
+              onChange={(value) => {
+                if (Number(value) > 0) {
+                  const address = { ...usuario.address, number: Number(value) };
+                  setUsuario({ ...usuario, address });
+                } else {
+                  console.log("No es un número");
+                }
+              }}
+            />
+
+            {/* Input Depto */}
+            <FormInput
+              label="Dpto."
+              value={address.apt}
+              prependComponent={
+                <Icono name="building-o" size={30} color="white" />
+              }
+              onChange={(value) => {
+                if (address.apt.length < 16) {
+                  const address = { ...usuario.address, apt: value.trim() };
+                  setUsuario({ ...usuario, address });
+                }
+              }}
+            />
+
+            {/* Input PostalCode */}
+            <FormInput
+              label="Código postal"
+              value={address.postalCode}
+              prependComponent={<Icon name="inbox" size={30} color="white" />}
+              onChange={(value) => {
+                const address = { ...usuario.address, postalCode: value };
+                setUsuario({ ...usuario, address });
+              }}
+            />
+
+            {/*Input Password */}
+            <FormInput
+              label="Contraseña "
+              secureTextEntry={!showPass}
+              value={password}
+              prependComponent={<Icon name="lock1" size={30} color="white" />}
+              autoCompletType="password"
+              containerStyle={{ marginTop: SIZES.radius }}
+              onChange={(value) => {
+                utils.validatePassword(value, setPasswordError);
+                setUsuario({ ...usuario, password: value });
+              }}
+              /* errorMsg={passwordError} */
+              appendComponent={
+                <TouchableOpacity
+                  style={{
+                    width: 40,
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => setShowPass(!showPass)}
+                >
+                  <Image
+                    source={showPass ? icons.eye_close : icons.eye}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      tintColor: COLORS.gray,
+                    }}
+                  />
+                </TouchableOpacity>
+              }
+            />
+            <Text style={{ color: "red" }}>{passwordError}</Text>
+
+            {/*Confirmation Password */}
+            <FormInput
+              label="Confirmar contraseña"
+              secureTextEntry={!showPass}
+              value={passwordConfirmation}
+              prependComponent={<Icon name="lock1" size={30} color="white" />}
+              autoCompletType="password"
+              containerStyle={{ marginTop: SIZES.radius }}
+              onChange={(value) => {
+                //utils.validatePassword(value, setPasswordConfirmationError);
+                if (passwordConfirmation === password) {
+                  setPasswordConfirmationError("");
+                }
+                setUsuario({ ...usuario, passwordConfirmation: value });
+              }}
+              errorMsg={passwordConfirmationError}
+              appendComponent={
+                <TouchableOpacity
+                  style={{
+                    width: 40,
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => setShowPass(!showPass)}
+                >
+                  <Image
+                    source={showPass ? icons.eye_close : icons.eye}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      tintColor: COLORS.gray,
+                    }}
+                  />
+                </TouchableOpacity>
+              }
+            />
+
+            {error ? <Text style={styles.error}>{error}</Text> : null}
+
+            {/* Sign Up & Sign In Button */}
+            <LinearGradient
+              colors={["#ED1200", "#D9510C", "#EA8100"]}
+              style={{
+                padding: 12,
+                borderRadius: 50,
+                marginTop: 10,
+                marginBottom: 10,
+                marginHorizontal: 10,
               }}
             >
-              <Text style={styles.iniciarSesion}>Iniciar sesión</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+              <TouchableOpacity onPress={() => registrarUsuario()}>
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 22,
+                    textAlign: "center",
+                    fontFamily: "Poppins-Regular",
+                  }}
+                >
+                  REGRISTRARME
+                </Text>
+              </TouchableOpacity>
+            </LinearGradient>
 
-        {/* Footer */}
-      </AuthLayout>
-    </ScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: SIZES.radius,
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ color: COLORS.white, ...FONTS.body3 }}>
+                Ya tienes una cuenta?{" "}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("SignIn");
+                }}
+              >
+                <Text style={styles.iniciarSesion}>Iniciar sesión</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Footer */}
+        </AuthLayout>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -385,5 +391,4 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 });
-
 export default SignUp;
